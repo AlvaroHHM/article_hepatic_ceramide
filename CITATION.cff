@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+authors:
+  - family-names: Hernandez-Montiel
+    given-names: Alvaro
+    orcid: "https://orcid.org/0000-0001-6125-0087"
+    affiliation: "Universidad Autonoma de Baja California (UABC)"
+title: "Hepatic Ceramide as the Peripheral Origin of CNS Inflammation: An In Silico Hypothesis"
+version: 2.0.0
+date-released: 2026-10-24
+license: MIT
+keywords:
+  - multiple sclerosis
+  - ceramide
+  - B4GALT6
+  - SMPD3
+  - S1PR1
+  - fingolimod
+  - holobiont
+  - neuroinflammation

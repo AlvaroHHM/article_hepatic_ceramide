@@ -1,0 +1,17 @@
+{
+  "title": "Hepatic Ceramide as the Peripheral Origin of CNS Inflammation: An In Silico Hypothesis",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "Reproducibility compendium for the manuscript. R scripts, CSV outputs, and figure-generating scripts for the layered transcriptomic analysis of the gut-liver-CNS axis in murine models.",
+  "creators": [
+    {
+      "name": "Hernandez-Montiel, Alvaro",
+      "orcid": "0000-0001-6125-0087",
+      "affiliation": "Universidad Autonoma de Baja California"
+    }
+  ],
+  "keywords": ["multiple sclerosis","ceramide","B4GALT6","SMPD3","S1PR1","fingolimod","holobiont","neuroinflammation"],
+  "license": "MIT",
+  "access_right": "open",
+  "language": "eng"
+}

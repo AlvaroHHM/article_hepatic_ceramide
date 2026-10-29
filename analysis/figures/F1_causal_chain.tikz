@@ -1,0 +1,47 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{xcolor}
+\definecolor{AAASgreen}{HTML}{008B45}
+\definecolor{AAASred}{HTML}{EE0000}
+\begin{document}
+\begin{tikzpicture}[
+  node distance=0.4cm,
+  box/.style={draw=black!70, rounded corners=3pt,
+    minimum width=12cm, minimum height=1.35cm,
+    align=left, inner sep=6pt, font=\small},
+  direct/.style={box, fill=AAASgreen!10, draw=AAASgreen!70!black},
+  pending/.style={box, fill=AAASred!10, draw=AAASred!70!black},
+  arrow/.style={->, thick, >=stealth, draw=black!70}
+]
+\node[direct] (s1) {%
+  \textbf{1. Dysbiosis and endotoxemia}\hfill{\footnotesize\textit{Direct evidence}}\\[2pt]
+  {\footnotesize Portal LPS $\uparrow$; sphingolipid-producing Bacteroidetes}
+};
+\node[direct, below=of s1] (s2) {%
+  \textbf{2. Hepatic bile collapse}\hfill{\footnotesize\textit{Direct evidence}}\\[2pt]
+  {\footnotesize CYP7A1 $-1.87$; CYP8B1 $-2.11$; Slc10a1 $-0.69$; PC/choline $\downarrow$}
+};
+\node[direct, below=of s2] (s3) {%
+  \textbf{3. SMPD3/SMS1 imbalance and ceramide accumulation}\hfill{\footnotesize\textit{Direct evidence}}\\[2pt]
+  {\footnotesize SMPD3 $+4.80$; B4GALT6 $+3.77$; SMS1 $+0.01$ (NS); Cers2 $-0.15$ (NS)}
+};
+\node[pending, below=of s3] (s4) {%
+  \textbf{4. Hepatic ceramide export}\hfill{\footnotesize\textit{Aim 1 (pending)}}\\[2pt]
+  {\footnotesize VLDL/LDL/EVs $\to$ portal plasma $\to$ systemic plasma $\to$ BBB}
+};
+\node[direct, below=of s4] (s5) {%
+  \textbf{5. Conversion to LacCer in the CNS}\hfill{\footnotesize\textit{Direct evidence}}\\[2pt]
+  {\footnotesize SMS-dominant astrocytes; MOL3\_EAE B4galt6$^{+}$ $7\%\to18\%$}
+};
+\draw[arrow] (s1) -- (s2);
+\draw[arrow] (s2) -- (s3);
+\draw[arrow] (s3) -- (s4);
+\draw[arrow] (s4) -- (s5);
+\node[below=0.35cm of s5, anchor=north, font=\footnotesize] {%
+  \textcolor{AAASgreen}{$\blacksquare$} Direct evidence
+  \hspace{0.8cm}%
+  \textcolor{AAASred}{$\blacksquare$} Aim 1 (pending)
+};
+\end{tikzpicture}
+\end{document}
