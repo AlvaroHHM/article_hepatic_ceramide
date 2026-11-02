@@ -1,0 +1,52 @@
+=== 53c: Re-extraer matriz + PCA + ARI ===
+  [OK] Early1
+  [OK] EarlyFemale3
+  [OK] EarlyMale3
+  [OK] Peak2
+  [OK] Peak3
+  [OK] PeakMale4
+  [OK] PeakFemale4
+  [OK] Late1
+  [OK] Late2
+  [OK] Late3
+  [OK] LateMale4
+  [OK] LateFemale4
+  [OK] PeakCtrl2
+  [OK] EarlyCtrl3
+  [OK] LateCtrl2
+  [OK] LateCtrl3
+  [OK] Early4
+  [OK] EarlyMale5
+  [OK] EarlyFemale5
+  [OK] Peak5
+  [OK] Late5
+  [OK] EarlyCtrl4
+  [OK] EarlyCtrlMale5
+  [OK] EarlyCtrlFemale5
+
+Matriz: 42 genes × 13737 células
+[OK] 53c_expr_mat.csv + 53c_labels.csv
+
+Genes con varianza: 42
+PC1-10 var explicada: 72.0%
+
+--- ARI vs Zheng para k-means k=2..6 sobre PC1-10 ---
+  k=2: ARI=0.402
+  k=3: ARI=0.283
+  k=4: ARI=0.266
+  k=5: ARI=0.214
+  k=6: ARI=0.167
+
+=== k=2 detalle ===
+ARI PCA(10PC) vs Zheng: 0.402
+   
+    MOL2_like MOL56_like Other
+  1      1019       5398   158
+  2      5610       1446   106
+
+Cluster 1: 6575 cells | Cluster 2: 7162 cells
+Concordancia si cluster 1=MOL2: 15.5%
+Concordancia si cluster 2=MOL56: 20.2%
+[OK] 53c_PCA_MOL3.pdf
+
+=== FIN 53c ===

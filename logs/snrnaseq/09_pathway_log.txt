@@ -1,0 +1,100 @@
+=== ANÁLISIS DE RUTA: MOL2_like vs MOL56_like ===
+Fecha: 2026-10-28 19:04:43 
+
+--- Módulos definidos ---
+  Sphingolipid_synthesis        : 12 genes
+  Sphingolipid_interconversion  : 14 genes
+  LacCer_synthesis              : 3 genes
+  S1P_receptors                 : 5 genes
+  Myelin_structural             : 5 genes
+  Apoptosis                     : 8 genes
+
+Subsample: 2378 células
+            
+             Early Late Peak
+  MOL2_like    110  400  400
+  MOL56_like   400  400  400
+  Other         91  106   71
+
+--- Cargando counts ---
+Matriz: 32245 genes × 2378 células
+
+--- Calculando module scores ---
+  Sphingolipid_synthesis        : 12/12 genes
+  Sphingolipid_interconversion  : 14/14 genes
+  LacCer_synthesis              : 3/3 genes
+  S1P_receptors                 : 5/5 genes
+  Myelin_structural             : 5/5 genes
+  Apoptosis                     : 8/8 genes
+
+--- Comparación por módulo ---
+
+                       module MOL2_mean MOL56_mean        delta   pct_delta
+                B4GALT6_alone 1.0509342  0.2730529  0.777881361 284.8830708
+             LacCer_synthesis 0.6459125  0.3101164  0.335796040 108.2806365
+ Sphingolipid_interconversion 0.9359067  0.7299867  0.205920079  28.2087451
+                    Apoptosis 0.9605498  0.7934258  0.167124026  21.0635986
+       Sphingolipid_synthesis 1.5354609  1.3888502  0.146610627  10.5562590
+            Myelin_structural 7.8798848  7.9326901 -0.052805343  -0.6656675
+                S1P_receptors 0.6273489  0.6177664  0.009582539   1.5511590
+   wilcoxon_p
+ 1.243405e-28
+ 4.455559e-18
+ 6.919105e-14
+ 1.299249e-12
+ 1.043981e-09
+ 8.195839e-03
+ 2.261516e-01
+
+--- Regresión controlando por nCount ---
+
+                       module coef_MOL56_vs_MOL2         pval
+       Sphingolipid_synthesis        0.001985714 9.343912e-01
+ Sphingolipid_interconversion       -0.026272203 2.047721e-01
+             LacCer_synthesis       -0.163068878 4.322726e-06
+                S1P_receptors        0.069305029 4.230110e-03
+            Myelin_structural        0.093906119 8.247556e-05
+                    Apoptosis       -0.065938599 3.734458e-03
+                B4GALT6_alone       -0.459182014 1.667234e-11
+
+--- Generando plots ---
+
+============================================================
+RESUMEN
+============================================================
+
+Efecto observado (sin controlar por depth):
+                       module MOL2_mean MOL56_mean        delta   pct_delta
+                B4GALT6_alone 1.0509342  0.2730529  0.777881361 284.8830708
+             LacCer_synthesis 0.6459125  0.3101164  0.335796040 108.2806365
+ Sphingolipid_interconversion 0.9359067  0.7299867  0.205920079  28.2087451
+                    Apoptosis 0.9605498  0.7934258  0.167124026  21.0635986
+       Sphingolipid_synthesis 1.5354609  1.3888502  0.146610627  10.5562590
+            Myelin_structural 7.8798848  7.9326901 -0.052805343  -0.6656675
+                S1P_receptors 0.6273489  0.6177664  0.009582539   1.5511590
+   wilcoxon_p
+ 1.243405e-28
+ 4.455559e-18
+ 6.919105e-14
+ 1.299249e-12
+ 1.043981e-09
+ 8.195839e-03
+ 2.261516e-01
+
+Efecto después de controlar por nCount (regresión):
+                       module coef_MOL56_vs_MOL2         pval
+       Sphingolipid_synthesis        0.001985714 9.343912e-01
+ Sphingolipid_interconversion       -0.026272203 2.047721e-01
+             LacCer_synthesis       -0.163068878 4.322726e-06
+                S1P_receptors        0.069305029 4.230110e-03
+            Myelin_structural        0.093906119 8.247556e-05
+                    Apoptosis       -0.065938599 3.734458e-03
+                B4GALT6_alone       -0.459182014 1.667234e-11
+
+INTERPRETACIÓN:
+  - Si |coef| después de regresión < |delta| antes → parte del efecto era depth
+  - Si |coef| después de regresión ≈ |delta| antes → el efecto es robusto al depth
+
+[OK] results/51_pathway_MOL2_vs_MOL56.csv
+[OK] results/51_pathway_regression.csv
+[OK] results/51_pathway_MOL2_vs_MOL56.pdf

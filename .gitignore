@@ -16,3 +16,11 @@ data/processed/
 Thumbs.db
 *~
 _archive/
+
+# Backups
+README.md.bak_*
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz

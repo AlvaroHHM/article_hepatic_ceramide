@@ -1,0 +1,38 @@
+============================================================ 
+10b: ARI from precomputed CSVs (no H5 needed)
+Date: 2026-11-02 09:00:32 
+ ============================================================ 
+
+Expression matrix: 42 x 13737 
+Labels: 13737 cells
+nCount rows: 131881 
+
+Cells in expr + labels + nCount: 13737 
+After filter (MOL2/MOL56 + valid nCount): 13473 cells
+  MOL2_like: 6629  | MOL56_like: 6844 
+
+Genes with variance: 42 
+
+--- Normalization: log1p(counts / nCount_RNA * 1e4) ---
+--- PCA (10 PCs, scale.=FALSE) ---
+  PC1-10 var explained: 72.4%
+
+--- k-means k=2..6 on PC1-10 (default params: nstart=1, iter.max=10) ---
+  k=2: ARI=0.402
+  k=3: ARI=0.284
+  k=4: ARI=0.222
+  k=5: ARI=0.213
+  k=6: ARI=0.184
+
+[OK] results/snrnaseq/10b_ari.csv
+
+============================================================ 
+VERIFICATION
+ ============================================================ 
+  ARI (k=2) actual    = 0.4018
+  ARI (k=2) expected  = 0.402 (manuscript)
+  delta               = 0.0002 OK
+
+ ============================================================ 
+FIN
+ ============================================================ 

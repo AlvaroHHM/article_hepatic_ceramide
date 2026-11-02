@@ -1,0 +1,67 @@
+============================================================ 
+MOL3 SUBPOPULATION PROFILE (consolidated)
+Date: 2026-11-02 08:43:32 
+ ============================================================ 
+
+Annotation: ../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz 
+B4galt6 data: results/snrnaseq/08_MOL3_sphingolipid_substructure.csv 
+
+--- 1. Loading annotation ---
+  Dimensions: 131881 x 247 
+  MOL3_EAE cells: 13741 
+  Distribution:
+            
+             Early Late Peak
+  MOL2_like    110 4720 1799
+  MOL56_like  1401 4103 1340
+  Other         91  106   71
+
+--- 2. Aggregating scores ---
+  Rows: 9 
+
+--- 3. Loading B4galt6+ from 08 ---
+
+--- 4. CONSOLIDATED PROFILE ---
+     subpop stage n_cells DamageScore InterferonScore ImmuneScore n_B4galt6_pos
+  MOL2_like Early     110 0.017253963      0.03395096  0.06054647            23
+  MOL2_like  Peak    1799 0.110628984      0.54698769  0.07203467           468
+  MOL2_like  Late    4720 0.061095605      0.02917465  0.05923943           782
+ MOL56_like Early    1401 0.004685568      0.37058357  0.06392856            83
+ MOL56_like  Peak    1340 0.015914928      0.44786637  0.05918492            81
+ MOL56_like  Late    4103 0.005615472      0.13050110  0.05829516           152
+      Other Early      91 0.047534832      0.11219866  0.05401068             4
+      Other  Peak      71 0.083709548      0.39438262  0.10211558            23
+      Other  Late     106 0.030198623     -0.02013728  0.06332749            22
+ pct_B4galt6_pos
+       20.909091
+       26.014452
+       16.567797
+        5.924340
+        6.044776
+        3.704606
+        4.395604
+       32.394366
+       20.754717
+
+[OK] results/snrnaseq/11_MOL3_subpop_profile.csv 
+
+============================================================ 
+VERIFICATION AGAINST MANUSCRIPT
+ ============================================================ 
+  MOL3nMOL2  DamageScore (Late)    actual=0.0611 expected=0.061  OK
+  MOL3nMOL56 DamageScore (Late)    actual=0.0056 expected=0.006  OK
+  MOL3nMOL2  B4galt6+ % (Late)     actual=16.5678 expected=16.600  OK
+  MOL3nMOL56 B4galt6+ % (Late)     actual=3.7046 expected=3.700  OK
+
+  Verified: 4/4 numbers match the manuscript
+
+ ============================================================ 
+DERIVED METRICS (informative)
+ ============================================================ 
+  DamageScore ratio  MOL2/MOL56 (Late): 10.88x
+  B4galt6+ ratio     MOL2/MOL56 (Late): 4.47x
+  InterferonScore    MOL2/MOL56 (Late): 0.22x
+
+ ============================================================ 
+FIN
+ ============================================================ 

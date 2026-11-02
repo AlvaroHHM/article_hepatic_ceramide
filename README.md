@@ -137,9 +137,9 @@ accession-level download instructions.
 
 ## Reproducibility notes
 
-- **29 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
+- **34 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
   convergence) plus figure-generation scripts.
-- **53 CSV outputs** in `results/`, one folder per layer.
+- **62 CSV outputs** in `results/`, one folder per layer.
 - **7 main figures** (F1–F7) and **4 supplementary figures** (S1–S4).
 - **Environment**: R 4.3.x, Bioconductor 3.18, Seurat 5.0.x, DESeq2,
   fgsea, hdf5r, org.Mm.eg.db, cluster, vegan.
@@ -149,6 +149,7 @@ accession-level download instructions.
   (Wilcoxon p < 10⁻⁹⁰). The LacCer module survives this confound
   (p = 4.3×10⁻⁶), but the B4GALT6 per-gene magnitude does not. The
   limitation is documented in the manuscript.
+
 
 ## Citation
 
