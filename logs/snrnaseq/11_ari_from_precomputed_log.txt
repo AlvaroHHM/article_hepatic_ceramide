@@ -1,6 +1,6 @@
 ============================================================ 
 10b: ARI from precomputed CSVs (no H5 needed)
-Date: 2026-11-02 09:00:32 
+Date: 2026-11-02 09:14:37 
  ============================================================ 
 
 Expression matrix: 42 x 13737 
@@ -24,7 +24,7 @@ Genes with variance: 42
   k=5: ARI=0.213
   k=6: ARI=0.184
 
-[OK] results/snrnaseq/10b_ari.csv
+[OK] results/snrnaseq/11_ari_from_precomputed.csv
 
 ============================================================ 
 VERIFICATION

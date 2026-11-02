@@ -1,6 +1,6 @@
 ============================================================ 
 MOL3 SUBPOPULATION PROFILE (consolidated)
-Date: 2026-11-02 08:43:32 
+Date: 2026-11-02 09:16:54 
  ============================================================ 
 
 Annotation: ../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz 
@@ -43,7 +43,7 @@ B4galt6 data: results/snrnaseq/08_MOL3_sphingolipid_substructure.csv
        32.394366
        20.754717
 
-[OK] results/snrnaseq/11_MOL3_subpop_profile.csv 
+[OK] results/snrnaseq/12_MOL3_subpop_profile.csv 
 
 ============================================================ 
 VERIFICATION AGAINST MANUSCRIPT

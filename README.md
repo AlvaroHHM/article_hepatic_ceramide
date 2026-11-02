@@ -118,7 +118,7 @@ extracted from the H5 files. No downstream script reads H5 directly.
 | `09_pathway_regression.csv` | Depth-controlled regression per pathway | `09_pathway_MOL2_vs_MOL56.R` |
 | `10_expr_mat.csv` | 42 top-DE genes x 13,737 MOL3 cells (raw counts) | `10_ari_validation.R` |
 | `10_labels.csv` | barcode + Zheng cellType + stage | `10_ari_validation.R` |
-| `11_MOL3_subpop_profile.csv` | DamageScore + InterferonScore by subpop x stage | `11_MOL3_subpop_profile.R` |
+| `12_MOL3_subpop_profile.csv` | DamageScore + InterferonScore by subpop x stage | `12_MOL3_subpop_profile.R` |
 
 **To re-extract additional genes or cells from raw data:**
 1. Download the 28 H5 from GEO (accession GSE250589; see `data/README.md`)

@@ -1,16 +1,16 @@
 # ============================================================
-# 10b_ari_from_expr_mat.R
+# 11_ari_from_precomputed.R
 # Recomputes ARI (Adjusted Rand Index) from precomputed CSVs,
 # without requiring the 28 H5 files.
 #
 # Inputs:
 #   - results/snrnaseq/10_expr_mat.csv       (42 genes x 13,737 cells)
 #   - results/snrnaseq/10_labels.csv         (orig.ident, barcode_clean, zheng)
-#   - results/snrnaseq/10b_nCount.csv        (orig.ident, barcode_clean, nCount_RNA)
+#   - results/snrnaseq/11_nCount.csv        (orig.ident, barcode_clean, nCount_RNA)
 #
 # Output:
-#   - results/snrnaseq/10b_ari.csv
-#   - logs/snrnaseq/10b_ari_log.txt
+#   - results/snrnaseq/11_ari_from_precomputed.csv
+#   - logs/snrnaseq/11_ari_from_precomputed_log.txt
 #
 # Verifies: ARI (k=2) vs Zheng = 0.402 (manuscript: 0.40)
 # Normalization: log1p(counts / nCount_RNA * 1e4), PCA scale.=FALSE
@@ -20,7 +20,7 @@ suppressPackageStartupMessages({ library(data.table) })
 
 SEP <- "============================================================"
 dir.create("logs/snrnaseq", recursive = TRUE, showWarnings = FALSE)
-sink("logs/snrnaseq/10b_ari_log.txt", split = TRUE); on.exit(sink())
+sink("logs/snrnaseq/11_ari_from_precomputed_log.txt", split = TRUE); on.exit(sink())
 
 cat(SEP, "\n10b: ARI from precomputed CSVs (no H5 needed)\n")
 cat("Date:", format(Sys.time()), "\n", SEP, "\n\n")
@@ -34,7 +34,7 @@ labels <- fread("results/snrnaseq/10_labels.csv", data.table = FALSE, check.name
 labels$key <- paste(labels$orig.ident, labels$barcode_clean, sep = "_")
 cat("Labels:", nrow(labels), "cells\n")
 
-ncount <- fread("results/snrnaseq/10b_nCount.csv", data.table = FALSE,
+ncount <- fread("results/snrnaseq/11_nCount.csv", data.table = FALSE,
                 header = FALSE, col.names = c("orig.ident", "barcode_clean", "nCount_RNA"))
 ncount$key <- paste(ncount$orig.ident, ncount$barcode_clean, sep = "_")
 ncount$nCount_RNA <- suppressWarnings(as.numeric(ncount$nCount_RNA))
@@ -94,8 +94,8 @@ out <- data.frame(
   value  = c(aris, ncol(expr), sum(labels_m$zheng == "MOL2_like"),
              sum(labels_m$zheng == "MOL56_like"), nrow(expr), var_exp)
 )
-write.csv(out, "results/snrnaseq/10b_ari.csv", row.names = FALSE)
-cat("[OK] results/snrnaseq/10b_ari.csv\n\n")
+write.csv(out, "results/snrnaseq/11_ari_from_precomputed.csv", row.names = FALSE)
+cat("[OK] results/snrnaseq/11_ari_from_precomputed.csv\n\n")
 
 cat(SEP, "\nVERIFICATION\n", SEP, "\n")
 expected <- 0.402

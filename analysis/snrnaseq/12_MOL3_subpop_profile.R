@@ -1,5 +1,5 @@
 # ============================================================
-# 11_MOL3_subpop_profile.R
+# 12_MOL3_subpop_profile.R
 # Consolidated MOL3_EAE subpopulation profile across EAE stages.
 #
 # Merges:
@@ -9,8 +9,8 @@
 #   - ImmuneScore         <- annotation
 #
 # Output:
-#   - results/snrnaseq/11_MOL3_subpop_profile.csv
-#   - logs/snrnaseq/11_MOL3_subpop_profile_log.txt
+#   - results/snrnaseq/12_MOL3_subpop_profile.csv
+#   - logs/snrnaseq/12_MOL3_subpop_profile_log.txt
 #
 # Verifies 4 numbers from the manuscript:
 #   DamageScore  MOL3∩MOL2 (Late)  = 0.061  -> actual ~0.0611
@@ -49,7 +49,7 @@ for (name in c("08_MOL3_sphingolipid_substructure.csv",
 }
 if (is.null(csv_08)) stop("Missing 08 output at ", file.path(OUT_DIR, "08_*.csv"))
 
-sink(file.path(LOG_DIR, "11_MOL3_subpop_profile_log.txt"), split = TRUE)
+sink(file.path(LOG_DIR, "12_MOL3_subpop_profile_log.txt"), split = TRUE)
 on.exit(sink())
 
 SEP <- "============================================================"
@@ -94,7 +94,7 @@ profile <- profile[order(profile$subpop,
 
 cat("\n--- 4. CONSOLIDATED PROFILE ---\n"); print(profile, row.names = FALSE); cat("\n")
 
-out_path <- file.path(OUT_DIR, "11_MOL3_subpop_profile.csv")
+out_path <- file.path(OUT_DIR, "12_MOL3_subpop_profile.csv")
 write.csv(profile, out_path, row.names = FALSE)
 cat("[OK]", out_path, "\n\n")
 
