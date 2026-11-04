@@ -15,8 +15,8 @@ cat("=== VERIFICACION DE GENES HEPATICOS ===\n")
 cat("Date:", format(Sys.time()), "\n\n")
 
 # --- Localizar CSV DESeq2 de SRP074136 ---
-f <- c("results/SRP074136_DESeq2_inflamed_vs_WT.csv",
-       "results/SRP074136_DESeq2_inflamed_vs_WT_annotated.csv")
+f <- c("results/bulk/SRP074136_DESeq2_inflamed_vs_WT.csv",
+       "results/bulk/SRP074136_DESeq2_inflamed_vs_WT_annotated.csv")
 f <- f[file.exists(f)][1]
 if (is.na(f)) {
   stop("No encuentro el CSV DESeq2 de SRP074136. Verifica results/")
@@ -30,7 +30,7 @@ cat("Columnas:", paste(colnames(deseq), collapse = ", "), "\n\n")
 # Añadir mapping Ensembl → Symbol:
 suppressPackageStartupMessages(library(org.Mm.eg.db))
 deseq$symbol <- mapIds(org.Mm.eg.db,
-                       keys = deseq$gene_id,
+                       keys = deseq$ensembl_clean,
                        keytype = "ENSEMBL",
                        column = "SYMBOL")
 gene_col <- "symbol"
@@ -82,6 +82,6 @@ cat("  En ese caso, usar DESeq2 (que es la fuente primaria) en la tabla final.\n
 # --- Guardar ---
 out <- merge(paper_tbl, sub[, c(gene_col, "log2FoldChange", "baseMean", "padj")],
              by.x = "gene", by.y = gene_col, all.x = TRUE)
-write.csv(out, "results/32_liver_check.csv", row.names = FALSE)
+write.csv(out, "results/bulk/32_liver_check.csv", row.names = FALSE)
 cat("\n  -> results/32_liver_check.csv\n")
 cat("\n=== FIN ===\n")
