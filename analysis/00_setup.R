@@ -1,33 +1,89 @@
 # ============================================================
 # 00_setup.R
-# Instala y verifica las dependencias del repositorio.
+# Install and verify all dependencies required by the repository.
+# Usage: Rscript analysis/00_setup.R
 # ============================================================
-pkgs_bioc <- c("recount3","DESeq2","fgsea","KEGGREST","GEOquery",
-               "limma","Seurat","tximeta")
-pkgs_cran <- c("dplyr","tidyr","ggplot2","cowplot","tibble",
-               "readr","pdftools","data.table","ggsci")
+
+# --- Repositories: CRAN + Bioconductor 3.18 ---
+options(repos = c(
+  CRAN     = "https://cloud.r-project.org",
+  BioCsoft = "https://bioconductor.org/packages/3.18/bioc",
+  BioCann  = "https://bioconductor.org/packages/3.18/data/annotation",
+  BioCexp  = "https://bioconductor.org/packages/3.18/data/experiment"
+))
 
 if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager", repos = "https://cloud.r-project.org")
+  install.packages("BiocManager")
 
-for (p in pkgs_bioc) {
-  if (!requireNamespace(p, quietly = TRUE)) {
-    message("[install] ", p)
-    BiocManager::install(p, ask = FALSE, update = FALSE)
+# --- Bioconductor packages ---
+pkgs_bioc <- c(
+  # Core pipeline
+  "recount3", "SummarizedExperiment", "DESeq2",
+  "fgsea", "KEGGREST",
+  # Bulk / cellular datasets
+  "GEOquery", "limma",
+  # snRNA-seq
+  "Seurat", "hdf5r",
+  # Annotation
+  "org.Mm.eg.db", "AnnotationDbi"
+)
+
+# --- CRAN packages ---
+pkgs_cran <- c(
+  # Data manipulation
+  "dplyr", "tidyr", "tibble", "data.table", "readr",
+  # Visualization / reporting
+  "ggplot2", "cowplot", "ggsci",
+  # Statistics
+  "lme4", "boot",
+  # Excel reading (GSE139531 supplementary file)
+  "readxl"
+)
+
+# --- Installer with per-package verification ---
+install_if_missing <- function(pkg, source) {
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    message("[install] ", pkg)
+    tryCatch({
+      if (source == "bioc") {
+        BiocManager::install(pkg, update = FALSE, ask = FALSE)
+      } else {
+        install.packages(pkg)
+      }
+      if (!requireNamespace(pkg, quietly = TRUE))
+        warning("Package ", pkg, " did NOT install correctly")
+    }, error = function(e) warning("Error installing ", pkg, ": ", conditionMessage(e)))
   }
 }
-for (p in pkgs_cran) {
-  if (!requireNamespace(p, quietly = TRUE)) {
-    message("[install] ", p)
-    install.packages(p, repos = "https://cloud.r-project.org")
-  }
-}
 
-message("\n=== Versiones ===")
-message("R:           ", getRversion())
-message("Bioconductor:", as.character(BiocManager::version()))
+for (p in pkgs_bioc) install_if_missing(p, "bioc")
+for (p in pkgs_cran) install_if_missing(p, "cran")
+
+# --- Session info for reproducibility ---
+dir.create("logs", showWarnings = FALSE)
+sink("logs/session_info.txt")
+tryCatch({
+  cat("=== SESSION INFO ===\n")
+  cat("Date:", format(Sys.time()), "\n")
+  cat("R:", R.version.string, "\n")
+  cat("Bioconductor:", as.character(BiocManager::version()), "\n\n")
+  sessionInfo()
+}, finally = { sink() })
+
+message("\n=== Key package versions ===")
 for (p in c(pkgs_bioc, pkgs_cran)) {
-  v <- tryCatch(as.character(packageVersion(p)), error = function(e) "missing")
-  message(sprintf("  %-18s %s", p, v))
+  v <- tryCatch(as.character(packageVersion(p)), error = function(e) "MISSING")
+  message(sprintf("  %-22s %s", p, v))
 }
-message("\n[OK] Setup completo")
+
+# --- Final verification ---
+missing <- c(pkgs_bioc, pkgs_cran)[
+  !sapply(c(pkgs_bioc, pkgs_cran), requireNamespace, quietly = TRUE)
+]
+if (length(missing) == 0) {
+  message("\n[OK] All packages installed successfully")
+  message("[OK] session_info saved to logs/session_info.txt")
+} else {
+  message("\n[MISSING] Packages not installed: ", paste(missing, collapse = ", "))
+  message("[WARNING] Scripts using these packages will fail")
+}
