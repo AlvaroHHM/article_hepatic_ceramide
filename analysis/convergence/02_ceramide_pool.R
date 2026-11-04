@@ -1,8 +1,8 @@
 # ============================================================
-# 22_ceramide_pool_and_degradation.R
+# 02_ceramide_pool.R
 # (b) Pool completo de ceramidas en PR000633 (NAFLD humano)
 # (c) Maquinaria sintesis vs degradacion en higado cronico (SRP074136)
-# Uso: Rscript scripts/22_ceramide_pool_and_degradation.R
+# Uso: Rscript analysis/convergence/02_ceramide_pool.R
 # ============================================================
 
 suppressPackageStartupMessages({
@@ -19,9 +19,9 @@ if (dir.exists("article_hepatic_ceramide")) {
 } else if (file.exists("analysis/figures/00_figure_style.R")) {
   source("analysis/figures/00_figure_style.R")
 }
-dir.create("results", showWarnings = FALSE)
-dir.create("logs", showWarnings = FALSE)
-sink("logs/22_ceramide_pool_log.txt", split = TRUE)
+dir.create("results/convergence", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/convergence", showWarnings = FALSE, recursive = TRUE)
+sink("logs/convergence/02_ceramide_pool_log.txt", split = TRUE)
 on.exit(sink())
 
 message("=== Pool de ceramidas + maquinaria de degradacion ===")
@@ -129,8 +129,8 @@ p_pool <- ggplot(cer_top, aes(x = Diagnosis, y = Lipid_Level, fill = Diagnosis))
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x = NULL, y = "Lipid_Level")
-ggsave("results/convergence/22_ceramide_pool_top6.pdf", p_pool, width = 11, height = 6)
-message("\nOK results/convergence/22_ceramide_pool_top6.pdf")
+ggsave("results/convergence/02_ceramide_pool_top6.pdf", p_pool, width = 11, height = 6)
+message("\nOK results/convergence/02_ceramide_pool_top6.pdf")
 
 # ============================================================
 # PARTE C: Maquinaria sintesis vs degradacion en higado cronico
@@ -212,10 +212,10 @@ if (!file.exists(liver_file)) {
     theme_pub(base_size = 9) +
     theme(legend.position = "none") +
     labs(x = NULL, y = "log2FC (Mdr2-KO vs WT)")
-  ggsave("results/convergence/22_liver_synthesis_vs_degradation.pdf", p_func,
+  ggsave("results/convergence/02_liver_synthesis_vs_degradation.pdf", p_func,
          width = 8, height = 9)
-  message("\nOK results/convergence/22_liver_synthesis_vs_degradation.pdf")
-  file.copy("results/convergence/22_liver_synthesis_vs_degradation.pdf",
+  message("\nOK results/convergence/02_liver_synthesis_vs_degradation.pdf")
+  file.copy("results/convergence/02_liver_synthesis_vs_degradation.pdf",
             "figures/supplementary/S4_liver_synthesis_degradation.pdf",
             overwrite = TRUE)
   message("OK figures/supplementary/S4_liver_synthesis_degradation.pdf (updated)")
@@ -244,23 +244,23 @@ if (!file.exists(liver_file)) {
     }
   }
 
-  write.csv(sint_df, "results/convergence/22_liver_synthesis_genes.csv", row.names = FALSE)
-  write.csv(deg_df,  "results/convergence/22_liver_degradation_genes.csv", row.names = FALSE)
-  write.csv(resumen_funcion, "results/convergence/22_liver_summary_by_function.csv",
+  write.csv(sint_df, "results/convergence/02_liver_synthesis_genes.csv", row.names = FALSE)
+  write.csv(deg_df,  "results/convergence/02_liver_degradation_genes.csv", row.names = FALSE)
+  write.csv(resumen_funcion, "results/convergence/02_liver_summary_by_function.csv",
             row.names = FALSE)
 }
 
 # ============================================================
 # Guardar
 # ============================================================
-write.csv(tt_by_especie, "results/convergence/22_ceramide_pool_all_species.csv",
+write.csv(tt_by_especie, "results/convergence/02_ceramide_pool_all_species.csv",
           row.names = FALSE)
-write.csv(stats_por_especie, "results/convergence/22_ceramide_pool_stats.csv",
+write.csv(stats_por_especie, "results/convergence/02_ceramide_pool_stats.csv",
           row.names = FALSE)
 
 message("\n=== Guardado ===")
-message("OK results/convergence/22_ceramide_pool_all_species.csv")
-message("OK results/convergence/22_ceramide_pool_stats.csv")
-message("OK results/convergence/22_ceramide_pool_top6.pdf")
+message("OK results/convergence/02_ceramide_pool_all_species.csv")
+message("OK results/convergence/02_ceramide_pool_stats.csv")
+message("OK results/convergence/02_ceramide_pool_top6.pdf")
 
 message("\n=== FIN ===")
