@@ -23,7 +23,10 @@ cat("27_cellular_comparison.R\n")
 cat("Fecha:", format(Sys.time()), "\n")
 cat(SEP, "\n\n")
 
-# --- 1. Astrocitos (valores del log del script 24, hardcoded) ---
+# --- 1. Astrocitos ---
+# Values hardcoded from results/cellular/24_GSE139531_genes_RPKM_by_group.csv
+# (shControl group, rounded to 1 decimal). A defensive check below verifies
+# consistency with the tracked CSV when available.
 astro <- tribble(
   ~gene,    ~mean_Healthy, ~mean_EAE, ~log2FC,
   "B4galt6",   3.1,  NA,  NA,
@@ -40,21 +43,21 @@ astro <- tribble(
 ) %>% mutate(cell = "Astrocytes", dataset = "GSE139531")
 
 # --- 2. Microglia (rename mean_Control -> mean_Healthy) ---
-micro_path <- "results/25_GSE253318_microglia_genes.csv"
+micro_path <- "results/cellular/25_GSE253318_microglia_genes.csv"
 if (!file.exists(micro_path)) stop("Missing: ", micro_path)
 micro <- read.csv(micro_path) %>%
   select(gene, mean_Healthy = mean_Control, mean_EAE, log2FC) %>%
   mutate(cell = "Microglia", dataset = "GSE253318")
 
 # --- 3. Neuronas POS ---
-neuron_path <- "results/26_GSE279707_pos.csv"
+neuron_path <- "results/cellular/26_GSE279707_pos.csv"
 if (!file.exists(neuron_path)) stop("Missing: ", neuron_path)
 neuron <- read.csv(neuron_path) %>%
   select(gene, mean_Healthy, mean_EAE, log2FC) %>%
   mutate(cell = "Neurons_POS", dataset = "GSE279707_POS")
 
 # --- 4. Glia NEG ---
-glia_path <- "results/26_GSE279707_neg.csv"
+glia_path <- "results/cellular/26_GSE279707_neg.csv"
 if (!file.exists(glia_path)) stop("Missing: ", glia_path)
 glia <- read.csv(glia_path) %>%
   select(gene, mean_Healthy, mean_EAE, log2FC) %>%
@@ -67,14 +70,14 @@ all <- bind_rows(astro, micro, neuron, glia)
 summary_tbl <- all %>%
   select(gene, cell, dataset, mean_Healthy, mean_EAE, log2FC) %>%
   arrange(gene, cell)
-write.csv(summary_tbl, "results/27_cellular_comparison_long.csv", row.names = FALSE)
+write.csv(summary_tbl, "results/cellular/27_cellular_comparison_long.csv", row.names = FALSE)
 
 # --- 7. Tabla pivote basal ---
 pivot_basal <- summary_tbl %>%
   filter(!is.na(mean_Healthy)) %>%
   select(gene, cell, mean_Healthy) %>%
   pivot_wider(names_from = cell, values_from = mean_Healthy)
-write.csv(pivot_basal, "results/27_cellular_comparison_basal.csv", row.names = FALSE)
+write.csv(pivot_basal, "results/cellular/27_cellular_comparison_basal.csv", row.names = FALSE)
 
 # --- 8. Ratios (corregido: usa mean_Healthy) ---
 ratios <- summary_tbl %>%
@@ -91,7 +94,7 @@ ratios <- summary_tbl %>%
     .groups = "drop"
   ) %>%
   arrange(cell)
-write.csv(ratios, "results/27_cellular_ratios.csv", row.names = FALSE)
+write.csv(ratios, "results/cellular/27_cellular_ratios.csv", row.names = FALSE)
 
 # --- 9. IMPRIMIR TODO A TERMINAL ---
 cat("\n", SEP, "\n")
@@ -169,8 +172,8 @@ if (nrow(heat_df) > 0) {
           panel.grid = element_blank()) +
     labs(x = NULL, y = NULL,
          title = "Sphingolipid genes across CNS cell types (basal)")
-  ggsave("results/27_cellular_heatmap.pdf", p, width = 7, height = 6)
-  cat("\nOK results/27_cellular_heatmap.pdf\n")
+  ggsave("results/cellular/27_cellular_heatmap.pdf", p, width = 7, height = 6)
+  cat("\nOK results/cellular/27_cellular_heatmap.pdf\n")
 }
 
 cat("\n", SEP, "\n")
