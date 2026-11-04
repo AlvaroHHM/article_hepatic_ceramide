@@ -19,15 +19,18 @@ suppressPackageStartupMessages({
   library(dplyr); library(tidyr); library(ggplot2)
 })
 
+dir.create("results", showWarnings = FALSE)
+dir.create("results/snrnaseq", showWarnings = FALSE, recursive = TRUE)
 dir.create("logs", showWarnings = FALSE)
-sink("logs/30_falcao_log.txt", split = TRUE)
+dir.create("logs/snrnaseq", showWarnings = FALSE, recursive = TRUE)
+sink("logs/snrnaseq/30_falcao_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("=== FALCAO QUANTIFICATION v2 (GSE250589) ===\n")
 cat("Date:", format(Sys.time()), "\n\n")
 
 # --- Cargar ---
-falcao_file <- "results/29b_GSE250589_OLG_falcao.csv"
+falcao_file <- "results/snrnaseq/29b_GSE250589_OLG_falcao.csv"
 if (!file.exists(falcao_file)) stop("Falta ", falcao_file)
 falcao <- read.csv(falcao_file, check.names = FALSE)
 cat("Dimensiones:", nrow(falcao), "x", ncol(falcao), "\n")
@@ -176,10 +179,10 @@ print(entropy_df)
 cat("\n")
 
 # --- Guardar CSVs ---
-write.csv(persistence, "results/30_falcao_persistence.csv", row.names = FALSE)
-write.csv(velocity,    "results/30_falcao_velocity.csv",    row.names = FALSE)
-write.csv(entropy_df,  "results/30_falcao_entropy.csv",     row.names = FALSE)
-write.csv(prop_matrix, "results/30_falcao_prop_matrix.csv", row.names = FALSE)
+write.csv(persistence, "results/snrnaseq/30_falcao_persistence.csv", row.names = FALSE)
+write.csv(velocity,    "results/snrnaseq/30_falcao_velocity.csv",    row.names = FALSE)
+write.csv(entropy_df,  "results/snrnaseq/30_falcao_entropy.csv",     row.names = FALSE)
+write.csv(prop_matrix, "results/snrnaseq/30_falcao_prop_matrix.csv", row.names = FALSE)
 cat("OK results/30_falcao_*.csv\n\n")
 
 # --- 4. Figura: trajectories por estado ---
@@ -215,7 +218,7 @@ p_traj <- ggplot(long_traj, aes(x = timepoint, y = pct,
         panel.grid.minor = element_blank()) +
   labs(x = NULL, y = "% cells per state")
 
-ggsave("results/30_falcao_trajectories.pdf", p_traj, width = 10, height = 6)
+ggsave("results/snrnaseq/30_falcao_trajectories.pdf", p_traj, width = 10, height = 6)
 cat("OK results/30_falcao_trajectories.pdf\n")
 
 # --- 5. Figura: entropía ---
@@ -235,14 +238,24 @@ p_entropy <- ggplot(entropy_df, aes(x = factor(combo,
   theme_pub(base_size = 10) +
   labs(x = NULL, y = "Entropía de Shannon (bits)")
 
-ggsave("results/30_falcao_entropy.pdf", p_entropy, width = 7.5, height = 4.5)
+ggsave("results/snrnaseq/30_falcao_entropy.pdf", p_entropy, width = 7.5, height = 4.5)
 cat("OK results/30_falcao_entropy.pdf\n")
 
 cat("\n=== Outputs generados ===\n")
-cat("  results/30_falcao_persistence.csv\n")
-cat("  results/30_falcao_velocity.csv\n")
-cat("  results/30_falcao_entropy.csv\n")
-cat("  results/30_falcao_prop_matrix.csv\n")
-cat("  results/30_falcao_trajectories.pdf\n")
-cat("  results/30_falcao_entropy.pdf\n")
+cat("  results/snrnaseq/30_falcao_persistence.csv\n")
+cat("  results/snrnaseq/30_falcao_velocity.csv\n")
+cat("  results/snrnaseq/30_falcao_entropy.csv\n")
+cat("  results/snrnaseq/30_falcao_prop_matrix.csv\n")
+cat("  results/snrnaseq/30_falcao_trajectories.pdf\n")
+cat("  results/snrnaseq/30_falcao_entropy.pdf\n")
+# --- 6. Copiar PDFs a figures/ (el .tex los cita desde ahi) ---
+dir.create("figures/main", showWarnings = FALSE)
+dir.create("figures/supplementary", showWarnings = FALSE)
+file.copy("results/snrnaseq/30_falcao_trajectories.pdf",
+          "figures/main/F4_snrnaseq_topology.pdf", overwrite = TRUE)
+file.copy("results/snrnaseq/30_falcao_entropy.pdf",
+          "figures/supplementary/S1_falcao_entropy.pdf", overwrite = TRUE)
+cat("[OK] figures/main/F4_snrnaseq_topology.pdf\n")
+cat("[OK] figures/supplementary/S1_falcao_entropy.pdf\n")
+
 cat("\n=== FIN ===\n")

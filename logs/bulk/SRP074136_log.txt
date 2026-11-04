@@ -1,0 +1,46 @@
+
+    inflamed       nodule           WT WT_untreated 
+           4            5            5            2 
+
+    inflamed       nodule           WT WT_untreated 
+           4            5            5            2 
+                                                                     pathway_name
+10                            Fatty acid degradation - Mus musculus (house mouse)
+118                      Chemokine signaling pathway - Mus musculus (house mouse)
+76                             Fatty acid metabolism - Mus musculus (house mouse)
+103                           PPAR signaling pathway - Mus musculus (house mouse)
+119                     NF-kappa B signaling pathway - Mus musculus (house mouse)
+12                    Primary bile acid biosynthesis - Mus musculus (house mouse)
+331                       Inflammatory bowel disease - Mus musculus (house mouse)
+342                        Lipid and atherosclerosis - Mus musculus (house mouse)
+9                              Fatty acid elongation - Mus musculus (house mouse)
+197                            TNF signaling pathway - Mus musculus (house mouse)
+259                                   Bile secretion - Mus musculus (house mouse)
+8                            Fatty acid biosynthesis - Mus musculus (house mouse)
+73           Biosynthesis of unsaturated fatty acids - Mus musculus (house mouse)
+48                            Ether lipid metabolism - Mus musculus (house mouse)
+52                           Sphingolipid metabolism - Mus musculus (house mouse)
+123                   Sphingolipid signaling pathway - Mus musculus (house mouse)
+215 Inflammatory mediator regulation of TRP channels - Mus musculus (house mouse)
+          NES         pval         padj
+10  -2.865237 3.687226e-16 1.264718e-14
+118  2.088573 2.165774e-11 3.376638e-10
+76  -2.470217 8.786293e-10 8.610567e-09
+103 -2.328958 2.889431e-09 2.477687e-08
+119  2.042108 2.512081e-08 1.538650e-07
+12  -2.330681 9.839882e-07 4.272253e-06
+331  2.038954 1.618839e-06 6.610260e-06
+342  1.730327 3.567830e-06 1.390643e-05
+9   -2.108047 2.825950e-05 8.577885e-05
+197  1.780984 4.855336e-05 1.332304e-04
+259 -1.815519 5.408590e-05 1.472338e-04
+8   -2.059138 1.965073e-04 4.780283e-04
+73  -1.982776 2.022876e-04 4.886242e-04
+48   1.795149 6.524118e-04 1.398608e-03
+52   1.592393 5.718085e-03 1.010981e-02
+123  1.378227 2.445425e-02 3.695070e-02
+215 -1.298274 2.841260e-02 4.237183e-02
+  project_id     comparison n_ref n_test n_sig_genes n_sig_strict
+1  SRP074136 inflamed_vs_WT     5      4       12228         6578
+  n_pathways_total n_pathways_sig
+1              343            240

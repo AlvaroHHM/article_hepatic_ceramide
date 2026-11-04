@@ -1,0 +1,42 @@
+
+  APAP Saline 
+     9      8 
+
+  APAP Saline 
+     9      8 
+                                                                     pathway_name
+10                            Fatty acid degradation - Mus musculus (house mouse)
+260                                   Bile secretion - Mus musculus (house mouse)
+77                             Fatty acid metabolism - Mus musculus (house mouse)
+104                           PPAR signaling pathway - Mus musculus (house mouse)
+120                     NF-kappa B signaling pathway - Mus musculus (house mouse)
+12                    Primary bile acid biosynthesis - Mus musculus (house mouse)
+74           Biosynthesis of unsaturated fatty acids - Mus musculus (house mouse)
+9                              Fatty acid elongation - Mus musculus (house mouse)
+119                      Chemokine signaling pathway - Mus musculus (house mouse)
+198                            TNF signaling pathway - Mus musculus (house mouse)
+216 Inflammatory mediator regulation of TRP channels - Mus musculus (house mouse)
+44                           Glycerolipid metabolism - Mus musculus (house mouse)
+343                        Lipid and atherosclerosis - Mus musculus (house mouse)
+47                    Glycerophospholipid metabolism - Mus musculus (house mouse)
+8                            Fatty acid biosynthesis - Mus musculus (house mouse)
+          NES         pval         padj
+10  -3.113326 5.799578e-17 1.977656e-15
+260 -2.729179 1.503216e-15 3.661404e-14
+77  -2.659400 3.805757e-11 5.407347e-10
+104 -2.412877 3.659950e-11 5.407347e-10
+120  1.749466 4.000247e-06 2.912623e-05
+12  -2.389992 5.257439e-06 3.474913e-05
+74  -2.258889 5.298987e-06 3.474913e-05
+9   -2.222948 1.746140e-05 9.923895e-05
+119  1.567213 3.209979e-05 1.684005e-04
+198  1.625276 1.820104e-04 8.166518e-04
+216 -1.538947 2.634537e-04 1.109107e-03
+44  -1.604961 1.931771e-03 6.653877e-03
+343  1.395058 2.421308e-03 7.987868e-03
+47  -1.379581 4.710638e-03 1.460298e-02
+8   -1.681102 1.202929e-02 3.155375e-02
+  project_id     comparison n_ref n_test n_sig_genes n_sig_strict
+1  SRP133057 APAP_vs_Saline     8      9        7243         4383
+  n_pathways_total n_pathways_sig
+1              344            143

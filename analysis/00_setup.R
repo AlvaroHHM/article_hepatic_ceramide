@@ -35,7 +35,7 @@ pkgs_cran <- c(
   # Visualization / reporting
   "ggplot2", "cowplot", "ggsci",
   # Statistics
-  "lme4", "boot",
+  "lme4", "boot", "lmerTest",
   # Excel reading (GSE139531 supplementary file)
   "readxl",
   # Lipidomics (PR000633 NAFLD pool)

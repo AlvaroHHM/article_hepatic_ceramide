@@ -1,0 +1,24 @@
+
+KO WT 
+ 3  3 
+
+KO WT 
+ 3  3 
+                                                   pathway_name      NES
+119    Chemokine signaling pathway - Mus musculus (house mouse) 2.124264
+333     Inflammatory bowel disease - Mus musculus (house mouse) 2.427858
+120   NF-kappa B signaling pathway - Mus musculus (house mouse) 2.181294
+198          TNF signaling pathway - Mus musculus (house mouse) 1.974528
+344      Lipid and atherosclerosis - Mus musculus (house mouse) 1.563259
+124 Sphingolipid signaling pathway - Mus musculus (house mouse) 1.448094
+            pval         padj
+119 1.290517e-09 1.272081e-08
+333 2.228782e-08 1.601937e-07
+120 4.530684e-08 2.963809e-07
+198 3.702739e-06 1.637750e-05
+344 8.488376e-04 2.218553e-03
+124 8.385177e-03 1.598280e-02
+  project_id comparison n_ref n_test n_sig_genes n_sig_strict n_pathways_total
+1  SRP148279   KO_vs_WT     3      3         266          193              345
+  n_pathways_sig
+1            205

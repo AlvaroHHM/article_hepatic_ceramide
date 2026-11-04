@@ -1,0 +1,190 @@
+=== MODELOS MIXTOS + BOOTSTRAP PARA PI/VI ===
+Fecha: 2026-11-03 21:47:34 
+
+--- 1. Cargando anotación ---
+  131881 células totales
+  82951 células EAE
+  17 ratones EAE
+
+Distribución de ratones por stage:
+       
+        Early1 Early4 EarlyFemale3 EarlyFemale5 EarlyMale3 EarlyMale5 Late1
+  Early   4206   1342         3423        11087       3728      10583     0
+  Peak       0      0            0            0          0          0     0
+  Late       0      0            0            0          0          0  4515
+       
+        Late2 Late3 Late5 LateFemale4 LateMale4 Peak2 Peak3 Peak5 PeakFemale4
+  Early     0     0     0           0         0     0     0     0           0
+  Peak      0     0     0           0         0  1762  3725  4089        3838
+  Late   1682  4310  6216       10072      4973     0     0     0           0
+       
+        PeakMale4
+  Early         0
+  Peak       3400
+  Late          0
+
+--- 2. Proporción por ratón × estado ---
+
+Resumen de proporciones por stage (media ± sd):
+
+MOL3_EAE:
+# A tibble: 3 × 4
+  stage media    sd     n
+  <fct> <dbl> <dbl> <int>
+1 Early  4.60  2.39     6
+2 Peak  18.2  11.2      5
+3 Late  28.3   6.42     6
+
+MOL5_6_EAE_A:
+# A tibble: 3 × 4
+  stage media    sd     n
+  <fct> <dbl> <dbl> <int>
+1 Early 37.6  17.3      6
+2 Peak  29.0  20.4      5
+3 Late   7.41  7.72     6
+
+MOL5_6_EAE_B:
+# A tibble: 3 × 4
+  stage media    sd     n
+  <fct> <dbl> <dbl> <int>
+1 Early  7.51  4.27     6
+2 Peak  14.7   4.23     5
+3 Late   9.79  3.87     6
+
+MOL5_6_EAE_C:
+# A tibble: 3 × 4
+  stage media    sd     n
+  <fct> <dbl> <dbl> <int>
+1 Early  8.01 4.95      6
+2 Peak   9.58 8.30      5
+3 Late   1.02 0.601     6
+
+MOL1_2_EAE:
+# A tibble: 3 × 4
+  stage  media    sd     n
+  <fct>  <dbl> <dbl> <int>
+1 Early  0.403 0.289     6
+2 Peak  12.1   6.50      5
+3 Late   1.69  2.15      6
+
+MOL2_Cntrl_A:
+# A tibble: 3 × 4
+  stage media     sd     n
+  <fct> <dbl>  <dbl> <int>
+1 Early 1.46   1.28      6
+2 Peak  0.771  0.825     5
+3 Late  9.16  10.3       6
+
+--- 3. Modelos mixtos (glmer binomial) ---
+
+MOL3_EAE:
+             Estimate Std. Error    z value     Pr(>|z|)
+(Intercept) -3.171044  0.2179434 -14.549849 5.853249e-48
+stagePeak    1.537702  0.3215581   4.782033 1.735313e-06
+stageLate    2.222759  0.3062969   7.256876 3.961322e-13
+  Test de tendencia lineal: coef = 1.1106, p = 1.0286e-11
+
+MOL5_6_EAE_A:
+              Estimate Std. Error    z value     Pr(>|z|)
+(Intercept) -0.5754491  0.4198733 -1.3705302 1.705214e-01
+stagePeak   -0.4725818  0.6228837 -0.7586999 4.480321e-01
+stageLate   -2.5643768  0.5953017 -4.3076925 1.649665e-05
+  Test de tendencia lineal: coef = -1.2821, p = 5.0248e-05
+
+MOL5_6_EAE_B:
+              Estimate Std. Error    z value     Pr(>|z|)
+(Intercept) -2.6512765  0.2044246 -12.969456 1.823193e-38
+stagePeak    0.8637351  0.3024424   2.855867 4.291951e-03
+stageLate    0.3329667  0.2885982   1.153738 2.486076e-01
+  Test de tendencia lineal: coef = 0.1660, p = 3.3169e-01
+
+MOL5_6_EAE_C:
+              Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -2.6673196  0.2977401 -8.958550 3.289771e-19
+stagePeak    0.1381053  0.4416444  0.312707 7.545033e-01
+stageLate   -2.0559867  0.4256123 -4.830656 1.360841e-06
+  Test de tendencia lineal: coef = -1.0238, p = 9.5361e-05
+
+MOL1_2_EAE:
+              Estimate Std. Error   z value     Pr(>|z|)
+(Intercept) -5.8159971  0.4700446 -12.37329 3.645867e-35
+stagePeak    3.6668285  0.6836354   5.36372 8.152544e-08
+stageLate    0.8030304  0.6617311   1.21353 2.249274e-01
+  Test de tendencia lineal: coef = 0.3807, p = 4.9010e-01
+
+MOL2_Cntrl_A:
+              Estimate Std. Error    z value     Pr(>|z|)
+(Intercept) -4.5443515  0.4380251 -10.374637 3.234382e-25
+stagePeak   -0.8178639  0.6652913  -1.229332 2.189473e-01
+stageLate    1.7170140  0.6159085   2.787774 5.307150e-03
+  Test de tendencia lineal: coef = 0.8661, p = 2.1551e-02
+
+--- 4. Bootstrap de PI/VI (1000 resamples) ---
+
+Bootstrap para cada estado (1000 iteraciones):
+  MOL3_EAE...
+  MOL5_6_EAE_A...
+  MOL5_6_EAE_B...
+  MOL5_6_EAE_C...
+  MOL1_2_EAE...
+  MOL2_Cntrl_A...
+                   estado    pi_mean  pi_ci_low pi_ci_high    vi_mean
+MOL3_EAE         MOL3_EAE  1.5967198 0.95101736  2.7147364  3.3459007
+MOL5_6_EAE_A MOL5_6_EAE_A  0.2470397 0.06539525  0.6203225 -0.2345386
+MOL5_6_EAE_B MOL5_6_EAE_B  0.6717066 0.45853651  0.8866321  1.1108568
+MOL5_6_EAE_C MOL5_6_EAE_C  0.1293344 0.05546273  0.2622120  0.2321399
+MOL1_2_EAE     MOL1_2_EAE  0.1756659 0.01678528  0.4020668 37.2133527
+MOL2_Cntrl_A MOL2_Cntrl_A 17.3823864 2.45664241 47.0648314 -0.3270031
+              vi_ci_low vi_ci_high
+MOL3_EAE      1.2025804  6.5567776
+MOL5_6_EAE_A -0.6919834  0.4050692
+MOL5_6_EAE_B  0.2021009  2.8819738
+MOL5_6_EAE_C -0.5033292  1.8488374
+MOL1_2_EAE   16.1628249 78.8967950
+MOL2_Cntrl_A -0.7616491  0.3717523
+
+--- 5. Comparación MOL3_EAE vs otros estados ---
+
+Coeficientes del modelo (Peak vs Early):
+                estado coef_Peak_vs_Early p_Peak_vs_Early
+Estimate      MOL3_EAE          1.5377015    1.735313e-06
+Estimate1 MOL5_6_EAE_A         -0.4725818    4.480321e-01
+Estimate2 MOL5_6_EAE_B          0.8637351    4.291951e-03
+Estimate3 MOL5_6_EAE_C          0.1381053    7.545033e-01
+Estimate4   MOL1_2_EAE          3.6668285    8.152544e-08
+Estimate5 MOL2_Cntrl_A         -0.8178639    2.189473e-01
+
+--- 6. Generando figura ---
+[OK] results/snrnaseq/52_PI_VI_bootstrap.pdf
+[1] TRUE
+[OK] figures/supplementary/S_bootstrap_PI_VI.pdf
+
+============================================================
+RESUMEN FINAL
+============================================================
+
+PI y VI con IC 95% (bootstrap):
+       estado    pi_mean  pi_ci_low pi_ci_high    vi_mean  vi_ci_low vi_ci_high
+     MOL3_EAE  1.5967198 0.95101736  2.7147364  3.3459007  1.2025804  6.5567776
+ MOL5_6_EAE_A  0.2470397 0.06539525  0.6203225 -0.2345386 -0.6919834  0.4050692
+ MOL5_6_EAE_B  0.6717066 0.45853651  0.8866321  1.1108568  0.2021009  2.8819738
+ MOL5_6_EAE_C  0.1293344 0.05546273  0.2622120  0.2321399 -0.5033292  1.8488374
+   MOL1_2_EAE  0.1756659 0.01678528  0.4020668 37.2133527 16.1628249 78.8967950
+ MOL2_Cntrl_A 17.3823864 2.45664241 47.0648314 -0.3270031 -0.7616491  0.3717523
+
+Coeficientes de los modelos mixtos:
+       estado coef_Peak_vs_Early p_Peak_vs_Early
+     MOL3_EAE          1.5377015    1.735313e-06
+ MOL5_6_EAE_A         -0.4725818    4.480321e-01
+ MOL5_6_EAE_B          0.8637351    4.291951e-03
+ MOL5_6_EAE_C          0.1381053    7.545033e-01
+   MOL1_2_EAE          3.6668285    8.152544e-08
+ MOL2_Cntrl_A         -0.8178639    2.189473e-01
+
+INTERPRETACIÓN:
+  - Si el IC 95% de PI NO incluye 1 → el cambio es significativo
+  - Si el IC 95% de VI NO incluye 0 → el crecimiento es significativo
+  - Los estados con IC ancho son los de denominador pequeño
+  - MOL3_EAE debe tener IC estrecho si el hallazgo es robusto
+
+[OK] Script completado

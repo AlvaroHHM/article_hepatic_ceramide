@@ -1,0 +1,149 @@
+=== FALCAO QUANTIFICATION v2 (GSE250589) ===
+Date: 2026-11-03 21:40:06 
+
+Dimensiones: 81 x 5 
+Columnas: stage, condition, cellTypeFalcao2018, n, prop 
+
+--- Valores únicos ---
+stage:      Early, Late, Peak 
+condition:  Ctrl, EAE 
+cellType:   18 estados
+ [1] "COP"            "MOL2_Cntrl_A"   "MOL3_EAE"       "MOL5_6_Cntrl_A"
+ [5] "MOL5_6_Cntrl_B" "MOL5_6_EAE_A"   "MOL5_6_EAE_B"   "MiGl2"         
+ [9] "MiGl4"          "NFOL"           "OPC1"           "OPC2"          
+[13] "OPC_Cycling"    "PLC"            "MOL1_2_EAE"     "MOL5_6_EAE_C"  
+[17] "OPC3"           "MiGl3"         
+
+--- Suma de prop y n por (stage, condition) ---
+# A tibble: 6 × 4
+  stage condition sum_prop n_cells
+  <chr> <chr>        <dbl>   <int>
+1 Early Ctrl          1      25971
+2 Early EAE           1      30937
+3 Late  Ctrl          1      12807
+4 Late  EAE           1      30705
+5 Peak  Ctrl          1       4515
+6 Peak  EAE           1.00   15248
+
+Si sum_prop ~ 1 -> fracción; si ~ 100 -> porcentaje.
+
+--- Estados en formato wide ---
+Columnas: cellTypeFalcao2018, prop_Early_Ctrl, prop_Early_EAE, prop_Late_Ctrl, prop_Late_EAE, prop_Peak_Ctrl, prop_Peak_EAE, n_Early_Ctrl, n_Early_EAE, n_Late_Ctrl, n_Late_EAE, n_Peak_Ctrl, n_Peak_EAE 
+
+--- Columnas de prop detectadas ---
+  Early_Ctrl   : prop_Early_Ctrl
+  Early_EAE    : prop_Early_EAE
+  Peak_Ctrl    : prop_Peak_Ctrl
+  Peak_EAE     : prop_Peak_EAE
+  Late_EAE     : prop_Late_EAE
+  Late_Ctrl    : prop_Late_Ctrl
+
+--- Matriz de proporciones ---
+            state   Early_Ctrl    Early_EAE    Peak_Ctrl     Peak_EAE
+1             COP 1.424666e-03 0.0023596341 0.0000000000 2.164218e-03
+2    MOL2_Cntrl_A 3.342189e-02 0.0141254808 0.0064230343 9.115950e-03
+3        MOL3_EAE 2.695314e-04 0.0487442221 0.0004429679 2.064533e-01
+4  MOL5_6_Cntrl_A 7.571907e-01 0.2279147946 0.8985603544 4.590766e-03
+5  MOL5_6_Cntrl_B 1.738478e-01 0.0716294405 0.0786267996 5.246590e-04
+6    MOL5_6_EAE_A 6.314736e-03 0.4434819149 0.0075304540 3.311254e-01
+7    MOL5_6_EAE_B 1.155135e-04 0.0798396742 0.0000000000 1.533316e-01
+8           MiGl2 7.700897e-05 0.0011313314 0.0015503876 6.689402e-03
+9           MiGl4 3.850449e-05 0.0000000000 0.0000000000 5.246590e-04
+10           NFOL 3.080359e-04 0.0006464751 0.0000000000 9.837356e-04
+11           OPC1 1.963729e-02 0.0170022950 0.0026578073 1.646118e-02
+12           OPC2 4.081475e-03 0.0048162395 0.0004429679 1.573977e-03
+13    OPC_Cycling 3.850449e-04 0.0008404176 0.0037652270 2.557712e-03
+14            PLC 2.887836e-03 0.0003232375 0.0000000000 1.311647e-03
+15     MOL1_2_EAE 0.000000e+00 0.0042344119 0.0000000000 1.440845e-01
+16   MOL5_6_EAE_C 0.000000e+00 0.0782558102 0.0000000000 8.833945e-02
+17           OPC3 0.000000e+00 0.0046546207 0.0000000000 3.010231e-02
+18          MiGl3 0.000000e+00 0.0000000000 0.0000000000 6.558237e-05
+       Late_EAE    Late_Ctrl
+1  8.825924e-03 0.0000000000
+2  1.287738e-01 0.0087452175
+3  2.888129e-01 0.0000000000
+4  2.723986e-01 0.8981026001
+5  3.471747e-02 0.0893261498
+6  6.621071e-02 0.0000000000
+7  9.601042e-02 0.0000000000
+8  1.139879e-03 0.0000000000
+9  9.770396e-05 0.0000000000
+10 6.350757e-03 0.0000000000
+11 4.168702e-02 0.0030452097
+12 1.139879e-03 0.0001561646
+13 1.791239e-03 0.0003904115
+14 1.263638e-02 0.0000000000
+15 2.406774e-02 0.0000000000
+16 9.868100e-03 0.0000000000
+17 5.471422e-03 0.0002342469
+18 0.000000e+00 0.0000000000
+
+--- 1. Persistence Index (Late/Peak) ---
+            state     Peak_EAE     Late_EAE PI_Late_over_Peak   PI_class
+1  MOL5_6_Cntrl_B 5.246590e-04 3.471747e-02        66.1715030 persistent
+2  MOL5_6_Cntrl_A 4.590766e-03 2.723986e-01        59.3362049 persistent
+3    MOL2_Cntrl_A 9.115950e-03 1.287738e-01        14.1262096 persistent
+4             PLC 1.311647e-03 1.263638e-02         9.6339749 persistent
+5            NFOL 9.837356e-04 6.350757e-03         6.4557564 persistent
+6             COP 2.164218e-03 8.825924e-03         4.0781118 persistent
+7            OPC1 1.646118e-02 4.168702e-02         2.5324450 persistent
+8        MOL3_EAE 2.064533e-01 2.888129e-01         1.3989260 persistent
+9            OPC2 1.573977e-03 1.139879e-03         0.7242034    parcial
+10    OPC_Cycling 2.557712e-03 1.791239e-03         0.7003286    parcial
+11   MOL5_6_EAE_B 1.533316e-01 9.601042e-02         0.6261621    parcial
+12   MOL5_6_EAE_A 3.311254e-01 6.621071e-02         0.1999566  resolving
+13          MiGl4 5.246590e-04 9.770396e-05         0.1862237  resolving
+14           OPC3 3.010231e-02 5.471422e-03         0.1817609  resolving
+15          MiGl2 6.689402e-03 1.139879e-03         0.1704008  resolving
+16     MOL1_2_EAE 1.440845e-01 2.406774e-02         0.1670391  resolving
+17   MOL5_6_EAE_C 8.833945e-02 9.868100e-03         0.1117066  resolving
+18          MiGl3 6.558237e-05 0.000000e+00         0.0000000  resolving
+
+--- 2. Velocity Index (Early->Peak) ---
+            state    Early_EAE     Peak_EAE VI_Early_to_Peak VI_class
+1      MOL1_2_EAE 0.0042344119 1.440845e-01      33.02703245  acelera
+2            OPC3 0.0046546207 3.010231e-02       5.46718832  acelera
+3           MiGl2 0.0011313314 6.689402e-03       4.91285789  acelera
+4        MOL3_EAE 0.0487442221 2.064533e-01       3.23544158  acelera
+5             PLC 0.0003232375 1.311647e-03       3.05784365  acelera
+6     OPC_Cycling 0.0008404176 2.557712e-03       2.04338274  acelera
+7    MOL5_6_EAE_B 0.0798396742 1.533316e-01       0.92049361    crece
+8            NFOL 0.0006464751 9.837356e-04       0.52169137    crece
+9    MOL5_6_EAE_C 0.0782558102 8.833945e-02       0.12885489    crece
+10           OPC1 0.0170022950 1.646118e-02      -0.03182628  estable
+11            COP 0.0023596341 2.164218e-03      -0.08281616  estable
+12   MOL5_6_EAE_A 0.4434819149 3.311254e-01      -0.25335085  estable
+13   MOL2_Cntrl_A 0.0141254808 9.115950e-03      -0.35464500  estable
+14           OPC2 0.0048162395 1.573977e-03      -0.67319380    decae
+15 MOL5_6_Cntrl_A 0.2279147946 4.590766e-03      -0.97985753    decae
+16 MOL5_6_Cntrl_B 0.0716294405 5.246590e-04      -0.99267537    decae
+17          MiGl4 0.0000000000 5.246590e-04               NA sin_dato
+18          MiGl3 0.0000000000 6.558237e-05               NA sin_dato
+
+--- 3. Entropía de Shannon ---
+       combo    H_bits n_states
+1 Early_Ctrl 1.1485184       14
+2  Early_EAE 2.4142698       16
+3  Peak_Ctrl 0.6044169        9
+4   Peak_EAE 2.6106837       18
+5   Late_EAE 2.8151735       17
+6  Late_Ctrl 0.5449996        7
+
+OK results/30_falcao_*.csv
+
+OK results/30_falcao_trajectories.pdf
+OK results/30_falcao_entropy.pdf
+
+=== Outputs generados ===
+  results/snrnaseq/30_falcao_persistence.csv
+  results/snrnaseq/30_falcao_velocity.csv
+  results/snrnaseq/30_falcao_entropy.csv
+  results/snrnaseq/30_falcao_prop_matrix.csv
+  results/snrnaseq/30_falcao_trajectories.pdf
+  results/snrnaseq/30_falcao_entropy.pdf
+[1] TRUE
+[1] TRUE
+[OK] figures/main/F4_snrnaseq_topology.pdf
+[OK] figures/supplementary/S1_falcao_entropy.pdf
+
+=== FIN ===
