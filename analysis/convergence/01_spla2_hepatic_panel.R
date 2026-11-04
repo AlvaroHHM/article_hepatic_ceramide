@@ -1,5 +1,5 @@
 # ============================================================
-# 35_spla2_hepatic_panel.R
+# 01_spla2_hepatic_panel.R
 # Panel extendido de sPLA2 secretoras en higado EAE (GSE312673)
 # + reanalisis del outlier de colon (Takahama)
 # ============================================================
@@ -13,10 +13,10 @@ suppressPackageStartupMessages({
   library(AnnotationDbi)
 })
 
-dir.create("results", showWarnings = FALSE)
-dir.create("logs", showWarnings = FALSE)
+dir.create("results/convergence", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/convergence", showWarnings = FALSE, recursive = TRUE)
 
-sink("logs/35_spla2_hepatic_log.txt", split = TRUE)
+sink("logs/convergence/01_spla2_hepatic_panel_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("============================================================\n")
@@ -29,8 +29,16 @@ cat("============================================================\n\n")
 # ============================================================
 cat("=== PARTE A: sPLA2 secretadas en higado EAE ===\n\n")
 
-count_file <- "data/GSE312673/GSE312673_counts_matrix.tsv.gz"
-if (!file.exists(count_file)) stop("Missing: ", count_file)
+count_candidates <- c(
+  "data/GSE312673/GSE312673_counts_matrix.tsv.gz",
+  "../data/GSE312673/GSE312673_counts_matrix.tsv.gz"
+)
+count_file <- count_candidates[file.exists(count_candidates)][1]
+if (is.na(count_file)) {
+  stop("GSE312673 counts not found.\n",
+       "Expected at data/GSE312673/GSE312673_counts_matrix.tsv.gz\n",
+       "(download from GEO GSE312673 supplementary files)")
+}
 
 counts_raw <- read.delim(count_file, row.names = 1, check.names = FALSE,
                           stringsAsFactors = FALSE, comment.char = "#")
@@ -78,6 +86,27 @@ cat("Genes filtrados:", sum(keep), "/", nrow(counts_mat), "\n")
 dds <- DESeqDataSetFromMatrix(counts_filt, colData, design = ~ group)
 dds <- DESeq(dds, quiet = TRUE)
 
+# --- Pre-filter panel counts (for manuscript tab:spla2_liver) ---
+# Some panel genes are below rowSum >= 10 and thus filtered out of DESeq2.
+# Their raw counts are still cited in the manuscript, so we output them here.
+spla2_panel_prefilter <- c(
+  "Pla2g1b", "Pla2g2a", "Pla2g2d", "Pla2g2e", "Pla2g2f",
+  "Pla2g5", "Pla2g3", "Pla2g10", "Pla2g12a", "Pla2g12b"
+)
+panel_counts <- data.frame(
+  gene = spla2_panel_prefilter,
+  total_counts = sapply(spla2_panel_prefilter, function(g) {
+    if (g %in% rownames(counts_mat)) sum(counts_mat[g, ]) else 0
+  }),
+  n_positive = sapply(spla2_panel_prefilter, function(g) {
+    if (g %in% rownames(counts_mat)) sum(counts_mat[g, ] > 0) else 0
+  }),
+  n_samples = ncol(counts_mat)
+)
+panel_counts$passes_filter <- panel_counts$total_counts >= 10
+write.csv(panel_counts, "results/convergence/01_sPLA2_panel_counts.csv", row.names = FALSE)
+cat("[OK] results/convergence/01_sPLA2_panel_counts.csv\n\n")
+
 # --- Panel extendido de sPLA2 secretoras ---
 spla2_panel <- c(
   # Grupo IB (pancreatica, digestiva)
@@ -120,9 +149,9 @@ print(as.data.frame(spla2_results$Pre_EAE_vs_Ctrl))
 
 # Guardar
 write.csv(spla2_results$Peak_EAE_vs_Ctrl,
-          "results/convergence/35_sPLA2_peak_EAE_vs_ctrl.csv", row.names = FALSE)
+          "results/convergence/01_sPLA2_peak_EAE_vs_ctrl.csv", row.names = FALSE)
 write.csv(spla2_results$Pre_EAE_vs_Ctrl,
-          "results/convergence/35_sPLA2_pre_EAE_vs_ctrl.csv", row.names = FALSE)
+          "results/convergence/01_sPLA2_pre_EAE_vs_ctrl.csv", row.names = FALSE)
 
 # Veredicto sobre Pla2g2a (el AMP real)
 cat("\n=== VEREDICTO: Pla2g2a (sPLA2-IIA, el AMP principal) ===\n")
@@ -165,7 +194,8 @@ if (nrow(p2g1b) > 0) {
 }
 
 cat("\n=== OUTPUTS ===\n")
-cat("  results/convergence/35_sPLA2_peak_EAE_vs_ctrl.csv\n")
-cat("  results/convergence/35_sPLA2_pre_EAE_vs_ctrl.csv\n")
-cat("  logs/35_spla2_hepatic_log.txt\n")
+cat("  results/convergence/01_sPLA2_panel_counts.csv\n")
+cat("  results/convergence/01_sPLA2_peak_EAE_vs_ctrl.csv\n")
+cat("  results/convergence/01_sPLA2_pre_EAE_vs_ctrl.csv\n")
+cat("  logs/convergence/01_spla2_hepatic_panel_log.txt\n")
 cat("\n=== FIN ===\n")

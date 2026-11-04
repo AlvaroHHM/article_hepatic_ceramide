@@ -1,0 +1,11 @@
+"gene","total_counts","n_positive","n_samples","passes_filter"
+"Pla2g1b",2,1,12,FALSE
+"Pla2g2a",0,0,12,FALSE
+"Pla2g2d",8,5,12,FALSE
+"Pla2g2e",0,0,12,FALSE
+"Pla2g2f",0,0,12,FALSE
+"Pla2g5",8,5,12,FALSE
+"Pla2g3",8,6,12,FALSE
+"Pla2g10",7,5,12,FALSE
+"Pla2g12a",2576,12,12,TRUE
+"Pla2g12b",7288,12,12,TRUE

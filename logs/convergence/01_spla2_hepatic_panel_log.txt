@@ -1,0 +1,37 @@
+============================================================
+sPLA2 SECRETED PANEL IN LIVER EAE + COLON OUTLIER CHECK
+Date: 2026-11-03 23:13:56 
+============================================================
+
+=== PARTE A: sPLA2 secretadas en higado EAE ===
+
+Counts: 55401 x 12 
+Genes agregados: 32056 
+
+ Pre_Ctrl   Pre_EAE Peak_Ctrl  Peak_EAE 
+        3         3         3         3 
+Genes filtrados: 16884 / 32056 
+[OK] results/convergence/01_sPLA2_panel_counts.csv
+
+
+=== sPLA2 PANEL: Peak EAE vs Ctrl ===
+             gene baseMean log2FoldChange       pvalue         padj sig
+Pla2g12a Pla2g12a 213.1821       1.275110 1.482943e-11 1.180224e-09 ***
+Pla2g12b Pla2g12b 595.5918       0.739544 3.989566e-09 1.821998e-07 ***
+
+=== sPLA2 PANEL: Pre EAE vs Ctrl ===
+             gene baseMean log2FoldChange    pvalue      padj sig
+Pla2g12b Pla2g12b 595.5918     0.20798543 0.1121636 0.2671708  ns
+Pla2g12a Pla2g12a 213.1821     0.03117233 0.8747340 0.9405226  ns
+
+=== VEREDICTO: Pla2g2a (sPLA2-IIA, el AMP principal) ===
+
+=== VEREDICTO: Pla2g1b (sPLA2-IB, digestiva) ===
+
+=== OUTPUTS ===
+  results/convergence/01_sPLA2_panel_counts.csv
+  results/convergence/01_sPLA2_peak_EAE_vs_ctrl.csv
+  results/convergence/01_sPLA2_pre_EAE_vs_ctrl.csv
+  logs/convergence/01_spla2_hepatic_panel_log.txt
+
+=== FIN ===
