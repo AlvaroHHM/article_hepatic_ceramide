@@ -1,5 +1,5 @@
 # ============================================================
-# 51_pathway_MOL2_vs_MOL56.R
+# 09_pathway_MOL2_vs_MOL56.R
 # Comparación de rutas completas entre MOL2_like y MOL56_like
 # - Módulo de esfingolípidos (síntesis, interconversión, LacCer, S1P)
 # - Módulo de mielina (MBP, PLP1, MAG, MOG, CNP)
@@ -12,7 +12,9 @@ suppressPackageStartupMessages({
   library(ggplot2); library(dplyr)
 })
 
-sink("logs/51_pathway_log.txt", split = TRUE)
+dir.create("results/snrnaseq", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/snrnaseq", showWarnings = FALSE, recursive = TRUE)
+sink("logs/snrnaseq/09_pathway_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("=== ANÁLISIS DE RUTA: MOL2_like vs MOL56_like ===\n")
@@ -36,8 +38,17 @@ for (p in names(pathways)) cat(sprintf("  %-30s: %d genes\n", p, length(pathways
 cat("\n")
 
 # ---- 2. Cargar anotación ----
-annot <- fread("data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz",
-               data.table = FALSE, check.names = FALSE)
+ann_candidates <- c(
+  "data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz",
+  "../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz"
+)
+ann_file <- ann_candidates[file.exists(ann_candidates)][1]
+if (is.na(ann_file)) {
+  stop("GSE250589 annotation not found.\n",
+       "To fix: Rscript analysis/snrnaseq/01_GSE250589_annotation.R\n",
+       "(downloads 139 MB from GEO into data/GSE250589/)")
+}
+annot <- fread(ann_file, data.table = FALSE, check.names = FALSE)
 rownames(annot) <- annot[[1]]; annot <- annot[, -1]
 
 mol3_bcs_all <- rownames(annot)[annot$cellTypeFalcao2018 == "MOL3_EAE"]
@@ -62,9 +73,26 @@ print(table(mol3_annot$subpop, mol3_annot$stage))
 
 # ---- 3. Cargar counts de H5 ----
 cat("\n--- Cargando counts ---\n")
-gsm_map <- read.csv("results/34_GSM_mapping_v2.csv", stringsAsFactors = FALSE)
+gsm_map_candidates <- c(
+  "results/snrnaseq/00_GSM_mapping.csv",
+  "results/snrnaseq/34_GSM_mapping_v2.csv",
+  "../results/34_GSM_mapping_v2.csv"
+)
+gsm_file <- gsm_map_candidates[file.exists(gsm_map_candidates)][1]
+if (is.na(gsm_file)) {
+  stop("GSM mapping not found. Expected results/snrnaseq/00_GSM_mapping.csv.\n",
+       "This file maps orig.ident to GSM in GSE250589.\n",
+       "See README 'H5 workflow' section for provenance.")
+}
+gsm_map <- read.csv(gsm_file, stringsAsFactors = FALSE)
 mol3_annot$GSM <- gsm_map$GSM[match(mol3_annot$orig.ident, gsm_map$orig.ident)]
 
+h5_dir <- "data/GSE250589/h5"
+if (!dir.exists(h5_dir) || length(list.files(h5_dir, pattern = "\\.h5$")) == 0) {
+  stop("H5 files not found at ", h5_dir, "/.\n",
+       "To fix: Rscript analysis/snrnaseq/00_download_h5.sh\n",
+       "(downloads 28 H5 files, ~2.3 GB, from GEO into data/GSE250589/h5/)")
+}
 genes_all <- unique(unlist(pathways))
 gsms <- unique(mol3_annot$GSM[!is.na(mol3_annot$GSM)])
 common_genes <- NULL; h5_paths <- list()
@@ -170,7 +198,7 @@ for (p in setdiff(colnames(module_scores), c("barcode","subpop","stage","nCount"
 results <- results[order(-abs(results$delta)), ]
 cat("\n")
 print(results, row.names = FALSE)
-write.csv(results, "results/51_pathway_MOL2_vs_MOL56.csv", row.names = FALSE)
+write.csv(results, "results/snrnaseq/09_pathway_MOL2_vs_MOL56.csv", row.names = FALSE)
 
 # ---- 6. Regresión para controlar por depth ----
 cat("\n--- Regresión controlando por nCount ---\n")
@@ -188,7 +216,7 @@ for (p in setdiff(colnames(module_scores), c("barcode","subpop","stage","nCount"
 }
 cat("\n")
 print(regression_results, row.names = FALSE)
-write.csv(regression_results, "results/51_pathway_regression.csv", row.names = FALSE)
+write.csv(regression_results, "results/snrnaseq/09_pathway_regression.csv", row.names = FALSE)
 
 # ---- 7. Plots ----
 cat("\n--- Generando plots ---\n")
@@ -211,8 +239,8 @@ if (requireNamespace("patchwork", quietly = TRUE)) {
                             axis.text.x = element_text(angle = 30, hjust = 1))
                   })
   combined <- wrap_plots(plots, ncol = 2)
-  ggsave("results/51_pathway_MOL2_vs_MOL56.pdf", combined, width = 12, height = 8)
-  ggsave("results/51_pathway_MOL2_vs_MOL56.png", combined, width = 12, height = 8, dpi = 150)
+  ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf", combined, width = 12, height = 8)
+  ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", combined, width = 12, height = 8, dpi = 150)
 }
 
 # ---- 8. Resumen ----
@@ -231,6 +259,6 @@ cat("\nINTERPRETACIÓN:\n")
 cat("  - Si |coef| después de regresión < |delta| antes → parte del efecto era depth\n")
 cat("  - Si |coef| después de regresión ≈ |delta| antes → el efecto es robusto al depth\n")
 
-cat("\n[OK] results/51_pathway_MOL2_vs_MOL56.csv\n")
-cat("[OK] results/51_pathway_regression.csv\n")
-cat("[OK] results/51_pathway_MOL2_vs_MOL56.pdf\n")
+cat("\n[OK] results/snrnaseq/09_pathway_MOL2_vs_MOL56.csv\n")
+cat("[OK] results/snrnaseq/09_pathway_regression.csv\n")
+cat("[OK] results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf\n")

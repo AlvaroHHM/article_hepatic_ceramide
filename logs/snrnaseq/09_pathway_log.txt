@@ -1,5 +1,5 @@
 === ANÁLISIS DE RUTA: MOL2_like vs MOL56_like ===
-Fecha: 2026-10-28 19:04:43 
+Fecha: 2026-11-03 22:55:23 
 
 --- Módulos definidos ---
   Sphingolipid_synthesis        : 12 genes
@@ -95,6 +95,6 @@ INTERPRETACIÓN:
   - Si |coef| después de regresión < |delta| antes → parte del efecto era depth
   - Si |coef| después de regresión ≈ |delta| antes → el efecto es robusto al depth
 
-[OK] results/51_pathway_MOL2_vs_MOL56.csv
-[OK] results/51_pathway_regression.csv
-[OK] results/51_pathway_MOL2_vs_MOL56.pdf
+[OK] results/snrnaseq/09_pathway_MOL2_vs_MOL56.csv
+[OK] results/snrnaseq/09_pathway_regression.csv
+[OK] results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf
