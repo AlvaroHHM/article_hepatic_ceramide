@@ -1,0 +1,22 @@
+=== LIVER GENE VALUES (SRP074136, DESeq2) ===
+Date: 2026-11-04 00:16:16 
+
+Source: results/bulk/SRP074136_DESeq2_inflamed_vs_WT.csv 
+
+Columns: gene_id, baseMean, log2FoldChange, lfcSE, stat, pvalue, padj, ensembl_clean 
+
+Mapped: 29122 / 46985 
+
+=== Sphingolipid cycle genes in SRP074136 (DESeq2) ===
+     gene log2FoldChange baseMean      padj
+1 B4galt5       1.891423   247365 1.055e-20
+2 B4galt6       3.774701    15011 1.188e-43
+3   Cers2      -0.152284   586822 4.280e-01
+4   Sgms1       0.008386    62228 9.831e-01
+5   Sgms2      -0.230405   227821 1.481e-01
+6   Smpd3       4.795442    44713 2.074e-58
+7    Ugcg      -0.203092   101682 4.155e-01
+
+-> results/bulk/04_liver_check.csv
+
+=== FIN ===

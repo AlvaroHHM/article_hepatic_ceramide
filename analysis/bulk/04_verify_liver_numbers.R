@@ -6,8 +6,8 @@
 # Input:
 #   results/bulk/SRP074136_DESeq2_inflamed_vs_WT.csv
 # Output:
-#   results/bulk/32_liver_check.csv
-#   logs/32_verify_liver_log.txt
+#   results/bulk/04_liver_check.csv
+#   logs/bulk/04_verify_liver_log.txt
 # ============================================================
 
 suppressPackageStartupMessages({
@@ -16,11 +16,10 @@ suppressPackageStartupMessages({
   library(AnnotationDbi)
 })
 
-dir.create("results", showWarnings = FALSE)
 dir.create("results/bulk", showWarnings = FALSE, recursive = TRUE)
-dir.create("logs", showWarnings = FALSE)
+dir.create("logs/bulk", showWarnings = FALSE, recursive = TRUE)
 
-sink("logs/32_verify_liver_log.txt", split = TRUE)
+sink("logs/bulk/04_verify_liver_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("=== LIVER GENE VALUES (SRP074136, DESeq2) ===\n")
@@ -61,6 +60,6 @@ print(sub, digits = 4)
 cat("\n")
 
 # --- Save ---
-write.csv(sub, "results/bulk/32_liver_check.csv", row.names = FALSE)
-cat("-> results/bulk/32_liver_check.csv\n")
+write.csv(sub, "results/bulk/04_liver_check.csv", row.names = FALSE)
+cat("-> results/bulk/04_liver_check.csv\n")
 cat("\n=== FIN ===\n")
