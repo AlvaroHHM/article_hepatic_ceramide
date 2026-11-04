@@ -50,7 +50,13 @@ pA <- ggplot(d, aes(x = timepoint, y = pct_positive,
   geom_line(linewidth = 0.9) +
   geom_point(size = 2.4) +
   facet_wrap(~ gene, scales = "free_y", nrow = 1) +
-  scale_color_manual(values = AAAS[c("red","blue","green","purple","orange")]) +
+  scale_color_manual(values = c(
+    "B4galt6" = "#EE0000",
+    "Ugcg"    = "#3B4992",
+    "Smpd3"   = "#008B45",
+    "Sgpl1"   = "#631879",
+    "S1pr1"   = "#F0A202"
+  )) +
   theme_pub(base_size = 9) +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 30, hjust = 1)) +
@@ -62,7 +68,13 @@ pB <- ggplot(d, aes(x = timepoint, y = mean_pos_CPM,
   geom_line(linewidth = 0.9) +
   geom_point(size = 2.4) +
   facet_wrap(~ gene, scales = "free_y", nrow = 1) +
-  scale_color_manual(values = AAAS[c("red","blue","green","purple","orange")]) +
+  scale_color_manual(values = c(
+    "B4galt6" = "#EE0000",
+    "Ugcg"    = "#3B4992",
+    "Smpd3"   = "#008B45",
+    "Sgpl1"   = "#631879",
+    "S1pr1"   = "#F0A202"
+  )) +
   theme_pub(base_size = 9) +
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 30, hjust = 1)) +

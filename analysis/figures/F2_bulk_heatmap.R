@@ -78,8 +78,8 @@ dfs <- list(
 dfs <- Filter(Negate(is.null), dfs)
 
 # --- EAE liver from 34 ---
-f_pre  <- file.path(REPO, "results/bulk/34_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv")
-f_peak <- file.path(REPO, "results/bulk/34_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv")
+f_pre  <- file.path(REPO, "results/bulk/06_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv")
+f_peak <- file.path(REPO, "results/bulk/06_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv")
 if (file.exists(f_pre) && file.exists(f_peak)) {
   dpre  <- read.csv(f_pre,  check.names = FALSE)
   dpeak <- read.csv(f_peak, check.names = FALSE)
