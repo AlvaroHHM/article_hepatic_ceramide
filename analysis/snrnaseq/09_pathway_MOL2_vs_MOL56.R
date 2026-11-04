@@ -243,8 +243,8 @@ if (requireNamespace("patchwork", quietly = TRUE)) {
 ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", combined, width = 12, height = 8, dpi = 150)
 dir.create("figures/main", showWarnings = FALSE, recursive = TRUE)
 file.copy("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf",
-          "figures/main/F7_pathway_modules.pdf", overwrite = TRUE)
-cat("[OK] figures/main/F7_pathway_modules.pdf\n")
+          "figures/main/F6_pathway_modules.pdf", overwrite = TRUE)
+cat("[OK] figures/main/F6_pathway_modules.pdf\n")
 }
 
 # ---- 8. Resumen ----

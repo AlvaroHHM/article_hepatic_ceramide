@@ -92,8 +92,8 @@ ggsave("results/cellular/06_cellular_heatmap_absolute.pdf",
        p_abs, width = 7.5, height = 6.5)
 cat("[OK] results/cellular/06_cellular_heatmap_absolute.pdf\n")
 file.copy("results/cellular/06_cellular_heatmap_absolute.pdf",
-          "figures/main/F3_cellular_heatmap.pdf", overwrite = TRUE)
-cat("[OK] figures/main/F3_cellular_heatmap.pdf\n")
+          "figures/main/F2_cellular_heatmap.pdf", overwrite = TRUE)
+cat("[OK] figures/main/F2_cellular_heatmap.pdf\n")
 
 # ---- HEATMAP 2: z-score within column, AAAS ----
 mat_z <- mat %>%

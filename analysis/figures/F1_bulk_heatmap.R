@@ -1,6 +1,6 @@
 # ============================================================
-# F2_bulk_heatmap.R
-# Figure 2: SMPD3 induced, SMS1 flat across liver and CNS
+# F1_bulk_heatmap.R
+# Figure 1: SMPD3 induced, SMS1 flat across liver and CNS
 # Style: theme_cowplot + AAAS palette, no title
 # ============================================================
 suppressPackageStartupMessages({
@@ -17,8 +17,8 @@ if (dir.exists("article_hepatic_ceramide")) {
 source(file.path(REPO, "analysis/figures/00_figure_style.R"))
 message("[repo] ", normalizePath(REPO))
 
-OUT    <- file.path(REPO, "figures/main/F2_bulk_heatmap.pdf")
-OUTCSV <- file.path(REPO, "figures/main/F2_bulk_heatmap_data.csv")
+OUT    <- file.path(REPO, "figures/main/F1_bulk_heatmap.pdf")
+OUTCSV <- file.path(REPO, "figures/main/F1_bulk_heatmap_data.csv")
 
 find_col <- function(df, cand) {
   hit <- intersect(cand, colnames(df))

@@ -1,6 +1,6 @@
 # ============================================================
-# F5_convergence_panel.R
-# Figure 5: metabolic relay liver -> CNS
+# F3_convergence_panel.R
+# Figure 3: metabolic relay liver -> CNS
 # 4 panels (A-D) labeled via plot_grid; no titles inside panels
 # Style: theme_cowplot + AAAS
 # ============================================================
@@ -17,7 +17,7 @@ if (dir.exists("article_hepatic_ceramide")) {
 source(file.path(REPO, "analysis/figures/00_figure_style.R"))
 message("[repo] ", normalizePath(REPO))
 
-OUT <- file.path(REPO, "figures/main/F6_convergence_panel.pdf")
+OUT <- file.path(REPO, "figures/main/F3_convergence_panel.pdf")
 
 find_col <- function(df, cand) {
   hit <- intersect(cand, colnames(df))
