@@ -1,9 +1,9 @@
 # ============================================================
-# 25_reanalysis_GSE253318_microglia.R
+# 03_GSE253318_microglia.R
 # Reanalisis de GSE253318: microglia EAE vs control (FPKM)
 # Objetivo: comparar la via de esfingolipidos en microglia
 # con astrocitos (GSE139531) y bulk SNC (SRP071304)
-# Uso: Rscript scripts/25_reanalysis_GSE253318_microglia.R
+# Uso: Rscript analysis/cellular/03_GSE253318_microglia.R
 # ============================================================
 
 suppressPackageStartupMessages({
@@ -13,9 +13,9 @@ suppressPackageStartupMessages({
 })
 
 dir.create("data/GSE253318", showWarnings = FALSE, recursive = TRUE)
-dir.create("results", showWarnings = FALSE)
-dir.create("logs", showWarnings = FALSE)
-sink("logs/25_GSE253318_log.txt", split = TRUE)
+dir.create("results/cellular", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/cellular", showWarnings = FALSE, recursive = TRUE)
+sink("logs/cellular/03_GSE253318_microglia_log.txt", split = TRUE)
 on.exit(sink())
 
 message("=== GSE253318: microglia EAE vs control ===")
@@ -108,8 +108,8 @@ for (g in c("Control", "EAE")) {
 res$log2FC <- log2(res$mean_EAE + 1) - log2(res$mean_Control + 1)
 res <- res[order(-res$log2FC), ]
 
-write.csv(res, "results/cellular/25_GSE253318_microglia_genes.csv", row.names = FALSE)
-message("OK results/cellular/25_GSE253318_microglia_genes.csv")
+write.csv(res, "results/cellular/03_GSE253318_microglia_genes.csv", row.names = FALSE)
+message("OK results/cellular/03_GSE253318_microglia_genes.csv")
 
 message("\n========================================")
 message("RPKM MEDIO POR GEN Y GRUPO (microglia)")
@@ -149,4 +149,4 @@ for (g in c("Asah1", "Sgpl1", "S1pr1", "S1pr3", "Sphk1", "Sphk2")) {
 }
 
 message("\n=== FIN ===")
-message("Log: logs/25_GSE253318_log.txt")
+message("Log: logs/cellular/03_GSE253318_microglia_log.txt")

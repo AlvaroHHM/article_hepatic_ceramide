@@ -43,7 +43,7 @@ astro <- tribble(
 ) %>% mutate(cell = "Astrocytes", dataset = "GSE139531")
 
 # --- 2. Microglia (rename mean_Control -> mean_Healthy) ---
-micro_path <- "results/cellular/25_GSE253318_microglia_genes.csv"
+micro_path <- "results/cellular/03_GSE253318_microglia_genes.csv"
 if (!file.exists(micro_path)) stop("Missing: ", micro_path)
 micro <- read.csv(micro_path) %>%
   select(gene, mean_Healthy = mean_Control, mean_EAE, log2FC) %>%
