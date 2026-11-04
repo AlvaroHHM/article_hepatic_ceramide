@@ -196,6 +196,7 @@ accession-level download instructions.
 
 Code: MIT (see `LICENSE`). Figures: CC-BY-4.0.
 
+
 ## Data prerequisites: GSE250589 H5 files
 
 Scripts `analysis/snrnaseq/05` through `10` (MOL3_EAE analyses)
@@ -206,9 +207,10 @@ To download them:
 
     bash analysis/snrnaseq/00_download_h5.sh
 
-This downloads GSE250589_RAW.tar from GEO FTP (~2.3 GB, 10-30 min)
-and extracts the 28 .h5 files to data/GSE250589/h5/. The script is
-idempotent: re-running when files are already present is a no-op.
+The script uses streaming extraction: it pipes the GEO RAW.tar
+(~40 GB compressed) through `tar --wildcards '*.h5'` so only the
+28 H5 files (~2.3 GB) are written to disk. The full tar is never
+stored, so ~3 GB of free disk is sufficient.
 
 The annotation file (GSE250589_EAE_multiomics_annotation.csv.gz,
 139 MB) is downloaded automatically by

@@ -24,3 +24,6 @@ README.md.bak_*
 *.out
 *.toc
 *.synctex.gz
+
+# GSE250589 H5 files (2.3 GB, not tracked)
+data/GSE250589/h5/
