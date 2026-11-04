@@ -129,7 +129,7 @@ for (nm in names(contrasts)) {
                           ifelse(df$padj < 0.01, "**",
                                  ifelse(df$padj < 0.05, "*", "ns"))))
   results_list[[nm]] <- df
-  out_file <- paste0("results/34_DESeq2_liver_EAE_", nm, ".csv")
+  out_file <- paste0("results/bulk/34_DESeq2_liver_EAE_", nm, ".csv")
   write.csv(df, out_file, row.names = FALSE)
   n_sig <- sum(df$sig %in% c("*", "**", "***"), na.rm = TRUE)
   cat(sprintf("  %-20s: %d genes, %d significant (padj < 0.05) -> %s\n",
@@ -170,12 +170,14 @@ if (length(panel_missing) > 0) {
 
 cat("\n=== PANEL OF INTEREST ===\n")
 print(as.data.frame(panel_df))
-write.csv(panel_df, "results/34_DESeq2_liver_EAE_panel.csv", row.names = FALSE)
+write.csv(panel_df, "results/bulk/34_DESeq2_liver_EAE_panel.csv", row.names = FALSE)
 
 # ------------------------------------------------------------
 # 8. Side-by-side with Mdr2-KO
 # ------------------------------------------------------------
-mdr2_reference <- tribble(
+# Mdr2-KO values from DESeq2 reanalysis of SRP074136 (this project),
+# not from Collino et al. 2018. Values match results/bulk/32_liver_check.csv.
+mdr2_deseq_reference <- tribble(
   ~gene,    ~log2FC_Mdr2KO, ~padj_Mdr2KO,
   "Smpd3",  4.80,           2e-58,
   "Sgms1",  0.01,           0.98,
@@ -185,13 +187,15 @@ mdr2_reference <- tribble(
   "Cers2",  -0.15,          0.43
 )
 
-comparison <- mdr2_reference %>%
+comparison <- mdr2_deseq_reference %>%
   left_join(panel_df %>%
-              select(gene,
+              dplyr::select(gene,
                      log2FC_Peak_EAE_vs_Ctrl,
                      padj_Peak_EAE_vs_Ctrl,
+                     sig_Peak_EAE_vs_Ctrl,
                      log2FC_Pre_EAE_vs_Ctrl,
-                     padj_Pre_EAE_vs_Ctrl),
+                     padj_Pre_EAE_vs_Ctrl,
+                     sig_Pre_EAE_vs_Ctrl),
             by = "gene")
 
 cat("\n=== MDR2-KO (colestasis) VS EAE (enfermedad) ===\n")
@@ -206,7 +210,7 @@ for (i in seq_len(nrow(comparison))) {
               row$log2FC_Peak_EAE_vs_Ctrl, row$padj_Peak_EAE_vs_Ctrl,
               row$log2FC_Pre_EAE_vs_Ctrl,  row$padj_Pre_EAE_vs_Ctrl))
 }
-write.csv(comparison, "results/34_comparison_Mdr2KO_vs_EAE.csv",
+write.csv(comparison, "results/bulk/34_comparison_Mdr2KO_vs_EAE.csv",
           row.names = FALSE)
 
 # ------------------------------------------------------------
