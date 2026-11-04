@@ -120,9 +120,9 @@ print(as.data.frame(spla2_results$Pre_EAE_vs_Ctrl))
 
 # Guardar
 write.csv(spla2_results$Peak_EAE_vs_Ctrl,
-          "results/35_sPLA2_peak_EAE_vs_ctrl.csv", row.names = FALSE)
+          "results/convergence/35_sPLA2_peak_EAE_vs_ctrl.csv", row.names = FALSE)
 write.csv(spla2_results$Pre_EAE_vs_Ctrl,
-          "results/35_sPLA2_pre_EAE_vs_ctrl.csv", row.names = FALSE)
+          "results/convergence/35_sPLA2_pre_EAE_vs_ctrl.csv", row.names = FALSE)
 
 # Veredicto sobre Pla2g2a (el AMP real)
 cat("\n=== VEREDICTO: Pla2g2a (sPLA2-IIA, el AMP principal) ===\n")
@@ -164,103 +164,8 @@ if (nrow(p2g1b) > 0) {
   }
 }
 
-# ============================================================
-# PARTE B: REANALISIS DEL OUTLIER DE COLON (TAKAHAMA)
-# ============================================================
-cat("\n\n=== PARTE B: Reanalisis outlier de colon (Takahama d5) ===\n\n")
-
-taka_file <- "results/10_takahama_long.csv"
-if (!file.exists(taka_file)) {
-  cat("SKIP: no existe", taka_file, "\n")
-} else {
-  taka <- read.csv(taka_file, stringsAsFactors = FALSE)
-  colon <- taka %>%
-    dplyr::filter(organ == "CO", gene == "Pla2g1b") %>%
-    dplyr::arrange(time, sample)
-
-  cat("Valores individuales de Pla2g1b en colon:\n")
-  print(colon[, c("sample", "time", "CPM")], row.names = FALSE)
-
-  # Estadisticas por tiempo
-  stats_by_time <- colon %>%
-    group_by(time) %>%
-    summarise(
-      n      = n(),
-      mean   = mean(CPM),
-      median = median(CPM),
-      sd     = sd(CPM),
-      max    = max(CPM),
-      n_zero = sum(CPM == 0),
-      .groups = "drop"
-    )
-  cat("\nEstadisticas por tiempo (mean vs median):\n")
-  print(as.data.frame(stats_by_time))
-
-  # Calcular log2FC con media (con outlier) y con mediana (robusto)
-  basal_mean   <- stats_by_time$mean[stats_by_time$time == "d0"]
-  basal_median <- stats_by_time$median[stats_by_time$time == "d0"]
-
-  stats_by_time <- stats_by_time %>%
-    mutate(
-      log2FC_mean   = log2(mean + 1)   - log2(basal_mean + 1),
-      log2FC_median = log2(median + 1) - log2(basal_median + 1)
-    )
-  cat("\nlog2FC con media (afectado por outlier) vs mediana (robusto):\n")
-  print(as.data.frame(stats_by_time %>%
-    dplyr::select(time, mean, median, log2FC_mean, log2FC_median)))
-
-  # Veredicto
-  d5 <- stats_by_time %>% dplyr::filter(time == "d5")
-  if (nrow(d5) > 0) {
-    cat("\n=== VEREDICTO colon d5 ===\n")
-    cat(sprintf("  Media: %+.2f log2FC (inflado por outlier)\n", d5$log2FC_mean))
-    cat(sprintf("  Mediana: %+.2f log2FC (robusto)\n", d5$log2FC_median))
-    cat(sprintf("  Muestras con CPM < 1.2: %d/%d\n",
-                sum(colon$CPM[colon$time == "d5"] < 1.2),
-                sum(colon$time == "d5")))
-    if (abs(d5$log2FC_median) < 1) {
-      cat("  -> INTERPRETACION CORRECTA: Pla2g1b esta APAGADO en colon d5.\n")
-      cat("     El +3.12 reportado es artefacto de 1 muestra (92.6 CPM).\n")
-    }
-  }
-
-  write.csv(stats_by_time, "results/35_colon_Pla2g1b_stats.csv",
-            row.names = FALSE)
-  cat("\n  -> results/35_colon_Pla2g1b_stats.csv\n")
-}
-
-# ============================================================
-# PARTE C: TABLA CONSOLIDADA
-# ============================================================
-cat("\n\n=== PARTE C: Tabla consolidada ===\n")
-
-summary_tbl <- tibble(
-  gen = c("Pla2g1b", "Pla2g2a", "Pla2g5"),
-  pancreas_EAE_SRP161558 = c(-1.30, NA, NA),
-  colon_d5_median = c(NA, NA, NA),
-  higado_peak = c(NA, NA, NA),
-  higado_pre = c(NA, NA, NA)
-)
-
-# Rellenar higado
-for (i in seq_len(nrow(summary_tbl))) {
-  g <- summary_tbl$gen[i]
-  pk <- spla2_results$Peak_EAE_vs_Ctrl %>%
-    dplyr::filter(gene == g)
-  pre <- spla2_results$Pre_EAE_vs_Ctrl %>%
-    dplyr::filter(gene == g)
-  if (nrow(pk) > 0) summary_tbl$higado_peak[i] <- round(pk$log2FoldChange[1], 2)
-  if (nrow(pre) > 0) summary_tbl$higado_pre[i] <- round(pre$log2FoldChange[1], 2)
-}
-
-cat("\nTabla consolidada sPLA2 secretadas:\n")
-print(as.data.frame(summary_tbl))
-write.csv(summary_tbl, "results/35_sPLA2_consolidated.csv", row.names = FALSE)
-
 cat("\n=== OUTPUTS ===\n")
-cat("  results/35_sPLA2_peak_EAE_vs_ctrl.csv\n")
-cat("  results/35_sPLA2_pre_EAE_vs_ctrl.csv\n")
-cat("  results/35_colon_Pla2g1b_stats.csv\n")
-cat("  results/35_sPLA2_consolidated.csv\n")
+cat("  results/convergence/35_sPLA2_peak_EAE_vs_ctrl.csv\n")
+cat("  results/convergence/35_sPLA2_pre_EAE_vs_ctrl.csv\n")
 cat("  logs/35_spla2_hepatic_log.txt\n")
 cat("\n=== FIN ===\n")
