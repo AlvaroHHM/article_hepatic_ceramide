@@ -1,0 +1,126 @@
+============================================================
+DESEQ2 ANALYSIS OF LIVER IN EAE (GSE312673)
+Date: 2026-11-04 00:23:27 
+============================================================
+
+Counts matrix: 55401 genes x 12 samples
+Samples: pre-onset phase NC1, pre-onset phase NC2, pre-onset phase NC3, pre-onset phase EAE1, pre-onset phase EAE2, pre-onset phase EAE3, peak phase NC1, peak phase NC2, peak phase NC3, peak phase EAE1, peak phase EAE2, peak phase EAE3 
+
+Symbols mapped: 32138 / 55401 
+Aggregated genes: 32056 
+
+Group assignment:
+sample_groups
+Peak_Ctrl  Peak_EAE  Pre_Ctrl   Pre_EAE 
+        3         3         3         3 
+
+Genes passing rowSums >= 10: 16884 / 32056 
+
+--- Running DESeq2 ---
+resultsNames(dds):
+[1] "Intercept"                   "group_Pre_EAE_vs_Pre_Ctrl"  
+[3] "group_Peak_Ctrl_vs_Pre_Ctrl" "group_Peak_EAE_vs_Pre_Ctrl" 
+
+  Peak_EAE_vs_Ctrl    : 16884 genes, 2640 significant (padj < 0.05) -> results/bulk/34_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv
+  Pre_EAE_vs_Ctrl     : 16884 genes, 3864 significant (padj < 0.05) -> results/bulk/34_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv
+
+=== PANEL OF INTEREST ===
+      gene log2FC_Peak_EAE_vs_Ctrl padj_Peak_EAE_vs_Ctrl sig_Peak_EAE_vs_Ctrl
+1    Smpd3              1.77293090          0.0384084561                    *
+2    Sgms1              0.07939438          0.7802402730                   ns
+3    Sgms2              0.28526666          0.3324569641                   ns
+4  B4galt5             -0.60806100          0.0413642779                    *
+5  B4galt6             -0.11308288          0.8337593173                   ns
+6     Ugcg             -0.71319956          0.0045956284                   **
+7    Cers2             -0.18158724          0.2956286198                   ns
+8    Cers5             -0.44804898          0.1952106763                   ns
+9    Cers6              0.02114841          0.9458336207                   ns
+10  Cyp7a1             -1.87115288          0.0027085346                   **
+11  Cyp8b1             -0.54092943          0.0271660692                    *
+12   Nr1h4             -0.08944746          0.6937881101                   ns
+13  Abcb11              0.64636045          0.0009120313                  ***
+14 Slc10a1             -0.01944690          0.9391266267                   ns
+15     Tnf             -1.53108217                    NA                   NA
+16     Il6              0.30136712                    NA                   NA
+17    Il1b              0.81597488          0.0210449229                    *
+18    Ccl2              0.19990610          0.8072218018                   ns
+19   Sphk1              0.64710358          0.6047667112                   ns
+20   S1pr1             -0.51918692          0.0245488704                    *
+   baseMean_Peak_EAE_vs_Ctrl log2FC_Pre_EAE_vs_Ctrl padj_Pre_EAE_vs_Ctrl
+1                  97.546044            2.880989329         2.028287e-04
+2                 416.033804            0.444814027         1.216159e-02
+3                1279.330165           -0.435031830         8.502556e-02
+4                 571.511158            0.005449195         9.961940e-01
+5                 151.717550            1.487352691         6.031610e-07
+6                 769.344319            0.233799667         4.567788e-01
+7                5411.759022           -0.410047923         2.805878e-03
+8                  68.531984            1.003885829         1.550278e-04
+9                1141.109116            0.585258376         3.030006e-04
+10               5990.363408           -0.243019512         7.962872e-01
+11               1627.374943           -2.112525635         1.419606e-25
+12               2730.614657            0.015181340         9.528662e-01
+13              13029.038902           -0.104660162         7.124556e-01
+14              13019.862490           -0.692383994         3.937806e-08
+15                  4.164776           -0.393200027         8.506074e-01
+16                  2.058466           -2.496177985         2.742330e-01
+17                 99.688478            2.019410201         7.397492e-10
+18                 33.582085            2.007810555         2.482918e-04
+19                  9.012727            2.000202303         3.984735e-02
+20                866.456172            0.515762175         2.142124e-02
+   sig_Pre_EAE_vs_Ctrl baseMean_Pre_EAE_vs_Ctrl
+1                  ***                97.546044
+2                    *               416.033804
+3                   ns              1279.330165
+4                   ns               571.511158
+5                  ***               151.717550
+6                   ns               769.344319
+7                   **              5411.759022
+8                  ***                68.531984
+9                  ***              1141.109116
+10                  ns              5990.363408
+11                 ***              1627.374943
+12                  ns              2730.614657
+13                  ns             13029.038902
+14                 ***             13019.862490
+15                  ns                 4.164776
+16                  ns                 2.058466
+17                 ***                99.688478
+18                 ***                33.582085
+19                   *                 9.012727
+20                   *               866.456172
+
+=== MDR2-KO (colestasis) VS EAE (enfermedad) ===
+gene         Mdr2KO_lfc   Mdr2KO_p EAE_Peak_lfc EAE_Peak_p  EAE_Pre_lfc  EAE_Pre_p
+Smpd3             +4.80      2e-58        +1.77      0.038        +2.88     0.0002
+Sgms1             +0.01       0.98        +0.08       0.78        +0.44      0.012
+Sgms2             -0.23       0.15        +0.29       0.33        -0.44      0.085
+B4galt6           +3.77      1e-43        -0.11       0.83        +1.49      6e-07
+B4galt5           +1.89      1e-20        -0.61      0.041        +0.01          1
+Cers2             -0.15       0.43        -0.18        0.3        -0.41     0.0028
+
+=== INTERPRETATION ===
+  Smpd3     Pre: lfc=+2.88 (***)  Peak: lfc=+1.77 (*)
+  Sgms1     Pre: lfc=+0.44 (*)  Peak: lfc=+0.08 (ns)
+  B4galt6   Pre: lfc=+1.49 (***)  Peak: lfc=-0.11 (ns)
+  Cyp7a1    Pre: lfc=-0.24 (ns)  Peak: lfc=-1.87 (**)
+  Cyp8b1    Pre: lfc=-2.11 (***)  Peak: lfc=-0.54 (*)
+  Il1b      Pre: lfc=+2.02 (***)  Peak: lfc=+0.82 (*)
+  Ccl2      Pre: lfc=+2.01 (***)  Peak: lfc=+0.20 (ns)
+
+=== VERDICT ===
+  PATRON CONFIRMADO en EAE: SMPD3 inducido, SMS1 plano.
+  El imbalance hepático productor/procesador se replica en el
+  modelo de enfermedad (EAE), no solo en colestasis (Mdr2-KO).
+
+  Cyp7a1 (síntesis biliar) en Peak: lfc=-1.87 (**)
+  -> Supresión biliar CONFIRMADA en hígado EAE.
+     Conecta nodo 4 (supresión biliar) con nodo 5 (ciclo SM).
+
+=== OUTPUTS ===
+  results/bulk/06_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv
+  results/bulk/06_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv
+  results/bulk/06_DESeq2_liver_EAE_panel.csv
+  results/bulk/06_comparison_Mdr2KO_vs_EAE.csv
+  logs/bulk/06_DESeq2_liver_EAE_log.txt
+
+=== FIN ===

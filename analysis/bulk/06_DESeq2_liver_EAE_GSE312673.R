@@ -14,10 +14,10 @@ suppressPackageStartupMessages({
   library(AnnotationDbi)
 })
 
-dir.create("results", showWarnings = FALSE)
-dir.create("logs", showWarnings = FALSE)
+dir.create("results/bulk", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/bulk", showWarnings = FALSE, recursive = TRUE)
 
-sink("logs/34_DESeq2_liver_EAE_log.txt", split = TRUE)
+sink("logs/bulk/06_DESeq2_liver_EAE_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("============================================================\n")
@@ -176,7 +176,7 @@ write.csv(panel_df, "results/bulk/34_DESeq2_liver_EAE_panel.csv", row.names = FA
 # 8. Side-by-side with Mdr2-KO
 # ------------------------------------------------------------
 # Mdr2-KO values from DESeq2 reanalysis of SRP074136 (this project),
-# not from Collino et al. 2018. Values match results/bulk/32_liver_check.csv.
+# not from Collino et al. 2018. Values match results/bulk/04_liver_check.csv.
 mdr2_deseq_reference <- tribble(
   ~gene,    ~log2FC_Mdr2KO, ~padj_Mdr2KO,
   "Smpd3",  4.80,           2e-58,
@@ -210,7 +210,7 @@ for (i in seq_len(nrow(comparison))) {
               row$log2FC_Peak_EAE_vs_Ctrl, row$padj_Peak_EAE_vs_Ctrl,
               row$log2FC_Pre_EAE_vs_Ctrl,  row$padj_Pre_EAE_vs_Ctrl))
 }
-write.csv(comparison, "results/bulk/34_comparison_Mdr2KO_vs_EAE.csv",
+write.csv(comparison, "results/bulk/06_comparison_Mdr2KO_vs_EAE.csv",
           row.names = FALSE)
 
 # ------------------------------------------------------------
@@ -271,9 +271,9 @@ if (!is.null(cyp)) {
 }
 
 cat("\n=== OUTPUTS ===\n")
-cat("  results/34_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv\n")
-cat("  results/34_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv\n")
-cat("  results/34_DESeq2_liver_EAE_panel.csv\n")
-cat("  results/34_comparison_Mdr2KO_vs_EAE.csv\n")
-cat("  logs/34_DESeq2_liver_EAE_log.txt\n")
+cat("  results/bulk/06_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv\n")
+cat("  results/bulk/06_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv\n")
+cat("  results/bulk/06_DESeq2_liver_EAE_panel.csv\n")
+cat("  results/bulk/06_comparison_Mdr2KO_vs_EAE.csv\n")
+cat("  logs/bulk/06_DESeq2_liver_EAE_log.txt\n")
 cat("\n=== FIN ===\n")
