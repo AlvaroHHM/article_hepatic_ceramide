@@ -22,7 +22,7 @@ SEP <- "============================================================"
 dir.create("logs/snrnaseq", recursive = TRUE, showWarnings = FALSE)
 sink("logs/snrnaseq/11_ari_from_precomputed_log.txt", split = TRUE); on.exit(sink())
 
-cat(SEP, "\n10b: ARI from precomputed CSVs (no H5 needed)\n")
+cat(SEP, "\n11: ARI from precomputed CSVs (no H5 needed)\n")
 cat("Date:", format(Sys.time()), "\n", SEP, "\n\n")
 
 expr <- fread("results/snrnaseq/10_expr_mat.csv", data.table = FALSE,
