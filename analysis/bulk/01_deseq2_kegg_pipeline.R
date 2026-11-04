@@ -58,8 +58,8 @@ tryCatch({
 
   if ("sra.sample_attributes" %in% colnames(cd)) {
     attrs <- cd$sra.sample_attributes
-    keys_to_try <- c("treated with", "treatment", "condition",
-                     "genotype/variation", "genotype", "group", "disease")
+    keys_to_try <- c("source_name", "genotype/variation", "genotype",
+                     "treated with", "treatment", "condition", "group", "disease")
     best_key <- NULL; best_n <- 0
     for (key in keys_to_try) {
       vals <- extract_attr(attrs, key)
@@ -74,6 +74,8 @@ tryCatch({
       raw_vals <- extract_attr(attrs, best_key)
       cd$condition <- sapply(raw_vals, function(x) {
         if (is.na(x) || x == "") return(NA_character_)
+        if (grepl("Mdr2-WT_liver", x, ignore.case = TRUE)) return("WT")
+        if (grepl("^Liver tissue$", x, ignore.case = TRUE)) return("WT_untreated")
         if (grepl("wild[ _]type", x, ignore.case = TRUE)) return("WT")
         if (grepl("knockout|knock-out|-/-| KO", x, ignore.case = TRUE)) return("KO")
         if (grepl("^WT$", x, ignore.case = TRUE)) return("WT")
