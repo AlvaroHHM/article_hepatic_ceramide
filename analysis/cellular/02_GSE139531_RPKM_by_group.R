@@ -1,9 +1,9 @@
 # ============================================================
-# 24_GSE139531_astrocytes_expression.R
+# 02_GSE139531_RPKM_by_group.R
 # Extrae RPKM de genes de esfingolipidos en astrocitos EAE
 # (shControl) y knockdowns (shB4GALT6, shUGCG, etc.)
 # Cierra el nodo 7 con datos celula-especificos de Chao 2019
-# Uso: Rscript scripts/24_GSE139531_astrocytes_expression.R
+# Uso: Rscript analysis/cellular/02_GSE139531_RPKM_by_group.R
 # ============================================================
 
 suppressPackageStartupMessages({
@@ -15,7 +15,8 @@ suppressPackageStartupMessages({
 
 dir.create("results", showWarnings = FALSE)
 dir.create("logs", showWarnings = FALSE)
-sink("logs/24_GSE139531_expression_log.txt", split = TRUE)
+dir.create("logs/cellular", showWarnings = FALSE, recursive = TRUE)
+sink("logs/cellular/02_GSE139531_RPKM_by_group_log.txt", split = TRUE)
 on.exit(sink())
 
 message("=== GSE139531: astrocitos EAE, expresion de esfingolipidos ===")
@@ -116,9 +117,9 @@ expr_genes <- expr_df %>%
   as.data.frame()
 
 # Guardar RPKM por muestra
-write.csv(expr_genes, "results/cellular/24_GSE139531_genes_RPKM_by_sample.csv",
+write.csv(expr_genes, "results/cellular/02_GSE139531_genes_RPKM_by_sample.csv",
           row.names = FALSE)
-message("OK results/cellular/24_GSE139531_genes_RPKM_by_sample.csv")
+message("OK results/cellular/02_GSE139531_genes_RPKM_by_sample.csv")
 
 # ------------------------------------------------------------
 # 6. Calcular RPKM medio por grupo
@@ -137,9 +138,9 @@ expr_means <- expr_long %>%
   ) %>%
   arrange(gene, group)
 
-write.csv(expr_means, "results/cellular/24_GSE139531_genes_RPKM_by_group.csv",
+write.csv(expr_means, "results/cellular/02_GSE139531_genes_RPKM_by_group.csv",
           row.names = FALSE)
-message("OK results/cellular/24_GSE139531_genes_RPKM_by_group.csv")
+message("OK results/cellular/02_GSE139531_genes_RPKM_by_group.csv")
 
 # ------------------------------------------------------------
 # 7. Tabla ancha: genes en filas, grupos en columnas
@@ -178,9 +179,9 @@ log2fc_df <- lapply(knockdowns, function(kd) {
     select(gene, knockdown, ctrl, kd, log2FC)
 }) %>% bind_rows()
 
-write.csv(log2fc_df, "results/cellular/24_GSE139531_log2FC_vs_shControl.csv",
+write.csv(log2fc_df, "results/cellular/02_GSE139531_log2FC_vs_shControl.csv",
           row.names = FALSE)
-message("OK results/cellular/24_GSE139531_log2FC_vs_shControl.csv")
+message("OK results/cellular/02_GSE139531_log2FC_vs_shControl.csv")
 
 # Mostrar solo el knockdown de B4galt6
 message("\n--- shB4GALT6 vs shControl (validacion del knockdown) ---")
@@ -279,7 +280,7 @@ if (length(s1pr3_ctrl) == 1) {
 
 message("\n=== FIN ===")
 message("Archivos generados:")
-message("  results/cellular/24_GSE139531_genes_RPKM_by_sample.csv")
-message("  results/cellular/24_GSE139531_genes_RPKM_by_group.csv")
-message("  results/cellular/24_GSE139531_log2FC_vs_shControl.csv")
-message("Log: logs/24_GSE139531_expression_log.txt")
+message("  results/cellular/02_GSE139531_genes_RPKM_by_sample.csv")
+message("  results/cellular/02_GSE139531_genes_RPKM_by_group.csv")
+message("  results/cellular/02_GSE139531_log2FC_vs_shControl.csv")
+message("Log: logs/cellular/02_GSE139531_RPKM_by_group_log.txt")

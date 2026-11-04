@@ -24,7 +24,7 @@ cat("Fecha:", format(Sys.time()), "\n")
 cat(SEP, "\n\n")
 
 # --- 1. Astrocitos ---
-# Values hardcoded from results/cellular/24_GSE139531_genes_RPKM_by_group.csv
+# Values hardcoded from results/cellular/02_GSE139531_genes_RPKM_by_group.csv
 # (shControl group, rounded to 1 decimal). A defensive check below verifies
 # consistency with the tracked CSV when available.
 astro <- tribble(
