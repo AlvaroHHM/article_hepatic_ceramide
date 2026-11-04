@@ -1,0 +1,4 @@
+"funcion","n_genes","mean_log2FC","median_log2FC","max_log2FC","gene_max"
+"To_LacCer",3,1.821,1.8914,3.7747,"B4galt6"
+"Synthesis",11,0.582545454545455,0.5799,2.1415,"Degs2"
+"Degradation",9,0.448744444444444,-0.0821,4.7954,"Smpd3"

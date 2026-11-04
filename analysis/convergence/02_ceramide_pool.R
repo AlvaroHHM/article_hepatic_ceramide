@@ -129,8 +129,8 @@ p_pool <- ggplot(cer_top, aes(x = Diagnosis, y = Lipid_Level, fill = Diagnosis))
   theme(legend.position = "none",
         axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x = NULL, y = "Lipid_Level")
-ggsave("results/22_ceramide_pool_top6.pdf", p_pool, width = 11, height = 6)
-message("\nOK results/22_ceramide_pool_top6.pdf")
+ggsave("results/convergence/22_ceramide_pool_top6.pdf", p_pool, width = 11, height = 6)
+message("\nOK results/convergence/22_ceramide_pool_top6.pdf")
 
 # ============================================================
 # PARTE C: Maquinaria sintesis vs degradacion en higado cronico
@@ -139,7 +139,9 @@ message("\n########################################")
 message("# PARTE C: Sintesis vs degradacion en higado cronico")
 message("########################################")
 
-liver_file <- "results/18_cers_liver_SRP074136.csv"
+liver_file <- c("results/bulk/18_cers_liver_SRP074136.csv",
+                "results/18_cers_liver_SRP074136.csv")
+liver_file <- liver_file[file.exists(liver_file)][1]
 if (!file.exists(liver_file)) {
   message("ADVERTENCIA: no encontrado ", liver_file)
   message("Ejecuta primero scripts/18_cers_isoforms_liver_vs_snc.R")
@@ -158,24 +160,24 @@ if (!file.exists(liver_file)) {
   liver$funcion[liver$gene %in% degradacion] <- "Degradation"
   liver$funcion[liver$gene %in% laccer]      <- "To_LacCer"
 
-  lfc_col <- "log2FC_inflam_vs_ctrl"
+  lfc_col <- "log2FC"
 
   message("\n--- Maquinaria de SINTESIS en higado cronico ---")
   sint_df <- liver %>% filter(funcion == "Synthesis") %>%
     arrange(desc(.data[[lfc_col]])) %>%
-    select(gene, all_of(lfc_col), mean_Mdr2.WT, mean_Mdr2.KO)
+    select(gene, all_of(lfc_col), padj, baseMean)
   print(sint_df, row.names = FALSE, digits = 2)
 
   message("\n--- Maquinaria de DEGRADACION en higado cronico ---")
   deg_df <- liver %>% filter(funcion == "Degradation") %>%
     arrange(desc(.data[[lfc_col]])) %>%
-    select(gene, all_of(lfc_col), mean_Mdr2.WT, mean_Mdr2.KO)
+    select(gene, all_of(lfc_col), padj, baseMean)
   print(deg_df, row.names = FALSE, digits = 2)
 
   message("\n--- Maquinaria de CONVERSION a LacCer ---")
   lac_df <- liver %>% filter(funcion == "To_LacCer") %>%
     arrange(desc(.data[[lfc_col]])) %>%
-    select(gene, all_of(lfc_col), mean_Mdr2.WT, mean_Mdr2.KO)
+    select(gene, all_of(lfc_col), padj, baseMean)
   print(lac_df, row.names = FALSE, digits = 2)
 
   # Resumen por funcion
@@ -210,9 +212,13 @@ if (!file.exists(liver_file)) {
     theme_pub(base_size = 9) +
     theme(legend.position = "none") +
     labs(x = NULL, y = "log2FC (Mdr2-KO vs WT)")
-  ggsave("results/22_liver_synthesis_vs_degradation.pdf", p_func,
+  ggsave("results/convergence/22_liver_synthesis_vs_degradation.pdf", p_func,
          width = 8, height = 9)
-  message("\nOK results/22_liver_synthesis_vs_degradation.pdf")
+  message("\nOK results/convergence/22_liver_synthesis_vs_degradation.pdf")
+  file.copy("results/convergence/22_liver_synthesis_vs_degradation.pdf",
+            "figures/supplementary/S4_liver_synthesis_degradation.pdf",
+            overwrite = TRUE)
+  message("OK figures/supplementary/S4_liver_synthesis_degradation.pdf (updated)")
 
   # Interpretacion
   message("\n--- INTERPRETACION ---")
@@ -238,23 +244,23 @@ if (!file.exists(liver_file)) {
     }
   }
 
-  write.csv(sint_df, "results/22_liver_synthesis_genes.csv", row.names = FALSE)
-  write.csv(deg_df,  "results/22_liver_degradation_genes.csv", row.names = FALSE)
-  write.csv(resumen_funcion, "results/22_liver_summary_by_function.csv",
+  write.csv(sint_df, "results/convergence/22_liver_synthesis_genes.csv", row.names = FALSE)
+  write.csv(deg_df,  "results/convergence/22_liver_degradation_genes.csv", row.names = FALSE)
+  write.csv(resumen_funcion, "results/convergence/22_liver_summary_by_function.csv",
             row.names = FALSE)
 }
 
 # ============================================================
 # Guardar
 # ============================================================
-write.csv(tt_by_especie, "results/22_ceramide_pool_all_species.csv",
+write.csv(tt_by_especie, "results/convergence/22_ceramide_pool_all_species.csv",
           row.names = FALSE)
-write.csv(stats_por_especie, "results/22_ceramide_pool_stats.csv",
+write.csv(stats_por_especie, "results/convergence/22_ceramide_pool_stats.csv",
           row.names = FALSE)
 
 message("\n=== Guardado ===")
-message("OK results/22_ceramide_pool_all_species.csv")
-message("OK results/22_ceramide_pool_stats.csv")
-message("OK results/22_ceramide_pool_top6.pdf")
+message("OK results/convergence/22_ceramide_pool_all_species.csv")
+message("OK results/convergence/22_ceramide_pool_stats.csv")
+message("OK results/convergence/22_ceramide_pool_top6.pdf")
 
 message("\n=== FIN ===")

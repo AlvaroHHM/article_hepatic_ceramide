@@ -37,7 +37,9 @@ pkgs_cran <- c(
   # Statistics
   "lme4", "boot",
   # Excel reading (GSE139531 supplementary file)
-  "readxl"
+  "readxl",
+  # Lipidomics (PR000633 NAFLD pool)
+  "lipidomeR"
 )
 
 # --- Installer with per-package verification ---
