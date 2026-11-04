@@ -216,3 +216,22 @@ The annotation file (GSE250589_EAE_multiomics_annotation.csv.gz,
 139 MB) is downloaded automatically by
 `analysis/snrnaseq/01_oligodendrocytes_GSE250589_annotation.R` if
 not present locally.
+
+## `bulk/01` and `bulk/02`: recount3 dependency
+
+Scripts `analysis/bulk/01_deseq2_kegg_pipeline.R` and
+`analysis/bulk/02_consolidate_gsea.R` require access to `recount3`
+(via `recount3::create_rse`), which downloads raw counts from SRA
+(~10 GB per project, 10-15 min).
+
+Their outputs (`results/bulk/SRP074136_*.csv`) are tracked in the
+repo. To regenerate them from scratch:
+
+    Rscript analysis/bulk/01_deseq2_kegg_pipeline.R SRP074136
+    Rscript analysis/bulk/02_consolidate_gsea.R
+
+The 6 values cited in the manuscript (SMPD3 +4.80, B4GALT6 +3.77,
+B4GALT5 +1.89, SMS1/SMS2/Cers2 NS) are verified independently by
+`analysis/bulk/04_verify_liver_numbers.R`, which reads the tracked
+`SRP074136_DESeq2_inflamed_vs_WT.csv` and produces
+`04_liver_check.csv` without requiring recount3.
