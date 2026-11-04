@@ -1,5 +1,5 @@
 # ============================================================
-# 26_reanalysis_GSE279707_neurons.R (v3)
+# 04_GSE279707_neurons.R (v3)
 # Núcleos EAE vs Healthy, separados por sorting (_pos_/_neg_)
 # ============================================================
 suppressPackageStartupMessages({
@@ -7,20 +7,27 @@ suppressPackageStartupMessages({
   library(org.Mm.eg.db); library(AnnotationDbi)
 })
 
-dir.create("results", showWarnings=FALSE)
-dir.create("logs", showWarnings=FALSE)
-sink("logs/26_GSE279707_log.txt", split=TRUE)
+dir.create("results/cellular", showWarnings=FALSE, recursive=TRUE)
+dir.create("logs/cellular", showWarnings=FALSE, recursive=TRUE)
+sink("logs/cellular/04_GSE279707_neurons_log.txt", split=TRUE)
 on.exit(sink())
 
 message("=== GSE279707: nucleos EAE vs Healthy ===")
 message("Fecha: ", Sys.time())
 
 # 1. Localizar archivo
-supp_dir <- "data/GSE279707"
+supp_candidates <- c("data/GSE279707", "../data/GSE279707")
+supp_dir <- supp_candidates[which.max(sapply(supp_candidates, function(d) {
+  if (!dir.exists(d)) return(0)
+  length(list.files(d, recursive = TRUE))
+}))]
+if (is.na(supp_dir)) supp_dir <- "data/GSE279707"
 supp_files <- list.files(supp_dir, recursive=TRUE, full.names=TRUE)
 if (length(supp_files) == 0) {
-  stop("No hay archivos en ", supp_dir,
-       ". Ejecuta getGEOSuppFiles('GSE279707') primero.")
+  stop("GSE279707 counts not found.\n",
+       "To fix manually: download GSE279707_gene_counts.txt.gz from GEO\n",
+       "(https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE279707)\n",
+       "and place at data/GSE279707/ or ../data/GSE279707/")
 }
 expr_file <- supp_files[grepl("count|fpkm|tpm|expr",
                               basename(supp_files), ignore.case=TRUE)][1]
@@ -154,9 +161,9 @@ analizar_grupo <- function(sub_sorting, etiqueta) {
   }
   res$log2FC <- log2(res$mean_EAE + 1) - log2(res$mean_Healthy + 1)
   res <- res[order(-res$log2FC), ]
-  write.csv(res, paste0("results/cellular/26_GSE279707_", sub_sorting, ".csv"),
+  write.csv(res, paste0("results/cellular/04_GSE279707_", sub_sorting, ".csv"),
             row.names=FALSE)
-  message("OK results/cellular/26_GSE279707_", sub_sorting, ".csv")
+  message("OK results/cellular/04_GSE279707_", sub_sorting, ".csv")
 
   message("\n--- MEDIA POR GEN Y GRUPO ---")
   print(res, row.names=FALSE, digits=2)

@@ -50,14 +50,14 @@ micro <- read.csv(micro_path) %>%
   mutate(cell = "Microglia", dataset = "GSE253318")
 
 # --- 3. Neuronas POS ---
-neuron_path <- "results/cellular/26_GSE279707_pos.csv"
+neuron_path <- "results/cellular/04_GSE279707_pos.csv"
 if (!file.exists(neuron_path)) stop("Missing: ", neuron_path)
 neuron <- read.csv(neuron_path) %>%
   select(gene, mean_Healthy, mean_EAE, log2FC) %>%
   mutate(cell = "Neurons_POS", dataset = "GSE279707_POS")
 
 # --- 4. Glia NEG ---
-glia_path <- "results/cellular/26_GSE279707_neg.csv"
+glia_path <- "results/cellular/04_GSE279707_neg.csv"
 if (!file.exists(glia_path)) stop("Missing: ", glia_path)
 glia <- read.csv(glia_path) %>%
   select(gene, mean_Healthy, mean_EAE, log2FC) %>%
