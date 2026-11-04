@@ -40,8 +40,8 @@ if (file.exists(f33)) {
     row <- d[d[[g]] == "B4galt6", , drop = FALSE]
     if (nrow(row) == 1) {
       A_data$log2FC <- c(as.numeric(row[[pc]]), as.numeric(row[[kc]]))
-      fpre  <- file.path(REPO, "results/bulk/34_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv")
-      fpeak <- file.path(REPO, "results/bulk/34_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv")
+      fpre  <- file.path(REPO, "results/bulk/06_DESeq2_liver_EAE_Pre_EAE_vs_Ctrl.csv")
+      fpeak <- file.path(REPO, "results/bulk/06_DESeq2_liver_EAE_Peak_EAE_vs_Ctrl.csv")
       if (file.exists(fpre) && file.exists(fpeak)) {
         dp <- read.csv(fpre,  check.names=FALSE)
         dk <- read.csv(fpeak, check.names=FALSE)
