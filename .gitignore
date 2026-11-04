@@ -37,3 +37,4 @@ rds/
 
 # Datos grandes (descargar con 00_download_h5.sh)
 data/GSE250589/
+figures/main/texput.log
