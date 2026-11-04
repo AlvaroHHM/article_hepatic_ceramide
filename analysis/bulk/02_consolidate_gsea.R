@@ -1,7 +1,7 @@
 # Consolidar TODOS los GSEA de resultados
 library(dplyr)
 
-files <- list.files("results", pattern = "_GSEA_.*\\.csv$", full.names = TRUE)
+files <- list.files("results", pattern = "_GSEA_.*\\.csv$", full.names = TRUE, recursive = TRUE)
 message("Archivos GSEA encontrados: ", length(files))
 
 rutas_hipotesis <- c(
@@ -45,7 +45,7 @@ for (f in files) {
 }
 
 consolidated <- bind_rows(resultados)
-write.csv(consolidated, "results/00_CONSOLIDATED_all_hypothesis_pathways.csv",
+write.csv(consolidated, "results/bulk/00_CONSOLIDATED_all_hypothesis_pathways.csv",
           row.names = FALSE)
 
 # Mostrar tabla pivote
