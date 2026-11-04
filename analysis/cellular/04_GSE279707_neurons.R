@@ -154,9 +154,9 @@ analizar_grupo <- function(sub_sorting, etiqueta) {
   }
   res$log2FC <- log2(res$mean_EAE + 1) - log2(res$mean_Healthy + 1)
   res <- res[order(-res$log2FC), ]
-  write.csv(res, paste0("results/26_GSE279707_", sub_sorting, ".csv"),
+  write.csv(res, paste0("results/cellular/26_GSE279707_", sub_sorting, ".csv"),
             row.names=FALSE)
-  message("OK results/26_GSE279707_", sub_sorting, ".csv")
+  message("OK results/cellular/26_GSE279707_", sub_sorting, ".csv")
 
   message("\n--- MEDIA POR GEN Y GRUPO ---")
   print(res, row.names=FALSE, digits=2)
