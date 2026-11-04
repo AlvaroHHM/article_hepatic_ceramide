@@ -11,13 +11,37 @@ suppressPackageStartupMessages({
 })
 
 dir.create("results", showWarnings = FALSE)
-sink("logs/29b_GSE250589_scores_log.txt", split = TRUE)
+dir.create("results/snrnaseq", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs", showWarnings = FALSE)
+dir.create("logs/snrnaseq", showWarnings = FALSE, recursive = TRUE)
+sink("logs/snrnaseq/29b_GSE250589_scores_log.txt", split = TRUE)
 on.exit(sink())
 
 cat("=== GSE250589 Fase 1b: pseudobulk de scores ===\n\n")
 
 # --- 1. Leer anotacion ---
-ann_file <- "data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz"
+ann_candidates <- c(
+  "data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz",
+  "../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz"
+)
+ann_file <- ann_candidates[file.exists(ann_candidates)][1]
+
+if (is.na(ann_file)) {
+  stop(
+    "GSE250589 annotation file not found.\n",
+    "\n",
+    "Looked in:\n",
+    paste("  -", ann_candidates, collapse = "\n"), "\n",
+    "\n",
+    "To fix, run the download script first:\n",
+    "  Rscript analysis/snrnaseq/01_oligodendrocytes_GSE250589_annotation.R\n",
+    "\n",
+    "Or download manually (139 MB) from:\n",
+    "  https://ftp.ncbi.nlm.nih.gov/geo/series/GSE250nnn/GSE250589/suppl/GSE250589_EAE_multiomics_annotation.csv.gz\n",
+    "and place it at data/GSE250589/",
+    call. = FALSE
+  )
+}
 ann <- fread(ann_file, data.table = FALSE)
 cat("Dimensiones:", nrow(ann), "x", ncol(ann), "\n")
 
@@ -122,15 +146,15 @@ if (length(falcao_cols) > 0) {
 }
 
 # --- 9. Guardar ---
-write.csv(resumen, "results/29b_GSE250589_OLG_scores_summary.csv", row.names = FALSE)
-write.csv(delta,   "results/29b_GSE250589_OLG_scores_delta.csv",   row.names = FALSE)
+write.csv(resumen, "results/snrnaseq/29b_GSE250589_OLG_scores_summary.csv", row.names = FALSE)
+write.csv(delta,   "results/snrnaseq/29b_GSE250589_OLG_scores_delta.csv",   row.names = FALSE)
 if (exists("falcao_table")) {
-  write.csv(falcao_table, "results/29b_GSE250589_OLG_falcao.csv", row.names = FALSE)
+  write.csv(falcao_table, "results/snrnaseq/29b_GSE250589_OLG_falcao.csv", row.names = FALSE)
 }
 
 cat("\n", rep("=", 60), "\n")
 cat("Guardado:\n")
-cat("  results/29b_GSE250589_OLG_scores_summary.csv\n")
-cat("  results/29b_GSE250589_OLG_scores_delta.csv\n")
-cat("  results/29b_GSE250589_OLG_falcao.csv\n")
+cat("  results/snrnaseq/29b_GSE250589_OLG_scores_summary.csv\n")
+cat("  results/snrnaseq/29b_GSE250589_OLG_scores_delta.csv\n")
+cat("  results/snrnaseq/29b_GSE250589_OLG_falcao.csv\n")
 cat(rep("=", 60), "\n")
