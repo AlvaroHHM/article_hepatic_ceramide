@@ -1,0 +1,41 @@
+============================================================ 
+GSE250589 - Descarga y verificacion de la anotacion
+Fecha: 2026-11-03 20:51:29 
+============================================================ 
+
+Archivo: ../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz ( 138.6 MB)
+
+Leyendo CSV comprimido...
+Dimensiones: 131881 x 247 
+
+Columnas clave (verificacion):
+  cellType        presente (9 valores unicos)
+  subcellType     presente (24 valores unicos)
+  cellType_merge  presente (7 valores unicos)
+  model           presente (2 valores unicos)
+  orig.ident      presente (26 valores unicos)
+  batch           presente (7 valores unicos)
+
+Distribucion de 'model':
+
+ Ctrl   EAE 
+48930 82951 
+
+Distribucion de 'orig.ident' (top 10):
+
+    EarlyFemale5       EarlyMale5      LateFemale4        LateCtrl2 
+           11087            10583            10072             8498 
+EarlyCtrlFemale5   EarlyCtrlMale5        LateCtrl3       EarlyCtrl4 
+            8368             8227             7411             7039 
+           Late5        LateMale4 
+            6216             4973 
+
+ ============================================================ 
+Estado de los H5 files (necesarios para scripts 05-10):
+  Encontrados: 0 / 28
+  Ejecutar: bash analysis/snrnaseq/00_download_h5.sh
+  (descarga ~2.3 GB desde GEO, 10-30 min)
+
+ ============================================================ 
+FIN
+ ============================================================ 

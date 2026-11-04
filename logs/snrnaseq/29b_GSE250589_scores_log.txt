@@ -1,0 +1,118 @@
+=== GSE250589 Fase 1b: pseudobulk de scores ===
+
+Dimensiones: 131881 x 247 
+Distribucion stage x condition (todas las celulas):
+       
+         Ctrl   EAE
+  Early 27695 34369
+  Late  15909 31768
+  Peak   5326 16814
+
+Celulas OLG: 120183 
+Distribucion por subtipo x stage:
+       
+        Early  Late  Peak
+  COP     243   646   113
+  MOL1    110   425     7
+  MOL2  10263 16712  9348
+  MOL56 44939 24295  9587
+  OPC    1353  1434   708
+
+Scores presentes: ImmuneScore, DamageScore, InterferonScore, ImmuneDamage, ImmuneInterferon, DamageInterferon 
+
+Replicas validas (n_cells >= 20): 84 
+
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+RESUMEN POR STAGE x CONDITION x CELLTYPE
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+   stage condition cellType n_rep n_cells ImmuneScore DamageScore
+1  Early      Ctrl      COP     2      71      0.0615     -0.0768
+2  Early       EAE      COP     2     144      0.0728      0.0223
+3  Early      Ctrl     MOL1     2      97      0.0518      0.1240
+4  Early      Ctrl     MOL2     5    6901      0.0484     -0.0921
+5  Early       EAE     MOL2     6    3362      0.0547      0.0129
+6  Early      Ctrl    MOL56     5   18301      0.0454     -0.0984
+7  Early       EAE    MOL56     6   26638      0.0536     -0.0294
+8  Early      Ctrl      OPC     3     579      0.0522     -0.0885
+9  Early       EAE      OPC     3     745      0.0697      0.0226
+10  Late       EAE      COP     3     624      0.0600     -0.0387
+11  Late       EAE     MOL1     5     411      0.0698      0.1486
+12  Late      Ctrl     MOL2     2    1777      0.0480     -0.0919
+13  Late       EAE     MOL2     6   14935      0.0599      0.0659
+14  Late      Ctrl    MOL56     2   10978      0.0460     -0.0966
+15  Late       EAE    MOL56     6   13317      0.0556     -0.0118
+16  Late      Ctrl      OPC     1      27      0.0484     -0.0695
+17  Late       EAE      OPC     5    1380      0.0588     -0.0378
+18  Peak       EAE      COP     1      82      0.0678      0.0134
+19  Peak      Ctrl     MOL2     2     556      0.0441     -0.0814
+20  Peak       EAE     MOL2     5    8792      0.0739      0.1369
+21  Peak      Ctrl    MOL56     2    3943      0.0415     -0.0866
+22  Peak       EAE    MOL56     5    5644      0.0597      0.0210
+23  Peak       EAE      OPC     5     694      0.0694      0.0763
+   InterferonScore ImmuneDamage ImmuneInterferon DamageInterferon
+1          -0.1866          NaN              NaN              NaN
+2           0.2503          NaN              NaN              NaN
+3          -0.0934          NaN              NaN              NaN
+4          -0.2449          NaN              NaN              NaN
+5          -0.0275          NaN              NaN              NaN
+6          -0.2300          NaN              NaN              NaN
+7           0.0529          NaN              NaN              NaN
+8          -0.2552          NaN              NaN              NaN
+9           0.2187          NaN              NaN              NaN
+10         -0.0982          NaN              NaN              NaN
+11          0.0279          NaN              NaN              NaN
+12         -0.2524          NaN              NaN              NaN
+13          0.0590          NaN              NaN              NaN
+14         -0.2326          NaN              NaN              NaN
+15          0.0668          NaN              NaN              NaN
+16         -0.2012          NaN              NaN              NaN
+17         -0.1105          NaN              NaN              NaN
+18          0.0813          NaN              NaN              NaN
+19         -0.2299          NaN              NaN              NaN
+20          0.6744          NaN              NaN              NaN
+21         -0.2025          NaN              NaN              NaN
+22          0.5151          NaN              NaN              NaN
+23          0.3123          NaN              NaN              NaN
+
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+DELTA EAE - CTRL POR STAGE x CELLTYPE (MOL2 y MOL56)
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+[1] stage             cellType          score             Ctrl             
+[5] EAE               delta_EAE_vs_Ctrl
+<0 rows> (or 0-length row.names)
+
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+ESTADOS FALCAO2018 (proporcion por condition x stage)
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+   stage cellTypeFalcao2018     Ctrl      EAE
+1  Early       MOL2_Cntrl_A 0.033422 0.014125
+2  Early           MOL3_EAE 0.000270 0.048744
+3  Early     MOL5_6_Cntrl_A 0.757191 0.227915
+4  Early     MOL5_6_Cntrl_B 0.173848 0.071629
+5  Early       MOL5_6_EAE_A 0.006315 0.443482
+6  Early       MOL5_6_EAE_B 0.000116 0.079840
+7  Early       MOL5_6_EAE_C       NA 0.078256
+8   Late       MOL2_Cntrl_A 0.008745 0.128774
+9   Late     MOL5_6_Cntrl_A 0.898103 0.272399
+10  Late     MOL5_6_Cntrl_B 0.089326 0.034717
+11  Late           MOL3_EAE       NA 0.288813
+12  Late       MOL5_6_EAE_A       NA 0.066211
+13  Late       MOL5_6_EAE_B       NA 0.096010
+14  Late       MOL5_6_EAE_C       NA 0.009868
+15  Peak       MOL2_Cntrl_A 0.006423 0.009116
+16  Peak           MOL3_EAE 0.000443 0.206453
+17  Peak     MOL5_6_Cntrl_A 0.898560 0.004591
+18  Peak     MOL5_6_Cntrl_B 0.078627 0.000525
+19  Peak       MOL5_6_EAE_A 0.007530 0.331125
+20  Peak       MOL5_6_EAE_B       NA 0.153332
+21  Peak       MOL5_6_EAE_C       NA 0.088339
+
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+Guardado:
+  results/snrnaseq/29b_GSE250589_OLG_scores_summary.csv
+  results/snrnaseq/29b_GSE250589_OLG_scores_delta.csv
+  results/snrnaseq/29b_GSE250589_OLG_falcao.csv
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
