@@ -30,6 +30,9 @@ if (!dir.exists(supp_dir) || length(list.files(supp_dir, recursive = TRUE)) == 0
   getGEOSuppFiles("GSE253318", baseDir = supp_dir, makeDirectory = TRUE)
 }
 supp_files <- list.files(supp_dir, recursive = TRUE, full.names = TRUE)
+if (length(supp_files) == 0) {
+  stop("No hay FPKM en ", supp_dir, " y no se pudo descargar. Verifica conexion.")
+}
 
 # Preferir FPKM sobre counts
 fpkm_candidates <- supp_files[grepl("FPKM", basename(supp_files), ignore.case = TRUE)]
@@ -105,8 +108,8 @@ for (g in c("Control", "EAE")) {
 res$log2FC <- log2(res$mean_EAE + 1) - log2(res$mean_Control + 1)
 res <- res[order(-res$log2FC), ]
 
-write.csv(res, "results/25_GSE253318_microglia_genes.csv", row.names = FALSE)
-message("OK results/25_GSE253318_microglia_genes.csv")
+write.csv(res, "results/cellular/25_GSE253318_microglia_genes.csv", row.names = FALSE)
+message("OK results/cellular/25_GSE253318_microglia_genes.csv")
 
 message("\n========================================")
 message("RPKM MEDIO POR GEN Y GRUPO (microglia)")
