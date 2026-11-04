@@ -50,12 +50,11 @@ chronological (initial pipeline -> verification).
 | Source script | Output PDF |
 |---|---|
 | `00_figure_style.R` | Shared `theme_pub()` + AAAS palette |
-| `F1_causal_chain.sh` + `F1_causal_chain.tikz` | `figures/main/F1_causal_chain.pdf` |
 | `F2_bulk_heatmap.R` | `figures/main/F2_bulk_heatmap.pdf` |
 | (via `cellular/06_cellular_heatmap_publication.R`) | `figures/main/F3_cellular_heatmap.pdf` |
 | (via `snrnaseq/03_falcao_quantification.R`) | `figures/main/F4_snrnaseq_topology.pdf` |
-| (via `snrnaseq/07_positivity_analysis.R`) | `figures/main/F5_mol3_conversion.pdf` |
-| `F5_convergence_panel.R` | `figures/main/F6_convergence_panel.pdf` |
+| `F5_mol3_conversion.R` | `figures/main/F5_mol3_conversion.pdf` |
+| `F6_convergence_panel.R` | `figures/main/F6_convergence_panel.pdf` |
 | `F4_snrnaseq_panels.sh` + `.tex` | (deprecated — panels split into F4 + F5) |
 
 ## Usage
@@ -63,4 +62,3 @@ chronological (initial pipeline -> verification).
     Rscript analysis/00_setup.R
     Rscript analysis/figures/F2_bulk_heatmap.R
     Rscript analysis/figures/F5_convergence_panel.R
-    bash    analysis/figures/F1_causal_chain.sh
