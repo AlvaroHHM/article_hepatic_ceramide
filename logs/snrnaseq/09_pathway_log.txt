@@ -1,5 +1,5 @@
 === ANÁLISIS DE RUTA: MOL2_like vs MOL56_like ===
-Fecha: 2026-11-03 22:55:23 
+Fecha: 2026-11-04 08:13:29 
 
 --- Módulos definidos ---
   Sphingolipid_synthesis        : 12 genes
@@ -58,6 +58,7 @@ Matriz: 32245 genes × 2378 células
                 B4GALT6_alone       -0.459182014 1.667234e-11
 
 --- Generando plots ---
+[OK] figures/main/F7_pathway_modules.pdf
 
 ============================================================
 RESUMEN
