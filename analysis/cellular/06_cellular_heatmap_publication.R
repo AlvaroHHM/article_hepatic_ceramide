@@ -14,18 +14,20 @@ suppressPackageStartupMessages({
   library(dplyr); library(tidyr); library(ggplot2); library(tibble)
 })
 
-dir.create("results", showWarnings = FALSE)
-dir.create("results/cellular", showWarnings = FALSE)
-dir.create("figures/main", showWarnings = FALSE)
-dir.create("figures/supplementary", showWarnings = FALSE)
-dir.create("logs", showWarnings = FALSE)
+dir.create("results/cellular", showWarnings = FALSE, recursive = TRUE)
+dir.create("figures/main", showWarnings = FALSE, recursive = TRUE)
+dir.create("figures/supplementary", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/cellular", showWarnings = FALSE, recursive = TRUE)
+sink("logs/cellular/06_cellular_heatmap_publication_log.txt", split = TRUE)
+on.exit(sink())
+
+cat("=== 06_cellular_heatmap_publication.R ===\n")
+cat("Date:", format(Sys.time()), "\n\n")
 
 long_path <- "results/cellular/05_cellular_comparison_long.csv"
 if (!file.exists(long_path)) {
-  long_path <- "results/cellular/05_cellular_comparison_long.csv"
-}
-if (!file.exists(long_path)) {
-  stop("Falta 05_cellular_comparison_long.csv")
+  stop("Falta 05_cellular_comparison_long.csv. ",
+       "Ejecuta primero: Rscript analysis/cellular/05_cellular_comparison.R")
 }
 long_df <- read.csv(long_path, stringsAsFactors = FALSE)
 
@@ -86,10 +88,10 @@ p_abs <- ggplot(mat, aes(x = cell, y = gene, fill = log_val)) +
   ) +
   labs(x = NULL, y = NULL)
 
-ggsave("results/cellular/27b_cellular_heatmap_absolute.pdf",
+ggsave("results/cellular/06_cellular_heatmap_absolute.pdf",
        p_abs, width = 7.5, height = 6.5)
-cat("[OK] 27b_cellular_heatmap_absolute.pdf\n")
-file.copy("results/cellular/27b_cellular_heatmap_absolute.pdf",
+cat("[OK] results/cellular/06_cellular_heatmap_absolute.pdf\n")
+file.copy("results/cellular/06_cellular_heatmap_absolute.pdf",
           "figures/main/F3_cellular_heatmap.pdf", overwrite = TRUE)
 cat("[OK] figures/main/F3_cellular_heatmap.pdf\n")
 
@@ -120,9 +122,9 @@ p_z <- ggplot(mat_z, aes(x = cell, y = gene, fill = z_clip)) +
   ) +
   labs(x = NULL, y = NULL)
 
-ggsave("results/cellular/27b_cellular_heatmap_zscore.pdf",
+ggsave("results/cellular/06_cellular_heatmap_zscore.pdf",
        p_z, width = 7.5, height = 6.5)
-cat("[OK] 27b_cellular_heatmap_zscore.pdf\n")
-file.copy("results/cellular/27b_cellular_heatmap_zscore.pdf",
+cat("[OK] results/cellular/06_cellular_heatmap_zscore.pdf\n")
+file.copy("results/cellular/06_cellular_heatmap_zscore.pdf",
           "figures/supplementary/S3_cellular_zscore.pdf", overwrite = TRUE)
 cat("[OK] figures/supplementary/S3_cellular_zscore.pdf\n")

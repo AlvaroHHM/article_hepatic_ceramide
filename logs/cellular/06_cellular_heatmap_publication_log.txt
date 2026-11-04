@@ -1,0 +1,9 @@
+=== 06_cellular_heatmap_publication.R ===
+Date: 2026-11-03 23:56:56 
+
+[OK] results/cellular/06_cellular_heatmap_absolute.pdf
+[1] TRUE
+[OK] figures/main/F3_cellular_heatmap.pdf
+[OK] results/cellular/06_cellular_heatmap_zscore.pdf
+[1] TRUE
+[OK] figures/supplementary/S3_cellular_zscore.pdf
