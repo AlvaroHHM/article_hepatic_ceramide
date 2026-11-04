@@ -28,7 +28,9 @@ find_data_root <- function() {
     if (file.exists(file.path(r, "data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz")))
       return(r)
   }
-  stop("Cannot find annotation. Run from repo root or parent.")
+  stop("Cannot find annotation at data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz.\n",
+       "To fix: Rscript analysis/snrnaseq/01_GSE250589_annotation.R\n",
+       "(downloads 139 MB from GEO into data/GSE250589/)")
 }
 DATA_ROOT <- find_data_root()
 
