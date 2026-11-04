@@ -20,12 +20,12 @@ dir.create("figures/main", showWarnings = FALSE)
 dir.create("figures/supplementary", showWarnings = FALSE)
 dir.create("logs", showWarnings = FALSE)
 
-long_path <- "results/cellular/27_cellular_comparison_long.csv"
+long_path <- "results/cellular/05_cellular_comparison_long.csv"
 if (!file.exists(long_path)) {
-  long_path <- "results/27_cellular_comparison_long.csv"
+  long_path <- "results/cellular/05_cellular_comparison_long.csv"
 }
 if (!file.exists(long_path)) {
-  stop("Falta 27_cellular_comparison_long.csv")
+  stop("Falta 05_cellular_comparison_long.csv")
 }
 long_df <- read.csv(long_path, stringsAsFactors = FALSE)
 
