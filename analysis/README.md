@@ -50,16 +50,16 @@ chronological (initial pipeline -> verification).
 | Source script | Output PDF |
 |---|---|
 | `00_figure_style.R` | Shared `theme_pub()` + AAAS palette |
-| `F2_bulk_heatmap.R` | `figures/main/F2_bulk_heatmap.pdf` |
-| (via `cellular/06_cellular_heatmap_publication.R`) | `figures/main/F3_cellular_heatmap.pdf` |
+| `F1_bulk_heatmap.R` | `figures/main/F1_bulk_heatmap.pdf` |
+| (via `cellular/06_cellular_heatmap_publication.R`) | `figures/main/F2_cellular_heatmap.pdf` |
 | (via `snrnaseq/03_falcao_quantification.R`) | `figures/main/F4_snrnaseq_topology.pdf` |
 | `F5_mol3_conversion.R` | `figures/main/F5_mol3_conversion.pdf` |
-| `F6_convergence_panel.R` | `figures/main/F6_convergence_panel.pdf` |
+| `F3_convergence_panel.R` | `figures/main/F3_convergence_panel.pdf` |
 
 ## Usage
 
     Rscript analysis/00_setup.R
-    Rscript analysis/figures/F2_bulk_heatmap.R
+    Rscript analysis/figures/F1_bulk_heatmap.R
     Rscript analysis/figures/F5_mol3_conversion.R
-    Rscript analysis/figures/F6_convergence_panel.R
+    Rscript analysis/figures/F3_convergence_panel.R
     Rscript analysis/figures/S2_MOL3_expression.R
