@@ -55,10 +55,11 @@ chronological (initial pipeline -> verification).
 | (via `snrnaseq/03_falcao_quantification.R`) | `figures/main/F4_snrnaseq_topology.pdf` |
 | `F5_mol3_conversion.R` | `figures/main/F5_mol3_conversion.pdf` |
 | `F6_convergence_panel.R` | `figures/main/F6_convergence_panel.pdf` |
-| `F4_snrnaseq_panels.sh` + `.tex` | (deprecated — panels split into F4 + F5) |
 
 ## Usage
 
     Rscript analysis/00_setup.R
     Rscript analysis/figures/F2_bulk_heatmap.R
-    Rscript analysis/figures/F5_convergence_panel.R
+    Rscript analysis/figures/F5_mol3_conversion.R
+    Rscript analysis/figures/F6_convergence_panel.R
+    Rscript analysis/figures/S2_MOL3_expression.R
