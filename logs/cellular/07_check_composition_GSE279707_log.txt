@@ -1,0 +1,27 @@
+=== 07_check_composition_GSE279707.R ===
+Date: 2026-11-04 00:07:05 
+
+
+--- POS (neuronas enriquecidas) ---
+  Snap25  : Healthy= 14515.8  EAE=  9881.2  log2FC=-0.55
+  Syp     : Healthy=  8184.6  EAE=  5268.4  log2FC=-0.64
+  Rbfox3  : Healthy=  6492.2  EAE=  2563.8  log2FC=-1.34
+  Map2    : Healthy=  5882.8  EAE=  2333.6  log2FC=-1.33
+  Gfap    : Healthy=  3997.6  EAE=  6695.4  log2FC=+0.74
+  Irf7    : Healthy=    87.4  EAE=   805.8  log2FC=+3.19
+
+--- NEG (glía + infiltrado) ---
+  Snap25  : Healthy=  9688.0  EAE=  3154.6  log2FC=-1.62
+  Syp     : Healthy=  1870.4  EAE=   812.8  log2FC=-1.20
+  Rbfox3  : Healthy=   601.2  EAE=   284.6  log2FC=-1.08
+  Map2    : Healthy=  4159.6  EAE=   713.0  log2FC=-2.54
+  Gfap    : Healthy= 23990.6  EAE= 10326.6  log2FC=-1.22
+  Irf7    : Healthy=   310.0  EAE=  2484.8  log2FC=+3.00
+OK results/cellular/07_check_composition_markers.csv
+
+--- Diagnóstico de composición ---
+Interpretación:
+  - Si Snap25/Syp/Map2 caen en POS => pérdida de contenido neuronal
+  - Si Gfap cae en NEG => pérdida de contenido glial
+  - Si Irf7 sube en ambos => infiltración inmune
+  - Cualquier combinación => log2FC confundido por composición

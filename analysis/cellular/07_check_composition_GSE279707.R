@@ -1,13 +1,24 @@
 # ============================================================
-# 28_check_composition_GSE279707.R
+# 07_check_composition_GSE279707.R
 # Verifica cambio de composición celular entre EAE y Healthy
 # ============================================================
 
 suppressPackageStartupMessages({library(dplyr)})
 
-# Cargar los dos CSVs del script 26
-pos <- read.csv("results/cellular/26_GSE279707_pos.csv")
-neg <- read.csv("results/cellular/26_GSE279707_neg.csv")
+dir.create("results/cellular", showWarnings = FALSE, recursive = TRUE)
+dir.create("logs/cellular", showWarnings = FALSE, recursive = TRUE)
+sink("logs/cellular/07_check_composition_GSE279707_log.txt", split = TRUE)
+on.exit(sink())
+
+cat("=== 07_check_composition_GSE279707.R ===\n")
+cat("Date:", format(Sys.time()), "\n\n")
+
+# Cargar los dos CSVs del script 04 (antes 26_*)
+pos <- read.csv("results/cellular/04_GSE279707_pos.csv", stringsAsFactors = FALSE)
+neg <- read.csv("results/cellular/04_GSE279707_neg.csv", stringsAsFactors = FALSE)
+if (nrow(pos) == 0 || nrow(neg) == 0) {
+  stop("Faltan CSVs de 04. Ejecuta: Rscript analysis/cellular/04_GSE279707_neurons.R")
+}
 
 # Marcadores de identidad
 neuronal <- c("Snap25", "Syp", "Rbfox3", "Map2")
@@ -27,6 +38,32 @@ check_markers <- function(df, name) {
 
 check_markers(pos, "POS (neuronas enriquecidas)")
 check_markers(neg, "NEG (glía + infiltrado)")
+
+# Guardar tabla de marcadores (respaldo de las líneas 857-861 del .tex)
+markers_panel <- c("Snap25","Syp","Rbfox3","Map2","Gfap","Irf7")
+comp_tbl <- data.frame(
+  marker = markers_panel,
+  pos_Healthy = sapply(markers_panel, function(m) {
+    v <- pos$mean_Healthy[pos$gene == m]; if (length(v)) v[1] else NA_real_
+  }),
+  pos_EAE = sapply(markers_panel, function(m) {
+    v <- pos$mean_EAE[pos$gene == m]; if (length(v)) v[1] else NA_real_
+  }),
+  pos_log2FC = sapply(markers_panel, function(m) {
+    v <- pos$log2FC[pos$gene == m]; if (length(v)) v[1] else NA_real_
+  }),
+  neg_Healthy = sapply(markers_panel, function(m) {
+    v <- neg$mean_Healthy[neg$gene == m]; if (length(v)) v[1] else NA_real_
+  }),
+  neg_EAE = sapply(markers_panel, function(m) {
+    v <- neg$mean_EAE[neg$gene == m]; if (length(v)) v[1] else NA_real_
+  }),
+  neg_log2FC = sapply(markers_panel, function(m) {
+    v <- neg$log2FC[neg$gene == m]; if (length(v)) v[1] else NA_real_
+  })
+)
+write.csv(comp_tbl, "results/cellular/07_check_composition_markers.csv", row.names = FALSE)
+cat("OK results/cellular/07_check_composition_markers.csv\n")
 
 cat("\n--- Diagnóstico de composición ---\n")
 cat("Interpretación:\n")
