@@ -15,6 +15,9 @@ suppressPackageStartupMessages({
 })
 
 dir.create("results", showWarnings = FALSE)
+dir.create("results/cellular", showWarnings = FALSE)
+dir.create("figures/main", showWarnings = FALSE)
+dir.create("figures/supplementary", showWarnings = FALSE)
 dir.create("logs", showWarnings = FALSE)
 
 long_path <- "results/cellular/27_cellular_comparison_long.csv"
@@ -86,6 +89,9 @@ p_abs <- ggplot(mat, aes(x = cell, y = gene, fill = log_val)) +
 ggsave("results/cellular/27b_cellular_heatmap_absolute.pdf",
        p_abs, width = 7.5, height = 6.5)
 cat("[OK] 27b_cellular_heatmap_absolute.pdf\n")
+file.copy("results/cellular/27b_cellular_heatmap_absolute.pdf",
+          "figures/main/F3_cellular_heatmap.pdf", overwrite = TRUE)
+cat("[OK] figures/main/F3_cellular_heatmap.pdf\n")
 
 # ---- HEATMAP 2: z-score within column, AAAS ----
 mat_z <- mat %>%
@@ -117,3 +123,6 @@ p_z <- ggplot(mat_z, aes(x = cell, y = gene, fill = z_clip)) +
 ggsave("results/cellular/27b_cellular_heatmap_zscore.pdf",
        p_z, width = 7.5, height = 6.5)
 cat("[OK] 27b_cellular_heatmap_zscore.pdf\n")
+file.copy("results/cellular/27b_cellular_heatmap_zscore.pdf",
+          "figures/supplementary/S3_cellular_zscore.pdf", overwrite = TRUE)
+cat("[OK] figures/supplementary/S3_cellular_zscore.pdf\n")
