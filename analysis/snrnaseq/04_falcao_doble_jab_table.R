@@ -1,3 +1,7 @@
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 # ============================================================
 # 30b_falcao_doble_jab_table.R  (v3 - fix pct_of_EAE unidades)
 # Clasifica los 18 estados Falcao en:

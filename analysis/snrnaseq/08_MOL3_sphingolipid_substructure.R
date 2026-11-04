@@ -1,3 +1,7 @@
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 # ============================================================
 # 44b_MOL3_sphingolipid_fixed.R
 # Version corregida: usa sparseMatrix() en lugar de

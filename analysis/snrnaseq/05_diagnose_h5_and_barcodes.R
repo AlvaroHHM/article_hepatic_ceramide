@@ -1,3 +1,7 @@
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 # ============================================================
 # 35a_diagnose_h5_and_barcodes.R (v2)
 # Fix: h5$ls() sin 'depth' (hdf5r 1.3.16 no lo acepta)

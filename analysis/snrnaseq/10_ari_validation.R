@@ -1,3 +1,7 @@
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 suppressPackageStartupMessages({
   library(data.table); library(Matrix); library(hdf5r); library(ggplot2)
 })

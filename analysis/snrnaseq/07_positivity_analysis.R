@@ -1,3 +1,7 @@
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 if (dir.exists("article_hepatic_ceramide")) {
   source("article_hepatic_ceramide/analysis/figures/00_figure_style.R")
 } else if (file.exists("analysis/figures/00_figure_style.R")) {

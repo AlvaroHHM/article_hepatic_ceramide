@@ -1,4 +1,8 @@
 # 35b v2 - procesa cada GSM y guarda checkpoint (reanudable)
+#
+# Requires:
+#   data/GSE250589/h5/*.h5 (28 files, ~2.3 GB)
+#   Download: bash analysis/snrnaseq/00_download_h5.sh
 suppressPackageStartupMessages({
   library(hdf5r); library(Matrix); library(dplyr); library(tidyr); library(ggplot2)
 })
