@@ -6,8 +6,8 @@
 suppressPackageStartupMessages({library(dplyr)})
 
 # Cargar los dos CSVs del script 26
-pos <- read.csv("results/26_GSE279707_pos.csv")
-neg <- read.csv("results/26_GSE279707_neg.csv")
+pos <- read.csv("results/cellular/26_GSE279707_pos.csv")
+neg <- read.csv("results/cellular/26_GSE279707_neg.csv")
 
 # Marcadores de identidad
 neuronal <- c("Snap25", "Syp", "Rbfox3", "Map2")
