@@ -229,10 +229,10 @@ write.csv(regression_results[, c("module","coef_MOL56_vs_MOL2","pval")],
 write.csv(regression_results,
           "results/snrnaseq/09_pathway_forest_data.csv", row.names = FALSE)
 
-# ---- 7. Plots ----
-cat("\n--- Generando plots ---\n")
+# ---- 7. Plots (2-panel forest: per-cell + per-mouse) ----
+cat("\n--- Generando plots (2-panel: per-cell + per-mouse) ---\n")
 
-# Forest plot: regression coefficient + 95% CI, colored by significance
+# === Panel A: per-cell regression (original, pseudoreplicated) ===
 forest_df <- regression_results %>%
   mutate(
     sig = ifelse((ci_low > 0 & ci_high > 0) | (ci_low < 0 & ci_high < 0),
@@ -243,28 +243,77 @@ forest_df <- regression_results %>%
 forest_df$module_label <- factor(forest_df$module_label,
                                   levels = forest_df$module_label[order(forest_df$coef_MOL56_vs_MOL2)])
 
-x_annot <- max(forest_df$ci_high) + 0.05
+x_annot_pc <- max(forest_df$ci_high) + 0.05
 
-p_forest <- ggplot(forest_df, aes(x = coef_MOL56_vs_MOL2, y = module_label)) +
+p_percell <- ggplot(forest_df, aes(x = coef_MOL56_vs_MOL2, y = module_label)) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
   geom_segment(aes(x = ci_low, xend = ci_high, y = module_label, yend = module_label),
                linewidth = 0.6, color = "gray30") +
-  geom_point(aes(color = sig), size = 3.5) +
-  geom_text(aes(x = x_annot, label = paste0("p = ", pval_label)),
-            hjust = 0, size = 3, color = "gray30") +
+  geom_point(aes(color = sig), size = 3.2) +
+  geom_text(aes(x = x_annot_pc, label = paste0("p = ", pval_label)),
+            hjust = 0, size = 2.6, color = "gray30") +
   scale_color_manual(values = c("significant" = "#B2182B", "ns" = "#999999")) +
-  scale_x_continuous(expand = expansion(mult = c(0.05, 0.30))) +
-  labs(x = "Regression coefficient (MOL56 - MOL2, adjusted for nCount)",
-       y = NULL) +
-  theme_minimal(base_size = 10) +
-  theme(
-    legend.position = "none",
-    panel.grid.minor = element_blank(),
-    panel.grid.major.y = element_blank()
-  )
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.35))) +
+  labs(x = "Per-cell regression (MOL56 - MOL2, adjusted for nCount)", y = NULL,
+       title = "A) Per-cell analysis (n = 13,741 cells; pseudoreplicated)") +
+  theme_minimal(base_size = 9) +
+  theme(legend.position = "none",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank(),
+        plot.title = element_text(size = 10, face = "bold"))
 
-ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf", p_forest, width = 9, height = 5)
-ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", p_forest, width = 9, height = 5, dpi = 150)
+# === Panel B: per-mouse lmer (pseudoreplication-corrected) ===
+pm_cands <- c("results/snrnaseq/09b_pathway_per_mouse_pvals.csv",
+              "../results/snrnaseq/09b_pathway_per_mouse_pvals.csv")
+pm_file <- pm_cands[file.exists(pm_cands)][1]
+if (is.na(pm_file)) {
+  cat("[WARN] 09b_pathway_per_mouse_pvals.csv no encontrado. Se omite panel B.\n")
+  combined <- p_percell
+} else {
+  pm_df <- read.csv(pm_file, check.names = FALSE)
+  pm_plot <- pm_df %>%
+    mutate(
+      ci_low_pm   = lmer_coef - 1.96 * lmer_se,
+      ci_high_pm  = lmer_coef + 1.96 * lmer_se,
+      sig         = ifelse(!is.na(lmer_p_adj_BH) & lmer_p_adj_BH < 0.05,
+                           "significant", "ns"),
+      module_label = gsub("_", " ", module),
+      pval_label  = format.pval(lmer_p_adj_BH, digits = 2)
+    )
+  pm_plot$module_label <- factor(pm_plot$module_label,
+                                  levels = levels(forest_df$module_label))
+  x_annot_pm <- max(pm_plot$ci_high_pm, na.rm = TRUE) + 0.05
+
+  p_permouse <- ggplot(pm_plot, aes(x = lmer_coef, y = module_label)) +
+    geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
+    geom_segment(aes(x = ci_low_pm, xend = ci_high_pm,
+                     y = module_label, yend = module_label),
+                 linewidth = 0.6, color = "gray30") +
+    geom_point(aes(color = sig), size = 3.2) +
+    geom_text(aes(x = x_annot_pm, label = paste0("p = ", pval_label)),
+              hjust = 0, size = 2.6, color = "gray30") +
+    scale_color_manual(values = c("significant" = "#B2182B", "ns" = "#999999")) +
+    scale_x_continuous(expand = expansion(mult = c(0.05, 0.35))) +
+    labs(x = "Per-mouse lmer (MOL56 - MOL2, random effect: mouse)",
+         y = NULL,
+         title = "B) Per-mouse analysis (n = 14 vs 17 mice; lmer, BH-corrected)") +
+    theme_minimal(base_size = 9) +
+    theme(legend.position = "none",
+          panel.grid.minor = element_blank(),
+          panel.grid.major.y = element_blank(),
+          plot.title = element_text(size = 10, face = "bold"))
+
+  if (requireNamespace("patchwork", quietly = TRUE)) {
+    library(patchwork)
+    combined <- p_percell / p_permouse
+  } else {
+    library(cowplot)
+    combined <- plot_grid(p_percell, p_permouse, ncol = 1)
+  }
+}
+
+ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf", combined, width = 9, height = 9)
+ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", combined, width = 9, height = 9, dpi = 150)
 dir.create("figures/main", showWarnings = FALSE, recursive = TRUE)
 file.copy("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf",
           "figures/main/F6_pathway_modules.pdf", overwrite = TRUE)
