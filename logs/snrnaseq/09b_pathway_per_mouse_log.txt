@@ -1,0 +1,98 @@
+=== 09b: per-mouse pathway modules (7 modules) ===
+Date: 2026-11-04 21:59:17 
+
+[h5]  data/GSE250589/h5 
+[ann]  ../data/GSE250589/GSE250589_EAE_multiomics_annotation.csv.gz 
+[modules]  7  modules,  47  unique genes
+
+[1/9] Loading annotation...
+  Total cells: 131881 
+  MOL3_EAE (EAE, valid stage):  13465  cells |  17  mice
+  Cells with GSM:  13465 
+
+ MOL2_like MOL56_like 
+      6628       6837 
+
+[2/9] Reading 28 H5 files (~5-10 min)...
+  GSMs to process: 17 
+  [ 1/17] GSM8637423 -> 296 cells, 47/47 genes
+  [ 2/17] GSM8637425 -> 990 cells, 47/47 genes
+  [ 3/17] GSM7982332 -> 2283 cells, 47/47 genes
+  [ 4/17] GSM7982328 -> 909 cells, 47/47 genes
+  [ 5/17] GSM8637421 -> 643 cells, 47/47 genes
+  [ 6/17] GSM7982320 -> 1168 cells, 47/47 genes
+  [ 7/17] GSM7982316 -> 169 cells, 47/47 genes
+  [ 8/17] GSM8637427 -> 2342 cells, 47/47 genes
+  [ 9/17] GSM7982324 -> 1533 cells, 47/47 genes
+  [10/17] GSM7982330 -> 1303 cells, 47/47 genes
+  [11/17] GSM7982314 -> 293 cells, 47/47 genes
+  [12/17] GSM7982308 -> 170 cells, 47/47 genes
+  [13/17] GSM7982326 -> 453 cells, 47/47 genes
+  [14/17] GSM7982312 -> 37 cells, 47/47 genes
+  [15/17] GSM7982318 -> 437 cells, 47/47 genes
+  [16/17] GSM7982322 -> 373 cells, 47/47 genes
+  [17/17] GSM8637419 -> 66 cells, 47/47 genes
+
+  Combined rows: 13465 
+
+[3/9] Merging with metadata...
+  Rows after filter: 13465 
+
+[4/9] CPM per gene...
+  Genes in dataframe: 47 / 47 
+
+[5/9] Module scores per cell...
+  [OK]   Sphingolipid_synthesis        : 12/12 genes, mean=1.109
+  [OK]   Sphingolipid_interconversion  : 14/14 genes, mean=0.635
+  [OK]   LacCer_synthesis              : 3/3 genes, mean=0.338
+  [OK]   S1P_receptors                 : 5/5 genes, mean=0.481
+  [OK]   Myelin_structural             : 5/5 genes, mean=6.658
+  [OK]   Apoptosis                     : 8/8 genes, mean=0.659
+  [OK]   B4GALT6_alone                 : 1/1 genes, mean=0.436
+
+[6/9] Per-mouse × subpop...
+  Per-mouse rows (n_cells >= 5): 31 
+
+[7/9] lmer + paired t-test per module...
+
+[8/9] RESULTS:
+                       module n_mice_mol2 n_mice_mol56   lmer_coef       lmer_p
+       Sphingolipid_synthesis          14           17 -0.10833952 6.241229e-05
+ Sphingolipid_interconversion          14           17 -0.10438802 2.308767e-04
+             LacCer_synthesis          14           17 -0.22875181 2.998523e-05
+                S1P_receptors          14           17 -0.02941798 1.325371e-01
+            Myelin_structural          14           17 -0.01306357 7.507638e-01
+                    Apoptosis          14           17 -0.10228622 3.551019e-04
+                B4GALT6_alone          14           17 -0.52845555 1.687023e-05
+ lmer_p_adj_BH     paired_p paired_p_adj_BH
+  0.0001456287 0.0001292271    0.0004522948
+  0.0004040342 0.0005508817    0.0009640430
+  0.0001049483 0.0002092510    0.0004882523
+  0.1546265703 0.1604602880    0.1872036694
+  0.7507637652 0.7614408981    0.7614408981
+  0.0004971427 0.0010681821    0.0014954550
+  0.0001049483 0.0001165981    0.0004522948
+
+[9/9] Comparison vs per-cell (09_pathway)...
+                       module   lmer_coef       lmer_p     paired_p
+                    Apoptosis -0.10228622 3.551019e-04 0.0010681821
+                B4GALT6_alone -0.52845555 1.687023e-05 0.0001165981
+             LacCer_synthesis -0.22875181 2.998523e-05 0.0002092510
+            Myelin_structural -0.01306357 7.507638e-01 0.7614408981
+                S1P_receptors -0.02941798 1.325371e-01 0.1604602880
+ Sphingolipid_interconversion -0.10438802 2.308767e-04 0.0005508817
+       Sphingolipid_synthesis -0.10833952 6.241229e-05 0.0001292271
+ percell_coef    percell_p  delta_coef
+ -0.065938599 3.734458e-03 -0.03634763
+ -0.459182014 1.667234e-11 -0.06927353
+ -0.163068878 4.322726e-06 -0.06568293
+  0.093906119 8.247556e-05 -0.10696968
+  0.069305029 4.230110e-03 -0.09872301
+ -0.026272203 2.047721e-01 -0.07811582
+  0.001985714 9.343912e-01 -0.11032523
+[OK] results/snrnaseq/09b_percell_vs_permouse.csv
+
+[OK] results/snrnaseq/09b_pathway_per_mouse_pvals.csv
+[OK] results/snrnaseq/09b_per_mouse_module_scores.csv
+
+=== FIN ===
