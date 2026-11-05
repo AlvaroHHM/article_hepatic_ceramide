@@ -1,5 +1,5 @@
 === MODELOS MIXTOS + BOOTSTRAP PARA PI/VI ===
-Fecha: 2026-11-03 21:47:34 
+Fecha: 2026-11-04 21:15:02 
 
 --- 1. Cargando anotación ---
   131881 células totales
@@ -146,16 +146,23 @@ MOL2_Cntrl_A -0.7616491  0.3717523
 --- 5. Comparación MOL3_EAE vs otros estados ---
 
 Coeficientes del modelo (Peak vs Early):
-                estado coef_Peak_vs_Early p_Peak_vs_Early
-Estimate      MOL3_EAE          1.5377015    1.735313e-06
-Estimate1 MOL5_6_EAE_A         -0.4725818    4.480321e-01
-Estimate2 MOL5_6_EAE_B          0.8637351    4.291951e-03
-Estimate3 MOL5_6_EAE_C          0.1381053    7.545033e-01
-Estimate4   MOL1_2_EAE          3.6668285    8.152544e-08
-Estimate5 MOL2_Cntrl_A         -0.8178639    2.189473e-01
+                estado coef_Peak_vs_Early p_Peak_vs_Early coef_Late_vs_Early
+Estimate      MOL3_EAE          1.5377015    1.735313e-06          2.2227586
+Estimate1 MOL5_6_EAE_A         -0.4725818    4.480321e-01         -2.5643768
+Estimate2 MOL5_6_EAE_B          0.8637351    4.291951e-03          0.3329667
+Estimate3 MOL5_6_EAE_C          0.1381053    7.545033e-01         -2.0559867
+Estimate4   MOL1_2_EAE          3.6668285    8.152544e-08          0.8030304
+Estimate5 MOL2_Cntrl_A         -0.8178639    2.189473e-01          1.7170140
+          p_Late_vs_Early coef_linear_trend p_linear_trend
+Estimate     3.961322e-13         1.1105622   1.028612e-11
+Estimate1    1.649665e-05        -1.2821027   5.024810e-05
+Estimate2    2.486076e-01         0.1660260   3.316876e-01
+Estimate3    1.360841e-06        -1.0237660   9.536111e-05
+Estimate4    2.249274e-01         0.3806644   4.901002e-01
+Estimate5    5.307150e-03         0.8661341   2.155060e-02
 
 --- 6. Generando figura ---
-[OK] results/snrnaseq/52_PI_VI_bootstrap.pdf
+[OK] results/snrnaseq/13_PI_VI_bootstrap.pdf
 [1] TRUE
 [OK] figures/supplementary/S_bootstrap_PI_VI.pdf
 
@@ -173,13 +180,20 @@ PI y VI con IC 95% (bootstrap):
  MOL2_Cntrl_A 17.3823864 2.45664241 47.0648314 -0.3270031 -0.7616491  0.3717523
 
 Coeficientes de los modelos mixtos:
-       estado coef_Peak_vs_Early p_Peak_vs_Early
-     MOL3_EAE          1.5377015    1.735313e-06
- MOL5_6_EAE_A         -0.4725818    4.480321e-01
- MOL5_6_EAE_B          0.8637351    4.291951e-03
- MOL5_6_EAE_C          0.1381053    7.545033e-01
-   MOL1_2_EAE          3.6668285    8.152544e-08
- MOL2_Cntrl_A         -0.8178639    2.189473e-01
+       estado coef_Peak_vs_Early p_Peak_vs_Early coef_Late_vs_Early
+     MOL3_EAE          1.5377015    1.735313e-06          2.2227586
+ MOL5_6_EAE_A         -0.4725818    4.480321e-01         -2.5643768
+ MOL5_6_EAE_B          0.8637351    4.291951e-03          0.3329667
+ MOL5_6_EAE_C          0.1381053    7.545033e-01         -2.0559867
+   MOL1_2_EAE          3.6668285    8.152544e-08          0.8030304
+ MOL2_Cntrl_A         -0.8178639    2.189473e-01          1.7170140
+ p_Late_vs_Early coef_linear_trend p_linear_trend
+    3.961322e-13         1.1105622   1.028612e-11
+    1.649665e-05        -1.2821027   5.024810e-05
+    2.486076e-01         0.1660260   3.316876e-01
+    1.360841e-06        -1.0237660   9.536111e-05
+    2.249274e-01         0.3806644   4.901002e-01
+    5.307150e-03         0.8661341   2.155060e-02
 
 INTERPRETACIÓN:
   - Si el IC 95% de PI NO incluye 1 → el cambio es significativo

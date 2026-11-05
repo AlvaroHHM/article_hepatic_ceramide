@@ -104,6 +104,7 @@ write.csv(per_mouse, "results/snrnaseq/13_per_mouse_proportions.csv", row.names 
 cat("\n--- 3. Modelos mixtos (glmer binomial) ---\n")
 
 modelos <- list()
+trend_store <- list()
 for (estado in estados_clave) {
   n_state <- per_mouse[[paste0("n_", estado)]]
   n_total <- per_mouse$n_total
@@ -126,6 +127,7 @@ for (estado in estados_clave) {
                        data = per_mouse, family = binomial,
                        control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1e5)))
     coef_trend <- summary(fit_trend)$coefficients["stage_num", ]
+    trend_store[[estado]] <- coef_trend
     cat(sprintf("  Test de tendencia lineal: coef = %.4f, p = %.4e\n",
                 coef_trend["Estimate"], coef_trend["Pr(>|z|)"]))
   }, error = function(e) {
@@ -204,11 +206,25 @@ for (estado in names(modelos)) {
   # Coeficiente de Peak vs Early (o el primero que exista)
   if ("stagePeak" %in% rownames(coefs)) {
     coef_peak <- coefs["stagePeak", ]
+    coef_late <- if ("stageLate" %in% rownames(coefs)) {
+      coefs["stageLate", ]
+    } else {
+      c(Estimate = NA_real_, `Pr(>|z|)` = NA_real_)
+    }
+    coef_trend <- if (estado %in% names(trend_store)) {
+      trend_store[[estado]]
+    } else {
+      c(Estimate = NA_real_, `Pr(>|z|)` = NA_real_)
+    }
     coef_table <- rbind(coef_table, data.frame(
-      estado = estado,
-      coef_Peak_vs_Early = coef_peak["Estimate"],
-      p_Peak_vs_Early = coef_peak["Pr(>|z|)"],
-      stringsAsFactors = FALSE
+      estado              = estado,
+      coef_Peak_vs_Early  = coef_peak["Estimate"],
+      p_Peak_vs_Early     = coef_peak["Pr(>|z|)"],
+      coef_Late_vs_Early  = coef_late["Estimate"],
+      p_Late_vs_Early     = coef_late["Pr(>|z|)"],
+      coef_linear_trend   = coef_trend["Estimate"],
+      p_linear_trend      = coef_trend["Pr(>|z|)"],
+      stringsAsFactors    = FALSE
     ))
   }
 }
