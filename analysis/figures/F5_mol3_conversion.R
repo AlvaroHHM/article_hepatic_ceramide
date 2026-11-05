@@ -1,10 +1,18 @@
 # ============================================================
 # F5_mol3_conversion.R
 # Figure 5: MOL3_EAE sphingolipid genes — fraction vs intensity.
-# Panel A: % positive cells (mean ± SD per mouse)
-# Panel B: mean CPM in positive cells (mean ± SD per mouse)
-# Error bars: SD per mouse (from 36c)
-# Asterisks: per-mouse glmer binomial (from 36d)
+#
+# Panel A: % positive cells. Jitter per mouse (n=5-6) + mean line +
+#          SEM error bars + asterisks (per-mouse glmer, only p_adj<0.05).
+# Panel B: mean CPM in positive cells. Jitter per mouse + mean line +
+#          SEM error bars. NO asterisks (intensity was not tested; the
+#          glmer binomial tests fraction positivity only).
+#
+# Inputs:
+#   results/snrnaseq/36c_positivity_plot_data.csv    (means + SD)
+#   results/snrnaseq/36c_positivity_per_mouse.csv    (per-mouse, jitter)
+#   results/snrnaseq/36d_glmer_per_mouse.csv         (asterisks)
+# Output: figures/main/F5_mol3_conversion.pdf
 # ============================================================
 suppressPackageStartupMessages({
   library(dplyr); library(tidyr); library(ggplot2)
@@ -27,8 +35,18 @@ cand_36c <- c(
 )
 path_36c <- cand_36c[file.exists(cand_36c)][1]
 if (is.na(path_36c)) stop("36c_positivity_plot_data.csv not found")
-d <- read.csv(path_36c, check.names = FALSE)
-message("[data 36c] ", path_36c)
+d_agg <- read.csv(path_36c, check.names = FALSE)
+message("[data 36c agg] ", path_36c)
+
+# ---- Load 36c per-mouse data (for jitter) ----
+cand_mouse <- c(
+  file.path(REPO, "results/snrnaseq/36c_positivity_per_mouse.csv"),
+  file.path(PARENT, "results/snrnaseq/36c_positivity_per_mouse.csv")
+)
+path_mouse <- cand_mouse[file.exists(cand_mouse)][1]
+if (is.na(path_mouse)) stop("36c_positivity_per_mouse.csv not found")
+d_mouse <- read.csv(path_mouse, check.names = FALSE)
+message("[data 36c mouse] ", path_mouse)
 
 # ---- Load 36d glmer for asterisks ----
 cand_36d <- c(
@@ -40,38 +58,51 @@ if (is.na(path_36d)) stop("36d_glmer_per_mouse.csv not found")
 d_glmer <- read.csv(path_36d, check.names = FALSE)
 message("[data 36d] ", path_36d)
 
-# ---- Merge + asterisks from glmer ----
+# ---- Merge + compute SEM and ast_panelA (only sig) ----
 genes <- c("B4galt6", "Ugcg", "Smpd3", "Sgpl1", "S1pr1")
-d <- d %>%
+
+d_agg <- d_agg %>%
   filter(gene %in% genes) %>%
   left_join(d_glmer %>% dplyr::select(gene, glmer_p_adj), by = "gene") %>%
   mutate(
-    timepoint = factor(timepoint, levels = c("Early", "Peak", "Late")),
-    ast = dplyr::case_when(
-      is.na(glmer_p_adj)  ~ "ns",
+    timepoint  = factor(timepoint, levels = c("Early", "Peak", "Late")),
+    sem_pct    = sd_pct / sqrt(n_mice),
+    sem_cpm    = sd_cpm / sqrt(n_mice),
+    ast_panelA = dplyr::case_when(
+      is.na(glmer_p_adj)  ~ "",
       glmer_p_adj < 0.001 ~ "***",
       glmer_p_adj < 0.01  ~ "**",
       glmer_p_adj < 0.05  ~ "*",
-      glmer_p_adj < 0.10  ~ "#",
-      TRUE                ~ "ns"
+      TRUE                ~ ""
     )
   )
-message("[ast] per gene: ",
-        paste(unique(paste0(d$gene, "=", d$ast)), collapse = ", "))
 
-annot <- d %>% filter(timepoint == "Peak")
+d_mouse <- d_mouse %>%
+  filter(gene %in% genes) %>%
+  mutate(timepoint = factor(timepoint, levels = c("Early", "Peak", "Late")))
+
+message("[ast sig-only] ",
+        paste(unique(paste0(d_agg$gene, "=",
+                            ifelse(d_agg$ast_panelA == "", "ns", d_agg$ast_panelA))),
+              collapse = ", "))
+
+annot <- d_agg %>% filter(timepoint == "Peak", ast_panelA != "")
 
 # ---- Panel A: fraction (%) ----
-pA <- ggplot(d, aes(x = timepoint, y = mean_pct, group = gene, color = gene)) +
-  geom_errorbar(aes(ymin = pmax(mean_pct - sd_pct, 0),
-                    ymax = mean_pct + sd_pct),
-                width = 0.15, linewidth = 0.4, alpha = 0.7) +
+pA <- ggplot(d_agg, aes(x = timepoint, y = mean_pct, group = gene, color = gene)) +
+  geom_jitter(data = d_mouse,
+              aes(x = timepoint, y = pct_positive),
+              width = 0.10, size = 1.3, alpha = 0.45, color = "gray40",
+              inherit.aes = FALSE) +
+  geom_errorbar(aes(ymin = pmax(mean_pct - sem_pct, 0),
+                    ymax = mean_pct + sem_pct),
+                width = 0.15, linewidth = 0.5, alpha = 0.85) +
   geom_line(linewidth = 0.9) +
   geom_point(size = 2.4) +
   geom_text(data = annot,
-            aes(x = timepoint, y = mean_pct + sd_pct, label = ast),
+            aes(x = timepoint, y = mean_pct + sem_pct, label = ast_panelA),
             vjust = -0.8, size = 3.5, fontface = "bold",
-            show.legend = FALSE) +
+            inherit.aes = FALSE, color = "black") +
   facet_wrap(~ gene, scales = "free_y", nrow = 1) +
   scale_color_manual(values = c(
     "B4galt6" = "#EE0000", "Ugcg" = "#3B4992", "Smpd3" = "#008B45",
@@ -82,17 +113,17 @@ pA <- ggplot(d, aes(x = timepoint, y = mean_pct, group = gene, color = gene)) +
         axis.text.x = element_text(angle = 30, hjust = 1)) +
   labs(x = NULL, y = "% positive cells")
 
-# ---- Panel B: intensity (CPM) ----
-pB <- ggplot(d, aes(x = timepoint, y = mean_cpm, group = gene, color = gene)) +
-  geom_errorbar(aes(ymin = pmax(mean_cpm - sd_cpm, 0),
-                    ymax = mean_cpm + sd_cpm),
-                width = 0.15, linewidth = 0.4, alpha = 0.7) +
+# ---- Panel B: intensity (CPM), NO asterisks ----
+pB <- ggplot(d_agg, aes(x = timepoint, y = mean_cpm, group = gene, color = gene)) +
+  geom_jitter(data = d_mouse,
+              aes(x = timepoint, y = mean_pos_CPM),
+              width = 0.10, size = 1.3, alpha = 0.45, color = "gray40",
+              inherit.aes = FALSE) +
+  geom_errorbar(aes(ymin = pmax(mean_cpm - sem_cpm, 0),
+                    ymax = mean_cpm + sem_cpm),
+                width = 0.15, linewidth = 0.5, alpha = 0.85) +
   geom_line(linewidth = 0.9) +
   geom_point(size = 2.4) +
-  geom_text(data = annot,
-            aes(x = timepoint, y = mean_cpm + sd_cpm, label = ast),
-            vjust = -0.8, size = 3.5, fontface = "bold",
-            show.legend = FALSE) +
   facet_wrap(~ gene, scales = "free_y", nrow = 1) +
   scale_color_manual(values = c(
     "B4galt6" = "#EE0000", "Ugcg" = "#3B4992", "Smpd3" = "#008B45",
@@ -110,5 +141,5 @@ final <- plot_grid(pA, pB, ncol = 1, labels = c("A", "B"),
 out_dir <- file.path(REPO, "figures/main")
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 out_pdf <- file.path(out_dir, "F5_mol3_conversion.pdf")
-ggsave(out_pdf, final, width = 10, height = 5.5, dpi = 300)
+ggsave(out_pdf, final, width = 10, height = 6.5, dpi = 300)
 message("[OK] ", out_pdf)
