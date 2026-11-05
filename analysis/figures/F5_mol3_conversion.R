@@ -101,7 +101,7 @@ pA <- ggplot(d_agg, aes(x = timepoint, y = mean_pct, group = gene, color = gene)
   geom_point(size = 2.4) +
   geom_text(data = annot,
             aes(x = timepoint, y = mean_pct + sem_pct, label = ast_panelA),
-            vjust = -0.8, size = 3.5, fontface = "bold",
+            vjust = -1.3, size = 6, fontface = "bold",
             inherit.aes = FALSE, color = "black") +
   facet_wrap(~ gene, scales = "free_y", nrow = 1) +
   scale_color_manual(values = c(
