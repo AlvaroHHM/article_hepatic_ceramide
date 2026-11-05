@@ -1,5 +1,5 @@
 === ANÁLISIS DE RUTA: MOL2_like vs MOL56_like ===
-Fecha: 2026-11-04 08:13:29 
+Fecha: 2026-11-04 18:45:02 
 
 --- Módulos definidos ---
   Sphingolipid_synthesis        : 12 genes
@@ -48,17 +48,26 @@ Matriz: 32245 genes × 2378 células
 
 --- Regresión controlando por nCount ---
 
-                       module coef_MOL56_vs_MOL2         pval
-       Sphingolipid_synthesis        0.001985714 9.343912e-01
- Sphingolipid_interconversion       -0.026272203 2.047721e-01
-             LacCer_synthesis       -0.163068878 4.322726e-06
-                S1P_receptors        0.069305029 4.230110e-03
-            Myelin_structural        0.093906119 8.247556e-05
-                    Apoptosis       -0.065938599 3.734458e-03
-                B4GALT6_alone       -0.459182014 1.667234e-11
+                       module coef_MOL56_vs_MOL2         se      ci_low
+       Sphingolipid_synthesis        0.001985714 0.02411861 -0.04528676
+ Sphingolipid_interconversion       -0.026272203 0.02071181 -0.06686735
+             LacCer_synthesis       -0.163068878 0.03539346 -0.23244007
+                S1P_receptors        0.069305029 0.02420213  0.02186884
+            Myelin_structural        0.093906119 0.02380497  0.04724838
+                    Apoptosis       -0.065938599 0.02271393 -0.11045790
+                B4GALT6_alone       -0.459182014 0.06782876 -0.59212638
+     ci_high         pval n_cells
+  0.04925819 9.343912e-01    2110
+  0.01432294 2.047721e-01    2110
+ -0.09369769 4.322726e-06    2110
+  0.11674121 4.230110e-03    2110
+  0.14056385 8.247556e-05    2110
+ -0.02141930 3.734458e-03    2110
+ -0.32623765 1.667234e-11    2110
 
 --- Generando plots ---
-[OK] figures/main/F7_pathway_modules.pdf
+[1] TRUE
+[OK] figures/main/F6_pathway_modules.pdf
 
 ============================================================
 RESUMEN
@@ -83,14 +92,22 @@ Efecto observado (sin controlar por depth):
  2.261516e-01
 
 Efecto después de controlar por nCount (regresión):
-                       module coef_MOL56_vs_MOL2         pval
-       Sphingolipid_synthesis        0.001985714 9.343912e-01
- Sphingolipid_interconversion       -0.026272203 2.047721e-01
-             LacCer_synthesis       -0.163068878 4.322726e-06
-                S1P_receptors        0.069305029 4.230110e-03
-            Myelin_structural        0.093906119 8.247556e-05
-                    Apoptosis       -0.065938599 3.734458e-03
-                B4GALT6_alone       -0.459182014 1.667234e-11
+                       module coef_MOL56_vs_MOL2         se      ci_low
+       Sphingolipid_synthesis        0.001985714 0.02411861 -0.04528676
+ Sphingolipid_interconversion       -0.026272203 0.02071181 -0.06686735
+             LacCer_synthesis       -0.163068878 0.03539346 -0.23244007
+                S1P_receptors        0.069305029 0.02420213  0.02186884
+            Myelin_structural        0.093906119 0.02380497  0.04724838
+                    Apoptosis       -0.065938599 0.02271393 -0.11045790
+                B4GALT6_alone       -0.459182014 0.06782876 -0.59212638
+     ci_high         pval n_cells
+  0.04925819 9.343912e-01    2110
+  0.01432294 2.047721e-01    2110
+ -0.09369769 4.322726e-06    2110
+  0.11674121 4.230110e-03    2110
+  0.14056385 8.247556e-05    2110
+ -0.02141930 3.734458e-03    2110
+ -0.32623765 1.667234e-11    2110
 
 INTERPRETACIÓN:
   - Si |coef| después de regresión < |delta| antes → parte del efecto era depth

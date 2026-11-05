@@ -207,45 +207,68 @@ for (p in setdiff(colnames(module_scores), c("barcode","subpop","stage","nCount"
   sub <- module_scores[module_scores$subpop %in% c("MOL2_like","MOL56_like"), ]
   fit <- lm(sub[[p]] ~ sub$subpop + sub$nCount)
   coef_subpop <- summary(fit)$coefficients["sub$subpopMOL56_like", "Estimate"]
-  coef_pval  <- summary(fit)$coefficients["sub$subpopMOL56_like", "Pr(>|t|)"]
+  coef_se     <- summary(fit)$coefficients["sub$subpopMOL56_like", "Std. Error"]
+  coef_pval   <- summary(fit)$coefficients["sub$subpopMOL56_like", "Pr(>|t|)"]
+  ci_low      <- coef_subpop - 1.96 * coef_se
+  ci_high     <- coef_subpop + 1.96 * coef_se
+  n_cells     <- nrow(sub)
   regression_results <- rbind(regression_results, data.frame(
-    module = p,
+    module             = p,
     coef_MOL56_vs_MOL2 = coef_subpop,
-    pval = coef_pval
+    se                 = coef_se,
+    ci_low             = ci_low,
+    ci_high            = ci_high,
+    pval               = coef_pval,
+    n_cells            = n_cells
   ))
 }
 cat("\n")
 print(regression_results, row.names = FALSE)
-write.csv(regression_results, "results/snrnaseq/09_pathway_regression.csv", row.names = FALSE)
+write.csv(regression_results[, c("module","coef_MOL56_vs_MOL2","pval")],
+          "results/snrnaseq/09_pathway_regression.csv", row.names = FALSE)
+write.csv(regression_results,
+          "results/snrnaseq/09_pathway_forest_data.csv", row.names = FALSE)
 
 # ---- 7. Plots ----
 cat("\n--- Generando plots ---\n")
-plot_modules <- c("Sphingolipid_synthesis", "Sphingolipid_interconversion",
-                  "LacCer_synthesis", "Myelin_structural", "B4GALT6_alone")
 
-if (requireNamespace("patchwork", quietly = TRUE)) {
-  library(patchwork)
-  plots <- lapply(plot_modules[plot_modules %in% colnames(module_scores)],
-                  function(p) {
-                    ggplot(module_scores[module_scores$subpop != "Other", ],
-                           aes(x = subpop, y = .data[[p]], fill = subpop)) +
-                      geom_violin(alpha = 0.7) +
-                      geom_boxplot(width = 0.15, outlier.shape = NA) +
-                      scale_fill_manual(values = c("MOL2_like" = "#B2182B",
-                                                    "MOL56_like" = "#2166AC")) +
-                      labs(title = p, x = NULL, y = "Module score (logCPM mean)") +
-                      theme_minimal(base_size = 9) +
-                      theme(legend.position = "none",
-                            axis.text.x = element_text(angle = 30, hjust = 1))
-                  })
-  combined <- wrap_plots(plots, ncol = 2)
-  ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf", combined, width = 12, height = 8)
-ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", combined, width = 12, height = 8, dpi = 150)
+# Forest plot: regression coefficient + 95% CI, colored by significance
+forest_df <- regression_results %>%
+  mutate(
+    sig = ifelse((ci_low > 0 & ci_high > 0) | (ci_low < 0 & ci_high < 0),
+                 "significant", "ns"),
+    module_label = gsub("_", " ", module),
+    pval_label = format.pval(pval, digits = 2)
+  )
+forest_df$module_label <- factor(forest_df$module_label,
+                                  levels = forest_df$module_label[order(forest_df$coef_MOL56_vs_MOL2)])
+
+x_annot <- max(forest_df$ci_high) + 0.05
+
+p_forest <- ggplot(forest_df, aes(x = coef_MOL56_vs_MOL2, y = module_label)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray40") +
+  geom_segment(aes(x = ci_low, xend = ci_high, y = module_label, yend = module_label),
+               linewidth = 0.6, color = "gray30") +
+  geom_point(aes(color = sig), size = 3.5) +
+  geom_text(aes(x = x_annot, label = paste0("p = ", pval_label)),
+            hjust = 0, size = 3, color = "gray30") +
+  scale_color_manual(values = c("significant" = "#B2182B", "ns" = "#999999")) +
+  scale_x_continuous(expand = expansion(mult = c(0.05, 0.30))) +
+  labs(x = "Regression coefficient (MOL56 - MOL2, adjusted for nCount)",
+       y = NULL) +
+  theme_minimal(base_size = 10) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+
+ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf", p_forest, width = 9, height = 5)
+ggsave("results/snrnaseq/09_pathway_MOL2_vs_MOL56.png", p_forest, width = 9, height = 5, dpi = 150)
 dir.create("figures/main", showWarnings = FALSE, recursive = TRUE)
 file.copy("results/snrnaseq/09_pathway_MOL2_vs_MOL56.pdf",
           "figures/main/F6_pathway_modules.pdf", overwrite = TRUE)
 cat("[OK] figures/main/F6_pathway_modules.pdf\n")
-}
 
 # ---- 8. Resumen ----
 cat("\n", paste(rep("=", 60), collapse = ""), "\n", sep = "")
