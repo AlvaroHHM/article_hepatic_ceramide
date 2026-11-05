@@ -1,0 +1,32 @@
+=== 36d: glmer binomial per-mouse (5 genes) ===
+Date: 2026-11-04 21:28:49 
+
+[1/5] Checkpoints: 26 
+[2/5] Total cells: 13741 
+  EAE cells: 13644  | mice: 17 
+[3/5] Per-mouse binomial data...
+[4/5] Fitting models per gene...
+  B4galt6 : glmer p=4.8861e-02 (glmer_converged) | t-logit p=0.1933
+  Ugcg    : glmer p=3.3477e-03 (glmer_converged) | t-logit p=0.0656
+  Smpd3   : glmer p=6.5545e-02 (glmer_converged) | t-logit p=0.1565
+  Sgpl1   : glmer p=2.5061e-02 (glmer_converged) | t-logit p=0.1552
+  S1pr1   : glmer p=2.9434e-03 (glmer_converged) | t-logit p=0.0135
+[5/5] Writing output...
+
+══════════════════════════════════════════════════════
+RESULTS — glmer binomial vs t-test logit (per-mouse)
+══════════════════════════════════════════════════════
+    gene n_early n_peak     glmer_p glmer_p_adj      glmer_note ttest_logit_p
+ B4galt6       6      5 0.048861487 0.061076859 glmer_converged    0.19330522
+    Ugcg       6      5 0.003347671 0.008369178 glmer_converged    0.06560193
+   Smpd3       6      5 0.065544832 0.065544832 glmer_converged    0.15647583
+   Sgpl1       6      5 0.025061231 0.041768718 glmer_converged    0.15521689
+   S1pr1       6      5 0.002943381 0.008369178 glmer_converged    0.01351777
+ ttest_logit_p_adj
+        0.19330522
+        0.16400483
+        0.19330522
+        0.19330522
+        0.06758886
+
+=== FIN ===

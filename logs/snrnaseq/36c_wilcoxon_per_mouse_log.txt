@@ -1,0 +1,63 @@
+=== 36c: Wilcoxon per-mouse for Figure 5 genes ===
+Date: 2026-11-04 21:20:01 
+
+[1/6] Checkpoints: 26 files in ../results/35b_checkpoint 
+[2/6] Loading RDS...
+  Total cells: 13741 
+  Columns: GSM, orig.ident, timepoint, condition, total_umi, B4galt6, S1pr1, Irf7, B4galt5, Ugcg, Smpd3, Sgms1, Asah1, Sgpl1 
+[3/6] Filtering EAE and Early/Peak/Late...
+  EAE cells: 13644 
+  Mice: 17 
+  Per timepoint:
+
+Early  Late  Peak 
+ 1557  8890  3197 
+[4/6] Computing per-mouse positivity...
+  per_mouse rows: 85  (expected 5 genes x 17 mice = 85)
+[5/6] Wilcoxon per-mouse (Early vs Peak) for 5 genes...
+  B4galt6 : Early=6.10% Peak=17.02% delta=+10.92% p=2.468e-01
+  Ugcg    : Early=9.53% Peak=16.06% delta=+6.53% p=8.225e-02
+  Smpd3   : Early=6.01% Peak=11.34% delta=+5.34% p=8.225e-02
+  Sgpl1   : Early=7.60% Peak=16.56% delta=+8.96% p=1.255e-01
+  S1pr1   : Early=2.55% Peak=0.35% delta=-2.21% p=2.217e-02
+[6/6] Writing outputs...
+
+[OK] 3 CSVs written
+
+══════════════════════════════════════════════════
+RESULTS (per-mouse Wilcoxon)
+══════════════════════════════════════════════════
+    gene n_early n_peak mean_pct_early mean_pct_peak delta_pct      p_raw
+ B4galt6       6      5       6.097504    17.0191310 10.921627 0.24675325
+    Ugcg       6      5       9.534174    16.0647135  6.530540 0.08225108
+   Smpd3       6      5       6.008326    11.3436695  5.335343 0.08225108
+   Sgpl1       6      5       7.598876    16.5595070  8.960631 0.12554113
+   S1pr1       6      5       2.553632     0.3471446 -2.206488 0.02217355
+  p_adj_BH sig
+ 0.2467532  ns
+ 0.1370851  ns
+ 0.1370851  ns
+ 0.1569264  ns
+ 0.1108677  ns
+
+══════════════════════════════════════════════════
+PLOT DATA (mean ± SD)
+══════════════════════════════════════════════════
+    gene timepoint mean_pct sd_pct n_mice mean_cpm sd_cpm p_adj_BH sig
+ B4galt6     Early    6.098  2.183      6     56.5  23.41    0.247  ns
+ B4galt6      Late   11.009  5.668      6     43.8  10.86    0.247  ns
+ B4galt6      Peak   17.019 15.211      5     69.8  23.95    0.247  ns
+   S1pr1     Early    2.554  2.270      6    131.5  64.69    0.111  ns
+   S1pr1      Late    0.476  0.372      6     42.8  15.38    0.111  ns
+   S1pr1      Peak    0.347  0.344      5     39.6  43.03    0.111  ns
+   Sgpl1     Early    7.599  4.982      6     51.9  32.75    0.157  ns
+   Sgpl1      Late   21.760  6.475      6     47.3   9.86    0.157  ns
+   Sgpl1      Peak   16.560  9.348      5     59.1  15.94    0.157  ns
+   Smpd3     Early    6.008  2.638      6     45.9  13.56    0.137  ns
+   Smpd3      Late    7.295  3.215      6     50.1   9.73    0.137  ns
+   Smpd3      Peak   11.344  5.532      5     67.5  31.44    0.137  ns
+    Ugcg     Early    9.534  1.931      6     48.4  12.81    0.137  ns
+    Ugcg      Late   15.636  3.777      6     46.4   9.04    0.137  ns
+    Ugcg      Peak   16.065  5.663      5     58.3  23.48    0.137  ns
+
+=== FIN ===
