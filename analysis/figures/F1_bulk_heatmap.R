@@ -18,7 +18,7 @@ source(file.path(REPO, "analysis/figures/00_figure_style.R"))
 message("[repo] ", normalizePath(REPO))
 
 OUT    <- file.path(REPO, "figures/main/F1_bulk_heatmap.pdf")
-OUTCSV <- file.path(REPO, "figures/main/F1_bulk_heatmap_data.csv")
+OUTCSV <- file.path(REPO, "results/convergence/F1_bulk_heatmap_data.csv")
 
 find_col <- function(df, cand) {
   hit <- intersect(cand, colnames(df))
