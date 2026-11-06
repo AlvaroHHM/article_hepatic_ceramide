@@ -1,0 +1,11 @@
+"gene","model","log2FC","padj"
+"Smpd3","Mdr2-KO",4.7954,2.074e-58
+"Smpd3","EAE_pre",2.881,0.0002028
+"Smpd3","EAE_peak",1.7729,0.03841
+"Smpd3","MASH",4.2989,5.302e-33
+"Smpd3","Fisher_combined",NA,1.518e-89
+"Sgms1","Mdr2-KO",0.0084,0.9831
+"Sgms1","EAE_pre",0.4448,0.01216
+"Sgms1","EAE_peak",0.0794,0.7802
+"Sgms1","MASH",0.0443,0.8163
+"Sgms1","Fisher_combined",NA,0.2826
