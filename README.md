@@ -149,9 +149,9 @@ extracted from the H5 files. No downstream script reads H5 directly.
 | S1 | `S1_falcao_entropy.pdf` | `analysis/snrnaseq/03_falcao_quantification.R` | Shannon entropy of Falcão state landscape |
 | S2 | `S2_MOL3_expression.pdf` | `analysis/figures/S2_MOL3_expression.R` | Per-gene MOL3_EAE expression over time |
 | S3 | `S3_cellular_zscore.pdf` | `analysis/cellular/06_cellular_heatmap_publication.R` | Z-score heatmap of the 4 CNS cell types |
-| S4 | `analysis/bulk/04_verify_liver_numbers.R` | Liver sphingolipid synthesis vs degradation balance |
-| S5 | `analysis/snrnaseq/11_ari_from_precomputed.R` | PCA of MOL3_EAE (ARI validation) — *verify script attribution* |
-| S_bootstrap | `analysis/snrnaseq/13_mixed_models_PI_VI.R` | Bootstrap PI/VI with 95% CI — *verify script attribution* |
+| S4 | `S4_liver_synthesis_degradation.pdf` | `analysis/bulk/04_verify_liver_numbers.R` | Liver sphingolipid synthesis vs degradation balance |
+| S5 | `S5_PCA_MOL3.pdf` | `analysis/snrnaseq/11_ari_from_precomputed.R` | PCA of MOL3_EAE (ARI validation) |
+| S_bootstrap | `S_bootstrap_PI_VI.pdf` | `analysis/snrnaseq/13_mixed_models_PI_VI.R` | Bootstrap PI/VI with 95% CI |
 
 ## Data sources
 
@@ -176,7 +176,7 @@ accession-level download instructions.
 - **38 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
   convergence) plus figure-generation scripts.
 - **66 CSV outputs** in `results/`, one folder per layer.
-- **7 main figures** (F1–F7) and **4 supplementary figures** (S1–S4).
+- **6 main figures** (F1–F6) and **6 supplementary figures** (S1–S5 + S_bootstrap).
 - **Environment**: R 4.3.x, Bioconductor 3.18, Seurat 5.0.x, DESeq2,
   fgsea, hdf5r, org.Mm.eg.db, cluster, vegan.
 - **Version tag**: `v5.3` corresponds to the manuscript version with
