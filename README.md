@@ -168,9 +168,9 @@ accession-level download instructions.
 
 ## Reproducibility notes
 
-- **34 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
+- **38 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
   convergence) plus figure-generation scripts.
-- **62 CSV outputs** in `results/`, one folder per layer.
+- **66 CSV outputs** in `results/`, one folder per layer.
 - **7 main figures** (F1–F7) and **4 supplementary figures** (S1–S4).
 - **Environment**: R 4.3.x, Bioconductor 3.18, Seurat 5.0.x, DESeq2,
   fgsea, hdf5r, org.Mm.eg.db, cluster, vegan.
