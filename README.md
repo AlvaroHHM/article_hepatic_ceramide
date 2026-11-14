@@ -4,7 +4,21 @@ Reproducibility compendium for the manuscript:
 
 > Hernández-Montiel, Á. *Hepatic Ceramide as the Peripheral Origin of
 > CNS Inflammation: An In Silico Hypothesis Integrating Gut–Liver–Brain
-> Signaling.* In preparation (2026). Version v5.3.
+> Signaling.* In preparation (2026). Version v7.0.
+
+## Hypothesis in one paragraph
+
+The cPLA2–MAVS cascade in reactive astrocytes is a central node of
+neuroinflammation in multiple sclerosis (MS). We propose that the ceramide
+that feeds this cascade originates in the liver. Peripheral inflammatory
+episodes (dysbiosis, endotoxemia, other triggers) reprogram hepatic bile
+metabolism, limit phosphatidylcholine availability, and induce SMPD3
+without sustained SMS1 induction, shifting the liver toward ceramide
+export (via lipoproteins and/or extracellular vesicles) to the CNS. The
+hepatic switch is reversible in EAE but persists in MASH and cholestasis,
+and only the reversible switch is expected to cause CNS damage, because
+the CNS effector (MOL3_EAE) requires an autoimmune context. The model is
+testable via five falsifiable predictions (P1–P5; see paper §5.4).
 
 The manuscript `.tex` source is **not** part of this repository. This
 repo contains the code, CSV outputs, and figure-generating scripts that
@@ -20,7 +34,7 @@ produce every result the manuscript cites.
 | `analysis/convergence/` | L4 — cross-layer convergence |
 | `analysis/figures/` | R scripts that generate F1, F3, F5, S2, and the style header |
 | `results/` | CSV outputs, one folder per layer |
-| `figures/main/` | F1–F6 (six figures of the manuscript) |
+| `figures/main/` | F1–F5 (five figures of the manuscript) |
 | `figures/supplementary/` | S1–S5 + S_bootstrap |
 | `tables/` | CSVs underlying each manuscript table |
 | `data/` | Data access instructions (no raw data stored) |
@@ -37,7 +51,7 @@ produce every result the manuscript cites.
 | L3 — snRNA-seq | `analysis/snrnaseq/` | Which individual cells, and with what phenotype? |
 | L4 — Convergence | `analysis/convergence/` | Do the layers agree? |
 
-## Key findings (v5.3)
+## Key findings
 
 1. **MOL3_EAE is not homogeneous.** The state identified by Falcão
    et al. (2019) distributes 48/50 between the *MOL2* and *MOL5/6*
@@ -93,7 +107,7 @@ produce every result the manuscript cites.
     Rscript analysis/figures/S2_MOL3_expression.R
     # F2, S3 come from analysis/cellular/06_cellular_heatmap_publication.R
     # F4, S1 come from analysis/snrnaseq/03_falcao_quantification.R
-    # F6 comes from analysis/snrnaseq/09_pathway_MOL2_vs_MOL56.R
+    # F6 (pathway modules) was removed from the v7 manuscript; the script is retained in _archive/
     # S4 comes from analysis/bulk/04_verify_liver_numbers.R
     # S5 comes from analysis/snrnaseq/11_ari_from_precomputed.R
     # S_bootstrap comes from analysis/snrnaseq/13_mixed_models_PI_VI.R
@@ -138,7 +152,6 @@ extracted from the H5 files. No downstream script reads H5 directly.
 | 3 | `F3_convergence_panel.pdf` | `analysis/figures/F3_convergence_panel.R` | Relay panel (A: liver, B: MOL3 conversion, C: damage vs interferon) |
 | 4 | `F5_mol3_conversion.pdf` | `analysis/figures/F5_mol3_conversion.R` | MOL3_EAE conversion (7% → 18% B4GALT6⁺) |
 | 5 | `F4_snrnaseq_topology.pdf` | `analysis/snrnaseq/03_falcao_quantification.R` | Falcão state topology (Early → Peak → Late) |
-| 6 | `F6_pathway_modules.pdf` | `analysis/snrnaseq/09_pathway_MOL2_vs_MOL56.R` | Pathway module scores (LacCer, sphingolipid, apoptosis) |
 
 *Note:* `F4_snrnaseq_topology.pdf` and `F5_mol3_conversion.pdf` retain their original file names but display as **Figure 5** and **Figure 4**, respectively, in the manuscript (file-vs-display numbering mismatch introduced during revision). The manuscript references figures by display number.
 
@@ -176,11 +189,11 @@ accession-level download instructions.
 - **38 R scripts** across four evidence layers (bulk, cellular, snrnaseq,
   convergence) plus figure-generation scripts.
 - **66 CSV outputs** in `results/`, one folder per layer.
-- **6 main figures** (F1–F6) and **6 supplementary figures** (S1–S5 + S_bootstrap).
+- **5 main figures** (F1–F5) and **6 supplementary figures** (S1–S5 + S_bootstrap).
 - **Environment**: R 4.3.x, Bioconductor 3.18, Seurat 5.0.x, DESeq2,
   fgsea, hdf5r, org.Mm.eg.db, cluster, vegan.
-- **Version tag**: `v5.3` corresponds to the manuscript version with
-  Figure 7 (pathway modules) and the depth confound caveat.
+- **Version tag**: `v7.0` corresponds to the current manuscript (5 main
+  figures, F1–F5, 11,971 words) with the depth confound caveat.
 - **Confound**: MOL2_like has +23% UMIs than MOL56_like
   (Wilcoxon p < 10⁻⁹⁰). The LacCer module survives this confound
   (p = 4.3×10⁻⁶), but the B4GALT6 per-gene magnitude does not. The
@@ -193,8 +206,8 @@ accession-level download instructions.
       title  = {Hepatic Ceramide as the Peripheral Origin of CNS Inflammation},
       author = {Hernandez-Montiel, Alvaro},
       year   = {2026},
-      note   = {Manuscript in preparation, version 5.3},
-      url    = {https://github.com/<user>/article_hepatic_ceramide}
+      note   = {Manuscript in preparation, version 7.0},
+      url    = {https://github.com/AlvaroHHM/article_hepatic_ceramide}
     }
 
 ## License
