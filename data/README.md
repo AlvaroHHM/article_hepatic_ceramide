@@ -1,5 +1,9 @@
 # Data access
 
+> **Note on scope.** All datasets below are downloadable from public sources. Nine *Mus musculus* datasets were analyzed in depth in the manuscript (see Table 2 of the manuscript); five additional datasets are cited as context or signal detection only. The download commands include all of them for completeness; the analysis pipeline (`analysis/`) only reads the nine analyzed datasets.
+
+
+
 No raw data is stored in this repository (see .gitignore). All
 datasets are public and can be downloaded with the commands below.
 

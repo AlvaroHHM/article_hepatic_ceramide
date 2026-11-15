@@ -168,18 +168,24 @@ extracted from the H5 files. No downstream script reads H5 directly.
 
 ## Data sources
 
-| Accession | Description |
-|---|---|
-| GSE250589 | Zheng et al. (2025) — single-cell multiome OLG in EAE (131,881 cells) |
-| GSE312673 | EAE liver bulk RNA-seq (pre-onset and peak) |
-| SRP074136 | Mdr2-KO liver bulk RNA-seq (inflammation vs WT) |
-| SRP133057 | APAP liver bulk RNA-seq (hepatotoxicity vs saline) |
-| SRP071304 | pEAE spinal cord bulk RNA-seq |
-| SRP148279 | alk-SMase KO intestine bulk RNA-seq |
-| SRP197582 | DSS colon time-series bulk RNA-seq |
-| GSE139531 | Purified astrocytes in EAE (Chao et al., 2019) |
-| GSE253318 | Purified microglia in EAE |
-| GSE279707 | Purified neurons (NeuN⁺/NeuN⁻) in EAE |
+The repository includes download instructions for all public datasets referenced in the manuscript. Nine *Mus musculus* datasets were analyzed in depth and appear in Table 2 of the manuscript; four are cited as context (SRP148279, SRP197582, GSE224127, PR000633); and one is used only for signal detection (SRP161558, $n=2$). The `Analysis` column indicates the category of each dataset.
+
+| Accession | Description | Analysis |
+|---|---|---|
+| GSE250589 | Zheng et al. (2025) — single-cell multiome OLG in EAE (131,881 cells) | depth |
+| GSE312673 | EAE liver bulk RNA-seq (pre-onset and peak) | depth |
+| SRP074136 | Mdr2-KO liver bulk RNA-seq (inflammation vs WT) | depth |
+| SRP071304 | pEAE spinal cord bulk RNA-seq | depth |
+| SRP148279 | alk-SMase KO intestine bulk RNA-seq | context |
+| SRP197582 | DSS colon time-series bulk RNA-seq | context |
+| GSE139531 | Purified astrocytes in EAE (Chao et al., 2019) | depth |
+| GSE253318 | Purified microglia in EAE | depth |
+| GSE279707 | Purified neurons (NeuN⁺/NeuN⁻) in EAE | depth |
+| GSE243976 | MASH (GAN diet) liver bulk RNA-seq | depth |
+| GSE286433 | MASH (GAN diet) + DPTIP liver bulk RNA-seq | depth |
+| SRP161558 | Cerulein pancreas bulk RNA-seq (n=2, signal detection only) | signal-only |
+| GSE224127 | LPS time course (13 organs) — source of Takahama 2024 | context |
+| PR000633 | Human NAFLD liver lipidome (lipidomeR) | context |
 
 Raw data are not stored in this repository. See `data/README.md` for
 accession-level download instructions.
